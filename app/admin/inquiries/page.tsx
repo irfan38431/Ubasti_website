@@ -164,7 +164,7 @@ export default function AdminInquiries() {
                 ["Party",    `${selected.partySize} guests`],
                 ["Occasion", selected.occasion],
                 selected.message ? ["Message", selected.message] : null,
-              ].filter(Boolean).map(([k, v]) => (
+              ].filter((x): x is [string, string] => x !== null).map(([k, v]) => (
                 <div key={k as string}>
                   <dt className="text-xs uppercase tracking-wide mb-0.5" style={{ color: "var(--ubasti-sage)" }}>{k}</dt>
                   <dd style={{ color: "var(--ubasti-ink)" }}>{v as string}</dd>
