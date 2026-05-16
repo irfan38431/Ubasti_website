@@ -88,6 +88,7 @@ export const kitties = pgTable("kitties", {
   name:        text("name").notNull(),
   imageUrl:    text("image_url"),
   age:         text("age"),
+  sex:         text("sex"),
   personality: text("personality"),
   bio:         text("bio"),
   bondedToId:  uuid("bonded_to_id"),  // self-ref added via migration

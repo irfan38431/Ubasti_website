@@ -6,16 +6,22 @@ import { PageEditorClient } from "@/components/admin/PageEditorClient";
 import { Hero }                  from "@/components/public/Hero";
 import { HeadlineBlock }         from "@/components/public/HeadlineBlock";
 import { AboutBlock }            from "@/components/public/AboutBlock";
-import { OfferingsTriptych }     from "@/components/public/OfferingsTriptych";
+import { SlideshowStrip }        from "@/components/public/SlideshowStrip";
 import { ScallopDivider }        from "@/components/decorative/ScallopDivider";
 import { VideoBackgroundBlock }  from "@/components/public/VideoBackgroundBlock";
-import { BookingCta }            from "@/components/public/BookingCta";
+import { CountersBlock }         from "@/components/public/CountersBlock";
 import { ContactForm }           from "@/components/public/ContactForm";
 import { BottomNavigationBlock } from "@/components/public/BottomNavigationBlock";
+import { FaqSection }            from "@/components/public/FaqSection";
+import { FAQ_BY_PAGE }          from "@/lib/content/faqs";
+import { buildMetadata }         from "@/lib/seo/metadata";
 
-export const metadata = {
-  title: "Ubasti — Cat Cafe & Lounge | Chennai",
-};
+export const metadata = buildMetadata({
+  title: "Cat Cafe & Adoption Lounge in Chennai",
+  description: "Sip specialty coffee, cuddle resident rescue cats, and find your forever friend at Ubasti — Chennai's serene cat cafe & adoption lounge.",
+  path: "/",
+  keywords: ["cat cafe chennai", "ubasti cat cafe", "cat adoption chennai", "cat cafe near me"],
+});
 
 interface Props { searchParams: Promise<Record<string, string>> }
 
@@ -56,8 +62,8 @@ export default async function HomePage({ searchParams }: Props) {
       {/* Scallop: cream → paper for offerings */}
       <ScallopDivider top="var(--ubasti-cream)" bottom="var(--ubasti-paper)" />
 
-      {/* Task 5: Offerings — photo + one-word labels + leaves */}
-      <OfferingsTriptych />
+      {/* Task 5: Slideshow marquee strip */}
+      <SlideshowStrip />
 
       {/* Task 6: Dedicated scallop-edge divider — paper → ink */}
       <ScallopDivider top="var(--ubasti-paper)" bottom="var(--ubasti-ink)" flip />
@@ -65,17 +71,20 @@ export default async function HomePage({ searchParams }: Props) {
       {/* Task 7: Video background + wordmark overlay */}
       <VideoBackgroundBlock />
 
-      {/* Scallop: ink → paper for booking */}
+      {/* Scallop: ink → paper for counters */}
       <ScallopDivider top="var(--ubasti-ink)" bottom="var(--ubasti-paper)" />
 
-      {/* Task 8: Booking CTA */}
-      <BookingCta />
+      {/* Counters block */}
+      <CountersBlock />
 
       {/* Scallop: paper → blush-light for connect */}
       <ScallopDivider top="var(--ubasti-paper)" bottom="var(--ubasti-blush-light)" flip />
 
       {/* Task 10: Connect with US — brand mark + Instagram handle + form */}
       <ContactForm />
+
+      {/* FAQ */}
+      <FaqSection title="Got Questions?" items={FAQ_BY_PAGE.home} />
 
       {/* Scallop: blush-light → ink for bottom nav */}
       <ScallopDivider top="var(--ubasti-blush-light)" bottom="var(--ubasti-ink)" />

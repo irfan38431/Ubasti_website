@@ -1,8 +1,14 @@
 import { Suspense } from "react";
 import { BookWizard } from "./BookWizard";
 import { getBookableDates } from "@/lib/booking/slots";
+import { buildMetadata } from "@/lib/seo/metadata";
 
-export const metadata = { title: "Book a Session — Ubasti" };
+export const metadata = buildMetadata({
+  title: "Book a Cat Cafe Session",
+  description: "Reserve your 60-minute cat cafe session at Ubasti, Chennai. Choose your time, complete the waiver, and meet the cats.",
+  path: "/book",
+  keywords: ["cat cafe booking chennai", "book cat cafe session"],
+});
 
 export default async function BookPage() {
   let dates: string[] = [];

@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { INSTAGRAM_URL } from "@/lib/constants/social";
 
 export function BottomNavigationBlock() {
   return (
@@ -12,7 +13,7 @@ export function BottomNavigationBlock() {
 
       {/* Large Instagram handle */}
       <a
-        href="https://instagram.com/ubasti.cafe"
+        href={INSTAGRAM_URL}
         target="_blank"
         rel="noopener noreferrer"
         className="mt-8 block transition-opacity hover:opacity-75 px-6"
@@ -24,7 +25,7 @@ export function BottomNavigationBlock() {
           letterSpacing: "0.02em",
         }}
       >
-        @ubasti.cafe
+        @ubasticatcafe
       </a>
 
       {/* Repeated Connect with US heading */}
@@ -56,11 +57,11 @@ export function BottomNavigationBlock() {
         <span aria-hidden="true">·</span>
         <Link href="/about" className="hover:opacity-100 transition-opacity">About</Link>
         <span aria-hidden="true">·</span>
-        <Link href="/book" className="hover:opacity-100 transition-opacity">Book</Link>
-        <span aria-hidden="true">·</span>
         <Link href="/kitties" className="hover:opacity-100 transition-opacity">Kitties</Link>
         <span aria-hidden="true">·</span>
-        <Link href="/blog" className="hover:opacity-100 transition-opacity">Blog</Link>
+        <Link href="/adoption" className="hover:opacity-100 transition-opacity">Adoption</Link>
+        <span aria-hidden="true">·</span>
+        <Link href="/grooming" className="hover:opacity-100 transition-opacity">Grooming</Link>
       </nav>
     </div>
   );

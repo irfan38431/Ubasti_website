@@ -4,8 +4,16 @@ import { asc } from "drizzle-orm";
 import { KittyCard } from "@/components/public/KittyCard";
 import { SectionTitle } from "@/components/ui/SectionTitle";
 import { Badge } from "@/components/ui/Badge";
+import { FaqSection } from "@/components/public/FaqSection";
+import { FAQ_BY_PAGE } from "@/lib/content/faqs";
+import { buildMetadata } from "@/lib/seo/metadata";
 
-export const metadata = { title: "Meet the Kitties — Ubasti Cat Cafe" };
+export const metadata = buildMetadata({
+  title: "Meet Our Cats — Adoption in Chennai",
+  description: "Meet the resident cats at Ubasti Cat Cafe. Each kitty is rescued, vetted, and looking for a forever home in Chennai.",
+  path: "/kitties",
+  keywords: ["cat adoption chennai", "adopt a cat chennai", "kitten adoption tamil nadu"],
+});
 
 export default async function KittiesPage() {
   let cats: typeof kitties.$inferSelect[] = [];
@@ -46,42 +54,26 @@ export default async function KittiesPage() {
               {cats.map((cat) => (
                 <KittyCard
                   key={cat.id}
-                  slug={cat.slug}
                   name={cat.name}
                   imageUrl={cat.imageUrl}
                   age={cat.age}
-                  personality={cat.personality}
-                  status={cat.status}
+                  sex={cat.sex}
                 />
               ))}
             </div>
           )}
 
-          {/* Adoption CTA */}
-          <div
-            className="mt-16 rounded-2xl p-8 md:p-12 text-center"
-            style={{ background: "var(--ubasti-blush-light)" }}
-          >
-            <h2
-              className="text-3xl md:text-4xl mb-4"
-              style={{ fontFamily: "var(--font-cormorant)", color: "var(--ubasti-ink)", fontWeight: 600 }}
-            >
-              Thinking of Adopting?
-            </h2>
-            <p className="text-base mb-6 max-w-lg mx-auto" style={{ color: "var(--ubasti-sage)" }}>
-              Visit the lounge, spend time with the cats, and if there&apos;s a spark — we&apos;ll guide you
-              through the adoption process.
-            </p>
-            <a
-              href="/book"
-              className="inline-flex h-12 items-center px-8 rounded-full font-medium text-sm transition-opacity hover:opacity-90"
-              style={{ background: "var(--ubasti-olive-dark)", color: "var(--ubasti-cream)" }}
-            >
-              Book a Visit
+          <div className="mt-10 text-center">
+            <a href="/adoption"
+              className="inline-flex h-10 items-center px-6 rounded-full font-medium text-sm transition-opacity hover:opacity-90 border"
+              style={{ borderColor: "var(--ubasti-olive-dark)", color: "var(--ubasti-olive-dark)" }}>
+              Want to take one home? → Adoption
             </a>
           </div>
         </div>
       </section>
+
+      <FaqSection title="Kitty FAQs" items={FAQ_BY_PAGE.kitties} />
     </div>
   );
 }

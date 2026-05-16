@@ -1,0 +1,18 @@
+{
+  "permissions": {
+    "allow": [
+      "WebSearch",
+      "Bash(xargs grep -l \"twilio\\\\|msg91\\\\|SMS\\\\|messaging\")",
+      "Bash(xargs grep -l \"sms\\\\|SMS\\\\|notification\\\\|webhook\")",
+      "Bash(xargs grep -l \"webhook\")",
+      "Bash(xargs grep -l \"msg91\\\\|twilio\")",
+      "Bash(New-Item -ItemType Directory -Force \"D:\\\\UBASTI\\\\ubasti-cafe\\\\app\\\\api\\\\webhooks\\\\whatsapp\")",
+      "Bash(Out-Null)",
+      "Bash(pnpm typecheck *)"
+    ]
+  },
+  "enableAllProjectMcpServers": true,
+  "enabledMcpjsonServers": [
+    "ruflo"
+  ]
+}

@@ -3,18 +3,19 @@ import { db } from "@/lib/db/client";
 import { events, blogPosts } from "@/lib/db/schema";
 import { eq, and, gte } from "drizzle-orm";
 
-const APP_URL = process.env.NEXT_PUBLIC_APP_URL ?? "https://ubasti.cafe";
+const APP_URL = process.env.NEXT_PUBLIC_APP_URL ?? "https://ubasticats.com";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  // Use fixed dates for static routes — prevents "always modified" signal to Google
   const staticRoutes: MetadataRoute.Sitemap = [
-    { url: APP_URL,                           lastModified: new Date(), changeFrequency: "weekly",  priority: 1.0 },
-    { url: `${APP_URL}/about`,                lastModified: new Date(), changeFrequency: "monthly", priority: 0.8 },
-    { url: `${APP_URL}/kitties`,              lastModified: new Date(), changeFrequency: "weekly",  priority: 0.8 },
-    { url: `${APP_URL}/events`,               lastModified: new Date(), changeFrequency: "daily",   priority: 0.9 },
-    { url: `${APP_URL}/private-parties`,      lastModified: new Date(), changeFrequency: "monthly", priority: 0.7 },
-    { url: `${APP_URL}/blog`,                 lastModified: new Date(), changeFrequency: "weekly",  priority: 0.7 },
-    { url: `${APP_URL}/book`,                 lastModified: new Date(), changeFrequency: "weekly",  priority: 0.9 },
-    { url: `${APP_URL}/waiver`,               lastModified: new Date(), changeFrequency: "yearly",  priority: 0.3 },
+    { url: APP_URL,                           lastModified: new Date("2026-05-16"), changeFrequency: "weekly",  priority: 1.0 },
+    { url: `${APP_URL}/about`,                lastModified: new Date("2026-05-16"), changeFrequency: "monthly", priority: 0.8 },
+    { url: `${APP_URL}/kitties`,              lastModified: new Date("2026-05-16"), changeFrequency: "weekly",  priority: 0.8 },
+    { url: `${APP_URL}/events`,               lastModified: new Date("2026-05-16"), changeFrequency: "daily",   priority: 0.9 },
+    { url: `${APP_URL}/private-parties`,      lastModified: new Date("2026-05-16"), changeFrequency: "monthly", priority: 0.7 },
+    { url: `${APP_URL}/blog`,                 lastModified: new Date("2026-05-16"), changeFrequency: "weekly",  priority: 0.7 },
+    { url: `${APP_URL}/book`,                 lastModified: new Date("2026-05-16"), changeFrequency: "weekly",  priority: 0.9 },
+    { url: `${APP_URL}/waiver`,               lastModified: new Date("2026-05-16"), changeFrequency: "yearly",  priority: 0.3 },
   ];
 
   let eventRoutes: MetadataRoute.Sitemap = [];

@@ -2,7 +2,7 @@
 
 > **For:** Sonnet (implementing agent)
 > **Project:** `ubasti-cafe` (Next.js 16 App Router, React 19, Drizzle + Supabase, Tailwind v4)
-> **Domain:** `https://ubasti.cafe`
+> **Domain:** `https://ubasticats.com`
 > **Business:** Cat cafe & adoption lounge in Chennai, Tamil Nadu, India
 > **Status of plan:** Authored 2026-05-16. Treat as the source of truth for SEO work.
 
@@ -68,7 +68,7 @@ Create `lib/seo/metadata.ts`:
 ```ts
 import type { Metadata } from "next";
 
-const APP_URL = process.env.NEXT_PUBLIC_APP_URL ?? "https://ubasti.cafe";
+const APP_URL = process.env.NEXT_PUBLIC_APP_URL ?? "https://ubasticats.com";
 const SITE_NAME = "Ubasti Cat Cafe & Lounge";
 
 export const DEFAULT_OG_IMAGE = {
@@ -214,13 +214,13 @@ Add a second JSON-LD block in `app/layout.tsx`:
 {
   "@context": "https://schema.org",
   "@type": "WebSite",
-  "@id": "https://ubasti.cafe/#website",
-  "url": "https://ubasti.cafe",
+  "@id": "https://ubasticats.com/#website",
+  "url": "https://ubasticats.com",
   "name": "Ubasti Cat Cafe & Lounge",
-  "publisher": { "@id": "https://ubasti.cafe/#business" },
+  "publisher": { "@id": "https://ubasticats.com/#business" },
   "potentialAction": {
     "@type": "SearchAction",
-    "target": "https://ubasti.cafe/blog?q={search_term_string}",
+    "target": "https://ubasticats.com/blog?q={search_term_string}",
     "query-input": "required name=search_term_string"
   }
 }
@@ -246,7 +246,7 @@ Add a second JSON-LD block in `app/layout.tsx`:
   },
   "image": ["<event.coverImage absolute URL>"],
   "description": "<event.summary>",
-  "organizer": { "@id": "https://ubasti.cafe/#business" },
+  "organizer": { "@id": "https://ubasticats.com/#business" },
   "offers": {
     "@type": "Offer",
     "url": "<absolute URL of /events/{slug}>",
@@ -271,7 +271,7 @@ Render the same way the root layout renders LocalBusiness JSON-LD. Source field 
   "datePublished": "<post.publishedAt ISO>",
   "dateModified": "<post.updatedAt ISO>",
   "author": { "@type": "Person", "name": "<post.authorName ?? 'Ubasti Team'>" },
-  "publisher": { "@id": "https://ubasti.cafe/#business" },
+  "publisher": { "@id": "https://ubasticats.com/#business" },
   "mainEntityOfPage": { "@type": "WebPage", "@id": "<absolute URL>" }
 }
 ```

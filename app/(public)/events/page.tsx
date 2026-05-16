@@ -2,8 +2,18 @@ import { Suspense } from "react";
 import { EventsList } from "./EventsList";
 import { SectionTitle } from "@/components/ui/SectionTitle";
 import { Badge } from "@/components/ui/Badge";
+import { FaqSection } from "@/components/public/FaqSection";
+import { FAQ_BY_PAGE } from "@/lib/content/faqs";
+import { buildMetadata } from "@/lib/seo/metadata";
 
-export const metadata = { title: "Calendar of Events — Ubasti Cat Cafe" };
+export const metadata = buildMetadata({
+  title: "Events at Ubasti — Kitten Yoga, Workshops & More",
+  description: "Kitten yoga, adoption drives, latte art classes, and cat-care workshops at Ubasti Cat Cafe in Chennai. Browse upcoming events.",
+  path: "/events",
+  keywords: ["cat cafe events chennai", "kitten yoga chennai", "cat adoption drive chennai"],
+});
+
+export const revalidate = 300;
 
 export default function EventsPage() {
   return (
@@ -39,6 +49,8 @@ export default function EventsPage() {
           </a>
         </p>
       </section>
+
+      <FaqSection title="Event FAQs" items={FAQ_BY_PAGE.events} />
     </div>
   );
 }

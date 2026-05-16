@@ -1,7 +1,11 @@
+"use client";
 import Image from "next/image";
+import { motion, useReducedMotion } from "framer-motion";
 import { ScallopDivider } from "@/components/decorative/ScallopDivider";
 
 export function HeadlineBlock() {
+  const shouldReduce = useReducedMotion();
+
   return (
     <>
       <section
@@ -9,10 +13,12 @@ export function HeadlineBlock() {
         style={{ background: "var(--ubasti-ink)" }}
       >
         {/* Top-right: cat-yawn (largest) */}
-        <div
+        <motion.div
           className="absolute top-4 right-[3%] md:right-[8%] w-32 h-32 md:w-56 md:h-56 opacity-75 hidden sm:block"
           style={{ transform: "rotate(-8deg)", zIndex: 0 }}
           aria-hidden="true"
+          animate={shouldReduce ? {} : { y: [0, -6, 0], rotate: [0, 1.5, 0, -1.5, 0] }}
+          transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
         >
           <Image
             src="/images/decorative/cat-yawn.svg"
@@ -21,13 +27,15 @@ export function HeadlineBlock() {
             className="object-contain"
             style={{ filter: "invert(1) brightness(1.6)" }}
           />
-        </div>
+        </motion.div>
 
         {/* Bottom-left: cat-outline */}
-        <div
+        <motion.div
           className="absolute bottom-4 left-[3%] md:left-[8%] w-28 h-28 md:w-52 md:h-52 opacity-70"
           style={{ transform: "rotate(6deg)", zIndex: 0 }}
           aria-hidden="true"
+          animate={shouldReduce ? {} : { y: [0, -6, 0], rotate: [0, 1.5, 0, -1.5, 0] }}
+          transition={{ duration: 4.7, repeat: Infinity, ease: "easeInOut" }}
         >
           <Image
             src="/images/decorative/cat-outline.svg"
@@ -36,13 +44,15 @@ export function HeadlineBlock() {
             className="object-contain"
             style={{ filter: "invert(1) brightness(1.6)" }}
           />
-        </div>
+        </motion.div>
 
         {/* Right-center: cat-pspsps (medium, rotated) */}
-        <div
+        <motion.div
           className="absolute bottom-8 right-[4%] md:right-[12%] w-24 h-24 md:w-44 md:h-44 opacity-65 hidden sm:block"
           style={{ transform: "rotate(12deg)", zIndex: 0 }}
           aria-hidden="true"
+          animate={shouldReduce ? {} : { y: [0, -6, 0], rotate: [0, 1.5, 0, -1.5, 0] }}
+          transition={{ duration: 5.4, repeat: Infinity, ease: "easeInOut" }}
         >
           <Image
             src="/images/decorative/cat-pspsps.svg"
@@ -51,13 +61,15 @@ export function HeadlineBlock() {
             className="object-contain"
             style={{ filter: "invert(1) brightness(1.6)" }}
           />
-        </div>
+        </motion.div>
 
         {/* Top-left: sparkles (smaller) */}
-        <div
+        <motion.div
           className="absolute top-8 left-[4%] md:left-[10%] w-20 h-20 md:w-36 md:h-36 opacity-60"
           style={{ transform: "rotate(-5deg)", zIndex: 0 }}
           aria-hidden="true"
+          animate={shouldReduce ? {} : { opacity: [0.3, 0.8, 0.3], scale: [1, 1.1, 1] }}
+          transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
         >
           <Image
             src="/images/decorative/sparkles.svg"
@@ -66,7 +78,7 @@ export function HeadlineBlock() {
             className="object-contain"
             style={{ filter: "invert(1) brightness(1.6)" }}
           />
-        </div>
+        </motion.div>
 
         {/* Headline */}
         <div className="relative z-10 text-center px-6">

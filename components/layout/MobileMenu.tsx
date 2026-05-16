@@ -12,10 +12,12 @@ const NAV_LINKS = [
   { href: "/",                label: "Home" },
   { href: "/about",           label: "About" },
   { href: "/kitties",         label: "Kitties" },
+  { href: "/adoption",        label: "Adoption" },
   { href: "/events",          label: "Events" },
   { href: "/private-parties", label: "Private Parties" },
-  { href: "/blog",            label: "Blog" },
-  { href: "/book",            label: "Book a Session" },
+  { href: "/grooming",        label: "Grooming" },
+  { href: "/boarding",        label: "Boarding" },
+  { href: "/shop",            label: "Shop" },
 ];
 
 interface Props {

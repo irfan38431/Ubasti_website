@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useState } from "react";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
+import { INSTAGRAM_URL } from "@/lib/constants/social";
 
 export function ContactForm() {
   const [name,    setName]    = useState("");
@@ -59,7 +60,7 @@ export function ContactForm() {
 
             {/* Instagram handle */}
             <a
-              href="https://instagram.com/ubasti.cafe"
+              href={INSTAGRAM_URL}
               target="_blank"
               rel="noopener noreferrer"
               className="text-center block transition-opacity hover:opacity-70"
@@ -71,7 +72,7 @@ export function ContactForm() {
                 letterSpacing: "0.02em",
               }}
             >
-              @ubasti.cafe
+              @ubasticatcafe
             </a>
 
             <div className="w-full">

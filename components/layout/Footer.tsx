@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
+import { INSTAGRAM_URL } from "@/lib/constants/social";
 
 export function Footer() {
   return (
@@ -22,7 +23,7 @@ export function Footer() {
           <Link href="/about" className="hover:opacity-100 transition-opacity">about</Link>
           <span aria-hidden="true">·</span>
           <a
-            href="https://instagram.com/ubasti.cafe"
+            href={INSTAGRAM_URL}
             target="_blank"
             rel="noopener noreferrer"
             className="hover:opacity-100 transition-opacity"
@@ -30,7 +31,7 @@ export function Footer() {
             connect
           </a>
           <span aria-hidden="true">·</span>
-          <Link href="/waiver" className="hover:opacity-100 transition-opacity">waiver</Link>
+          <Link href="/adoption" className="hover:opacity-100 transition-opacity">adoption</Link>
         </nav>
 
         {/* Copyright */}
@@ -40,15 +41,6 @@ export function Footer() {
         >
           © {new Date().getFullYear()} UBASTI CAT CAFE &amp; LOUNGE
         </p>
-
-        {/* Adoption Application link */}
-        <a
-          href="#"
-          className="text-sm underline underline-offset-4 opacity-70 hover:opacity-100 transition-opacity"
-          style={{ color: "var(--ubasti-blush)" }}
-        >
-          Adoption Application
-        </a>
       </div>
     </footer>
   );

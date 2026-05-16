@@ -1,5 +1,13 @@
 import { Suspense } from "react";
 import { LoginForm } from "./LoginForm";
+import { buildMetadata } from "@/lib/seo/metadata";
+
+export const metadata = buildMetadata({
+  title: "Sign In",
+  description: "Sign in to your Ubasti account to manage bookings.",
+  path: "/login",
+  noindex: true,
+});
 
 export default function LoginPage() {
   return (

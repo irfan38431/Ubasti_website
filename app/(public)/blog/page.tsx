@@ -4,8 +4,15 @@ import { db } from "@/lib/db/client";
 import { blogPosts } from "@/lib/db/schema";
 import { eq, desc } from "drizzle-orm";
 import { SectionTitle } from "@/components/ui/SectionTitle";
+import { buildMetadata } from "@/lib/seo/metadata";
 
-export const metadata = { title: "Blog — Ubasti Cat Cafe" };
+export const metadata = buildMetadata({
+  title: "Ubasti Blog — Cat Care, Cafe Life, Chennai",
+  description: "Cat-care guides, lounge updates, and stories from inside Ubasti Cat Cafe in Chennai. Read the latest from our team.",
+  path: "/blog",
+});
+
+export const revalidate = 300;
 
 export default async function BlogPage() {
   let posts: typeof blogPosts.$inferSelect[] = [];

@@ -23,7 +23,7 @@ export async function GET(req: NextRequest, ctx: RouteContext) {
   }
 
   const { error, value } = createEvent({
-    uid:         `${booking.id}@ubasti.cafe`,
+    uid:         `${booking.id}@ubasticats.com`,
     title:       "Ubasti Cat Cafe Session",
     description: `Lounge session for ${booking.partySize} guest${booking.partySize > 1 ? "s" : ""}. Pay on arrival.`,
     location:    "Ubasti Cat Cafe & Lounge, Chennai, Tamil Nadu, India",
@@ -32,7 +32,7 @@ export async function GET(req: NextRequest, ctx: RouteContext) {
     startInputType: "utc",
     endInputType:   "utc",
     url:         `${process.env.NEXT_PUBLIC_APP_URL}/account`,
-    organizer:   { name: "Ubasti Cat Cafe", email: "hello@ubasti.cafe" },
+    organizer:   { name: "Ubasti Cat Cafe", email: "hello@ubasticats.com" },
     status:      "CONFIRMED",
   });
 

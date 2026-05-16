@@ -9,20 +9,30 @@ import { SectionTitle } from "@/components/ui/SectionTitle";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
 import { InquiryForm } from "@/components/parties/InquiryForm";
 
-export const metadata = { title: "Private Parties — Ubasti Cat Cafe" };
+import { buildMetadata } from "@/lib/seo/metadata";
 
-const TIERS = [
-  { label: "Weekday", sublabel: "Mon – Thu", price: "₹6,000", duration: "70 min", capacity: "up to 12 guests",
-    perks: ["Cake & decor coordination", "Dedicated host", "Custom playlist", "Cat interaction session"] },
-  { label: "Weekend", sublabel: "Fri – Sun", price: "₹8,000", duration: "70 min", capacity: "up to 12 guests",
-    perks: ["Cake & decor coordination", "Dedicated host", "Custom playlist", "Cat interaction session", "Priority booking window"] },
+export const metadata = buildMetadata({
+  title: "Private Parties & Bookouts",
+  description: "Host a cat-themed birthday, baby shower, or team offsite at Ubasti. Private buyout, custom menus, and cuddles included — Chennai.",
+  path: "/private-parties",
+  keywords: ["cat themed birthday party chennai", "private cat cafe booking", "kids party chennai cat cafe"],
+});
+
+const LOUNGE_TIERS = [
+  { label: "Lounge Alone",    day: "Weekday", dayNote: "Mon – Thu", price: "₹4,999/hr", bg: "var(--ubasti-white)",      color: "var(--ubasti-ink)",   cta: "var(--ubasti-olive-dark)", ctaColor: "var(--ubasti-cream)" },
+  { label: "Lounge Alone",    day: "Weekend", dayNote: "Fri – Sun", price: "₹6,999/hr", bg: "var(--ubasti-olive-dark)", color: "var(--ubasti-cream)", cta: "var(--ubasti-blush)",     ctaColor: "var(--ubasti-ink)" },
+  { label: "Lounge + GF Cafe", day: "Weekday", dayNote: "Mon – Thu", price: "₹9,999/hr", bg: "var(--ubasti-sage)",       color: "var(--ubasti-cream)", cta: "var(--ubasti-olive-dark)", ctaColor: "var(--ubasti-cream)" },
+  { label: "Lounge + GF Cafe", day: "Weekend", dayNote: "Fri – Sun", price: "₹13,999/hr",bg: "var(--ubasti-blush)",     color: "var(--ubasti-ink)",   cta: "var(--ubasti-olive-dark)", ctaColor: "var(--ubasti-cream)" },
 ];
+const WHOLE_MANOR = { weekday: "₹14,999/hr", weekend: "₹16,999/hr" };
 const RULES = [
+  "Food & decor not included",
+  "Cake can be ordered from outside",
+  "Decor in the lounge must be confirmed 2 days prior — poppers, balloons, and sprays not allowed",
+  "Banner only in the designated area",
   "Guests must be 6+ years old (children under 7 need 1 adult chaperone per 2 children)",
   "Maximum 12 guests per party booking",
-  "Bring your own cake/snacks — send list 48h before for approval",
-  "Decorations allowed at entry area only",
-  "No glitter, confetti, or balloons inside the lounge — the cats say absolutely not",
+  "No glitter, confetti inside the lounge — the cats say absolutely not",
   "No fish, strong-smelling foods, or heavy fragrances",
   "Outside alcohol not permitted",
 ];
@@ -102,27 +112,40 @@ export default async function PrivatePartiesPage({ searchParams }: Props) {
         <div className="max-w-[1280px] mx-auto px-6 md:px-12 lg:px-16">
           <ScrollReveal><SectionTitle eyebrow="Pricing" title="Choose Your Day" className="mb-12" /></ScrollReveal>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-3xl mx-auto">
-            {TIERS.map((tier, i) => (
-              <ScrollReveal key={tier.label} delay={i * 0.1}>
+            {LOUNGE_TIERS.map((tier, i) => (
+              <ScrollReveal key={`${tier.label}-${tier.day}`} delay={i * 0.1}>
                 <div className="rounded-2xl p-8 flex flex-col gap-4"
-                  style={{ background: i === 1 ? "var(--ubasti-olive-dark)" : "var(--ubasti-white)", color: i === 1 ? "var(--ubasti-cream)" : "var(--ubasti-ink)", boxShadow: "0 8px 24px rgba(44,46,31,0.08)" }}>
+                  style={{ background: tier.bg, color: tier.color, boxShadow: "0 8px 24px rgba(44,46,31,0.08)" }}>
                   <div>
-                    <p className="text-xs font-bold uppercase tracking-widest opacity-60">{tier.sublabel}</p>
-                    <h3 className="text-3xl mt-1" style={{ fontFamily: "var(--font-cormorant)", fontWeight: 600 }}>{tier.label}</h3>
+                    <p className="text-xs font-bold uppercase tracking-widest opacity-60">{tier.dayNote}</p>
+                    <h3 className="text-2xl mt-1" style={{ fontFamily: "var(--font-cormorant)", fontWeight: 600 }}>{tier.label}</h3>
+                    <p className="text-sm opacity-70">{tier.day}</p>
                   </div>
                   <p className="text-4xl font-bold" style={{ fontFamily: "var(--font-cinzel)" }}>{tier.price}</p>
-                  <p className="text-sm opacity-70">{tier.duration} · {tier.capacity}</p>
-                  <ul className="flex flex-col gap-2 mt-2">
-                    {tier.perks.map((p) => <li key={p} className="flex items-center gap-2 text-sm"><span>✓</span>{p}</li>)}
-                  </ul>
-                  <a href="#inquiry" className="mt-3 inline-flex h-11 items-center justify-center rounded-full font-medium text-sm transition-opacity hover:opacity-90"
-                    style={{ background: i === 1 ? "var(--ubasti-blush)" : "var(--ubasti-olive-dark)", color: i === 1 ? "var(--ubasti-ink)" : "var(--ubasti-cream)" }}>
-                    Book This
-                  </a>
+                  <a href="#inquiry" className="mt-2 inline-flex h-11 items-center justify-center rounded-full font-medium text-sm transition-opacity hover:opacity-90"
+                    style={{ background: tier.cta, color: tier.ctaColor }}>Book This</a>
                 </div>
               </ScrollReveal>
             ))}
           </div>
+          <ScrollReveal delay={0.4}>
+            <div className="mt-6 rounded-2xl p-8 max-w-3xl mx-auto"
+              style={{ background: "var(--ubasti-ink)", color: "var(--ubasti-cream)", boxShadow: "0 8px 24px rgba(44,46,31,0.08)" }}>
+              <h3 className="text-3xl mb-4" style={{ fontFamily: "var(--font-cormorant)", fontWeight: 600 }}>Whole Manor</h3>
+              <div className="flex gap-8 flex-wrap">
+                <div>
+                  <p className="text-xs opacity-60 uppercase tracking-widest mb-1">Weekday</p>
+                  <p className="text-3xl font-bold" style={{ fontFamily: "var(--font-cinzel)" }}>{WHOLE_MANOR.weekday}</p>
+                </div>
+                <div>
+                  <p className="text-xs opacity-60 uppercase tracking-widest mb-1">Weekend</p>
+                  <p className="text-3xl font-bold" style={{ fontFamily: "var(--font-cinzel)" }}>{WHOLE_MANOR.weekend}</p>
+                </div>
+              </div>
+              <a href="#inquiry" className="mt-6 inline-flex h-11 items-center px-7 rounded-full font-medium text-sm transition-opacity hover:opacity-90"
+                style={{ background: "var(--ubasti-blush)", color: "var(--ubasti-ink)" }}>Book This</a>
+            </div>
+          </ScrollReveal>
         </div>
       </section>
 
@@ -132,7 +155,7 @@ export default async function PrivatePartiesPage({ searchParams }: Props) {
           <ul className="flex flex-col gap-3">
             {RULES.map((rule) => (
               <li key={rule} className="flex items-start gap-3 text-sm leading-relaxed" style={{ color: "var(--ubasti-sage)" }}>
-                <span className="mt-0.5 shrink-0 text-base" style={{ color: "var(--ubasti-mustard)" }}>🐱</span>{rule}
+                <span className="mt-0.5 shrink-0" style={{ color: "var(--ubasti-mustard)", fontSize: "0.9rem" }}>✦</span>{rule}
               </li>
             ))}
           </ul>

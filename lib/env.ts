@@ -15,19 +15,16 @@ const envSchema = z.object({
   SESSION_SECRET: z.string().min(32),
   SESSION_COOKIE_NAME: z.string().default("ubasti_session"),
 
-  // SMS
-  SMS_PROVIDER: z.enum(["msg91", "twilio", "dev"]).default("dev"),
-  MSG91_AUTH_KEY: z.string().optional(),
-  MSG91_SENDER_ID: z.string().optional(),
-  MSG91_TEMPLATE_ID_OTP: z.string().optional(),
-  MSG91_TEMPLATE_ID_BOOKING_CONFIRM: z.string().optional(),
-  MSG91_TEMPLATE_ID_BOOKING_CANCEL: z.string().optional(),
-  MSG91_TEMPLATE_ID_REMINDER: z.string().optional(),
-  MSG91_TEMPLATE_ID_EVENT_CONFIRM: z.string().optional(),
-  TWILIO_ACCOUNT_SID: z.string().optional(),
-  TWILIO_AUTH_TOKEN: z.string().optional(),
-  TWILIO_VERIFY_SID: z.string().optional(),
-  TWILIO_FROM_NUMBER: z.string().optional(),
+  // Messaging (WhatsApp Business API via Meta Cloud API)
+  SMS_PROVIDER: z.enum(["whatsapp", "dev"]).default("dev"),
+  WHATSAPP_PHONE_NUMBER_ID: z.string().optional(),
+  WHATSAPP_ACCESS_TOKEN: z.string().optional(),
+  WHATSAPP_WEBHOOK_VERIFY_TOKEN: z.string().optional(),
+  WHATSAPP_TEMPLATE_OTP: z.string().optional(),
+  WHATSAPP_TEMPLATE_BOOKING_CONFIRM: z.string().optional(),
+  WHATSAPP_TEMPLATE_BOOKING_CANCEL: z.string().optional(),
+  WHATSAPP_TEMPLATE_REMINDER: z.string().optional(),
+  WHATSAPP_TEMPLATE_EVENT_CONFIRM: z.string().optional(),
 
   // Rate limiting
   UPSTASH_REDIS_REST_URL: z.string().url().optional(),

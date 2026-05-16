@@ -8,6 +8,9 @@ import { TiptapRenderer } from "@/lib/cms/tiptap-render";
 import { formatInTimeZone } from "date-fns-tz";
 import { Suspense } from "react";
 import { RegisterButton } from "./RegisterButton";
+import { buildMetadata } from "@/lib/seo/metadata";
+
+export const revalidate = 3600;
 
 const TZ = "Asia/Kolkata";
 
@@ -16,11 +19,27 @@ interface Props { params: Promise<{ slug: string }> }
 export async function generateMetadata({ params }: Props) {
   const { slug } = await params;
   try {
-    const [row] = await db.select({ title: events.title, description: events.description })
-      .from(events).where(and(eq(events.slug, slug), eq(events.isPublished, true))).limit(1);
-    if (row) return { title: `${row.title} — Ubasti Events` };
+    const [row] = await db.select({
+      title: events.title,
+      description: events.description,
+      coverImageUrl: events.coverImageUrl,
+      startsAt: events.startsAt,
+      updatedAt: events.updatedAt,
+    }).from(events).where(and(eq(events.slug, slug), eq(events.isPublished, true))).limit(1);
+
+    if (row) {
+      return buildMetadata({
+        title: row.title,
+        description: row.description?.slice(0, 155) ?? "Join us at Ubasti Cat Cafe for this event in Chennai.",
+        path: `/events/${slug}`,
+        image: row.coverImageUrl ? { url: row.coverImageUrl, alt: row.title } : undefined,
+        type: "article",
+        publishedTime: new Date(row.startsAt).toISOString(),
+        modifiedTime: row.updatedAt?.toISOString(),
+      });
+    }
   } catch {}
-  return { title: "Event — Ubasti Cat Cafe" };
+  return buildMetadata({ title: "Event", description: "Ubasti Cat Cafe event.", path: `/events/${slug}` });
 }
 
 export default async function EventDetailPage({ params }: Props) {
@@ -47,18 +66,37 @@ export default async function EventDetailPage({ params }: Props) {
   const isFree = !event.priceInr || event.priceInr === 0;
   const isFull = !!event.capacity && regCount >= event.capacity;
 
+  const appUrl = process.env.NEXT_PUBLIC_APP_URL ?? "https://ubasticats.com";
   const jsonLd = {
     "@context": "https://schema.org",
     "@type":    "Event",
     name:       event.title,
     description: event.description ?? "",
-    startDate:  event.startsAt,
-    endDate:    event.endsAt,
-    location:   { "@type": "Place", name: event.location ?? "Ubasti Cat Cafe, Chennai" },
-    image:      event.coverImageUrl ?? "",
-    organizer:  { "@type": "Organization", name: "Ubasti Cat Cafe & Lounge" },
+    startDate:  new Date(event.startsAt).toISOString(),
+    endDate:    new Date(event.endsAt).toISOString(),
     eventStatus: "https://schema.org/EventScheduled",
     eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
+    location: {
+      "@type": "Place",
+      name: event.location ?? "Ubasti Cat Cafe & Lounge",
+      address: {
+        "@type": "PostalAddress",
+        addressLocality: "Chennai",
+        addressRegion: "Tamil Nadu",
+        addressCountry: "IN",
+      },
+    },
+    image: event.coverImageUrl ? [event.coverImageUrl] : [`${appUrl}/og/default.png`],
+    organizer: { "@id": `${appUrl}/#business` },
+    offers: event.priceInr
+      ? {
+          "@type": "Offer",
+          url: `${appUrl}/events/${slug}`,
+          price: event.priceInr,
+          priceCurrency: "INR",
+          availability: "https://schema.org/InStock",
+        }
+      : undefined,
   };
 
   return (

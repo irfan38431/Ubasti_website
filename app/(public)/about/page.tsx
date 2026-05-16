@@ -7,7 +7,13 @@ import { SectionTitle } from "@/components/ui/SectionTitle";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
 import { Badge } from "@/components/ui/Badge";
 
-export const metadata = { title: "About — Ubasti Cat Cafe" };
+import { buildMetadata } from "@/lib/seo/metadata";
+
+export const metadata = buildMetadata({
+  title: "About Ubasti — Our Story & Cats",
+  description: "Meet the team and the rescue cats behind Ubasti Cat Cafe in Chennai. Our mission, the lounge, and how each visit supports cat welfare.",
+  path: "/about",
+});
 
 const FAQ = [
   { q: "Do I need to book in advance?", a: "Yes — sessions are 60 minutes and slots fill up, especially on weekends. Book online at least a few hours ahead." },
@@ -42,9 +48,20 @@ export default async function AboutPage({ searchParams }: Props) {
     return <BlocksRenderer blocks={activeBlocks} />;
   }
 
+  const faqJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: FAQ.map(({ q, a }) => ({
+      "@type": "Question",
+      name: q,
+      acceptedAnswer: { "@type": "Answer", text: a },
+    })),
+  };
+
   // Static fallback
   return (
     <div style={{ background: "var(--ubasti-paper)" }}>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }} />
       <section className="py-24 md:py-32 relative overflow-hidden" style={{ background: "var(--ubasti-cream)" }}>
         <div className="absolute bottom-8 right-12 hidden md:block">
           <Badge variant="sip-cuddle-relax" size={120} rotate={15} />

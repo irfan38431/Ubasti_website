@@ -1,7 +1,6 @@
 import type { SmsProvider } from "./provider";
 import { DevProvider } from "./dev";
-import { Msg91Provider } from "./msg91";
-import { TwilioProvider } from "./twilio";
+import { WhatsAppProvider } from "./whatsapp";
 
 let _provider: SmsProvider | null = null;
 
@@ -10,10 +9,8 @@ export function getSmsProvider(): SmsProvider {
 
   const which = process.env.SMS_PROVIDER ?? "dev";
 
-  if (which === "msg91") {
-    _provider = new Msg91Provider();
-  } else if (which === "twilio") {
-    _provider = new TwilioProvider();
+  if (which === "whatsapp") {
+    _provider = new WhatsAppProvider();
   } else {
     _provider = new DevProvider();
   }

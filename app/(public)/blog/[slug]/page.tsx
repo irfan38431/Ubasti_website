@@ -5,6 +5,9 @@ import { db } from "@/lib/db/client";
 import { blogPosts } from "@/lib/db/schema";
 import { eq, and } from "drizzle-orm";
 import { TiptapRenderer } from "@/lib/cms/tiptap-render";
+import { buildMetadata } from "@/lib/seo/metadata";
+
+export const revalidate = 3600;
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -13,11 +16,27 @@ interface Props {
 export async function generateMetadata({ params }: Props) {
   const { slug } = await params;
   try {
-    const [post] = await db.select({ title: blogPosts.title, excerpt: blogPosts.excerpt })
-      .from(blogPosts).where(and(eq(blogPosts.slug, slug), eq(blogPosts.isPublished, true))).limit(1);
-    if (post) return { title: `${post.title} — Ubasti Blog` };
+    const [post] = await db.select({
+      title: blogPosts.title,
+      excerpt: blogPosts.excerpt,
+      coverImageUrl: blogPosts.coverImageUrl,
+      publishedAt: blogPosts.publishedAt,
+      updatedAt: blogPosts.updatedAt,
+    }).from(blogPosts).where(and(eq(blogPosts.slug, slug), eq(blogPosts.isPublished, true))).limit(1);
+
+    if (post) {
+      return buildMetadata({
+        title: post.title,
+        description: post.excerpt?.slice(0, 155) ?? "Read the latest from Ubasti Cat Cafe.",
+        path: `/blog/${slug}`,
+        image: post.coverImageUrl ? { url: post.coverImageUrl, alt: post.title } : undefined,
+        type: "article",
+        publishedTime: post.publishedAt?.toISOString(),
+        modifiedTime: post.updatedAt?.toISOString(),
+      });
+    }
   } catch {}
-  return { title: "Blog — Ubasti Cat Cafe" };
+  return buildMetadata({ title: "Blog", description: "Ubasti Cat Cafe blog.", path: `/blog/${slug}` });
 }
 
 export default async function BlogPostPage({ params }: Props) {
@@ -32,21 +51,17 @@ export default async function BlogPostPage({ params }: Props) {
 
   if (!post) notFound();
 
-  const appUrl = process.env.NEXT_PUBLIC_APP_URL ?? "https://ubasti.cafe";
+  const appUrl = process.env.NEXT_PUBLIC_APP_URL ?? "https://ubasticats.com";
   const blogPostJsonLd = {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
     headline: post.title,
     description: post.excerpt ?? "",
-    image: post.coverImageUrl ?? `${appUrl}/images/placeholders/blog-cover-1.svg`,
+    image: post.coverImageUrl ? [post.coverImageUrl] : [`${appUrl}/og/default.png`],
     datePublished: post.publishedAt?.toISOString() ?? post.updatedAt.toISOString(),
     dateModified: post.updatedAt.toISOString(),
     author: { "@type": "Organization", name: "Ubasti Cat Cafe & Lounge" },
-    publisher: {
-      "@type": "Organization",
-      name: "Ubasti Cat Cafe & Lounge",
-      logo: { "@type": "ImageObject", url: `${appUrl}/images/placeholders/Ubasti Symbol_Pink.jpg` },
-    },
+    publisher: { "@id": `${appUrl}/#business` },
     mainEntityOfPage: { "@type": "WebPage", "@id": `${appUrl}/blog/${slug}` },
   };
 

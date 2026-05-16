@@ -20,13 +20,24 @@ export const devTemplates: Record<SmsTemplateKey, string> = {
     "Hi {name}, you're registered for {event_title} on {datetime} at Ubasti. Details: {url}",
 };
 
-/** Returns the DLT template ID env var name for a given key. */
-export function templateEnvKey(key: SmsTemplateKey): string {
+/**
+ * Ordered variable keys for each WhatsApp template.
+ * Must match the {{1}}, {{2}}, … parameter positions in your approved Meta templates.
+ */
+export const whatsappTemplateParams: Record<SmsTemplateKey, string[]> = {
+  BOOKING_CONFIRM:  ["name", "datetime", "address", "url"],
+  BOOKING_CANCEL:   ["name", "datetime", "url"],
+  BOOKING_REMINDER: ["time"],
+  EVENT_CONFIRM:    ["name", "event_title", "datetime", "url"],
+};
+
+/** Returns the env var name holding the WhatsApp template name for a given key. */
+export function whatsappTemplateEnvKey(key: SmsTemplateKey): string {
   const map: Record<SmsTemplateKey, string> = {
-    BOOKING_CONFIRM:  "MSG91_TEMPLATE_ID_BOOKING_CONFIRM",
-    BOOKING_CANCEL:   "MSG91_TEMPLATE_ID_BOOKING_CANCEL",
-    BOOKING_REMINDER: "MSG91_TEMPLATE_ID_REMINDER",
-    EVENT_CONFIRM:    "MSG91_TEMPLATE_ID_EVENT_CONFIRM",
+    BOOKING_CONFIRM:  "WHATSAPP_TEMPLATE_BOOKING_CONFIRM",
+    BOOKING_CANCEL:   "WHATSAPP_TEMPLATE_BOOKING_CANCEL",
+    BOOKING_REMINDER: "WHATSAPP_TEMPLATE_REMINDER",
+    EVENT_CONFIRM:    "WHATSAPP_TEMPLATE_EVENT_CONFIRM",
   };
   return map[key];
 }

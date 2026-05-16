@@ -38,15 +38,24 @@ const jetbrains = JetBrains_Mono({
   display: "swap",
 });
 
+const APP_URL = process.env.NEXT_PUBLIC_APP_URL ?? "https://ubasticats.com";
+
 const localBusinessJsonLd = {
   "@context": "https://schema.org",
   "@type": "CafeOrCoffeeShop",
+  "@id": `${APP_URL}/#business`,
   name: "Ubasti Cat Cafe & Lounge",
   description: "Serene cat cafe & adoption lounge in Chennai. Sip coffee, cuddle cats, find your forever friend.",
-  url: process.env.NEXT_PUBLIC_APP_URL ?? "https://ubasti.cafe",
-  image: `${process.env.NEXT_PUBLIC_APP_URL ?? "https://ubasti.cafe"}/images/placeholders/Ubasti Logo_Green Pink.png`,
+  url: APP_URL,
+  image: {
+    "@type": "ImageObject",
+    url: `${APP_URL}/og/default.png`,
+    width: 1200,
+    height: 630,
+  },
   address: {
     "@type": "PostalAddress",
+    streetAddress: "Chennai",
     addressLocality: "Chennai",
     addressRegion: "Tamil Nadu",
     addressCountry: "IN",
@@ -55,18 +64,40 @@ const localBusinessJsonLd = {
   telephone: "+919445077270",
   priceRange: "₹",
   servesCuisine: "Coffee, Tea, Light Bites",
+  acceptsReservations: true,
+  paymentAccepted: "Cash, UPI, Credit Card",
+  currenciesAccepted: "INR",
   openingHoursSpecification: [
     { "@type": "OpeningHoursSpecification", dayOfWeek: ["Monday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"], opens: "11:00", closes: "19:00" },
   ],
-  sameAs: [],
+  sameAs: [
+    "https://www.instagram.com/ubasticatcafe?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==",
+  ],
+};
+
+const websiteJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "@id": `${APP_URL}/#website`,
+  url: APP_URL,
+  name: "Ubasti Cat Cafe & Lounge",
+  publisher: { "@id": `${APP_URL}/#business` },
 };
 
 export const metadata: Metadata = {
-  title: "Ubasti — Cat Cafe & Lounge | Chennai",
+  title: {
+    default: "Ubasti Cat Cafe & Lounge | Chennai",
+    template: "%s | Ubasti Cat Cafe & Lounge",
+  },
   description:
-    "Serene cat cafe & adoption lounge in Chennai. Sip coffee, cuddle cats, find your forever friend.",
-  metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL ?? "http://localhost:3000"),
-  openGraph: { locale: "en_IN" },
+    "Sip specialty coffee, cuddle resident rescue cats, and find your forever friend at Ubasti — Chennai's serene cat cafe & adoption lounge.",
+  metadataBase: new URL(APP_URL),
+  openGraph: {
+    locale: "en_IN",
+    siteName: "Ubasti Cat Cafe & Lounge",
+    images: [{ url: `${APP_URL}/og/default.png`, width: 1200, height: 630, alt: "Ubasti Cat Cafe & Lounge — Chennai" }],
+  },
+  twitter: { card: "summary_large_image" },
 };
 
 export default function RootLayout({
@@ -85,10 +116,8 @@ export default function RootLayout({
       ].join(" ")}
     >
       <body className="min-h-full flex flex-col">
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessJsonLd) }}
-        />
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessJsonLd) }} />
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }} />
         <a href="#main-content" className="skip-to-content">
           Skip to content
         </a>

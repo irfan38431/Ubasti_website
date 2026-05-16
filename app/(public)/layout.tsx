@@ -4,12 +4,14 @@ import { usePathname } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
+import { AdoptNowRibbon } from "@/components/public/AdoptNowRibbon";
 
 export default function PublicLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
 
   return (
     <>
+      <AdoptNowRibbon />
       {/* Floating nav icon — visible on all pages */}
       <Navbar />
 
