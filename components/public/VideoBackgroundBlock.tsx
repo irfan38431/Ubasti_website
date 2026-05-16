@@ -32,7 +32,7 @@ export function VideoBackgroundBlock() {
       {/* Overlay */}
       <div
         className="absolute inset-0"
-        style={{ background: "rgba(44,46,31,0.82)" }}
+        style={{ background: "rgba(44,46,31,0.95)" }}
         aria-hidden="true"
       />
 
