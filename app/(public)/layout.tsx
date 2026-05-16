@@ -10,7 +10,9 @@ export default function PublicLayout({ children }: { children: React.ReactNode }
 
   return (
     <>
+      {/* Floating nav icon — visible on all pages */}
       <Navbar />
+
       <AnimatePresence mode="wait" initial={false}>
         <motion.div
           key={pathname}
@@ -25,6 +27,7 @@ export default function PublicLayout({ children }: { children: React.ReactNode }
           </main>
         </motion.div>
       </AnimatePresence>
+
       <Footer />
     </>
   );

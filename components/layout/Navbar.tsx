@@ -1,93 +1,180 @@
 "use client";
 
+import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { User, LogOut, LayoutDashboard, ChevronDown } from "lucide-react";
+import Image from "next/image";
+import { X, User, LogOut, LayoutDashboard } from "lucide-react";
 import { useAuth } from "@/lib/contexts/auth";
-import { useState } from "react";
+import { useRouter } from "next/navigation";
+
+const NAV_LINKS = [
+  { href: "/",                label: "Home" },
+  { href: "/about",           label: "About" },
+  { href: "/kitties",         label: "Kitties" },
+  { href: "/events",          label: "Events" },
+  { href: "/private-parties", label: "Private Parties" },
+  { href: "/blog",            label: "Blog" },
+  { href: "/book",            label: "Book" },
+  { href: "/waiver",          label: "Waiver" },
+];
 
 export function Navbar() {
-  const router = useRouter();
+  const [open, setOpen] = useState(false);
   const { user, isAdmin, refetch } = useAuth();
-  const [userMenuOpen, setUserMenuOpen] = useState(false);
+  const router = useRouter();
+  const drawerRef = useRef<HTMLDivElement>(null);
+
+  // Trap focus inside drawer when open
+  useEffect(() => {
+    if (!open) return;
+    const el = drawerRef.current;
+    if (!el) return;
+    const focusable = el.querySelectorAll<HTMLElement>(
+      'a, button, [tabindex]:not([tabindex="-1"])'
+    );
+    focusable[0]?.focus();
+    function handleKey(e: KeyboardEvent) {
+      if (e.key === "Escape") setOpen(false);
+      if (e.key !== "Tab" || focusable.length === 0) return;
+      const first = focusable[0];
+      const last  = focusable[focusable.length - 1];
+      if (e.shiftKey ? document.activeElement === first : document.activeElement === last) {
+        e.preventDefault();
+        (e.shiftKey ? last : first).focus();
+      }
+    }
+    document.addEventListener("keydown", handleKey);
+    return () => document.removeEventListener("keydown", handleKey);
+  }, [open]);
+
+  // Prevent body scroll when drawer is open
+  useEffect(() => {
+    document.body.style.overflow = open ? "hidden" : "";
+    return () => { document.body.style.overflow = ""; };
+  }, [open]);
 
   async function handleLogout() {
     await fetch("/api/auth/logout", { method: "POST" });
     refetch();
-    setUserMenuOpen(false);
+    setOpen(false);
     router.push("/");
   }
 
   return (
-    <header className="sticky top-0 z-40 h-[72px] flex items-center" style={{ background: "var(--ubasti-paper)" }}>
-      {/* Skip to content */}
+    <>
+      {/* Skip to content — first focusable element */}
       <a
         href="#main-content"
-        className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:rounded-lg focus:text-sm"
+        className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-20 focus:z-[100] focus:px-4 focus:py-2 focus:rounded-lg focus:text-sm"
         style={{ background: "var(--ubasti-blush)", color: "var(--ubasti-ink)" }}
       >
         Skip to content
       </a>
 
-      <div className="max-w-[1280px] mx-auto w-full px-6 md:px-12 lg:px-16 flex items-center justify-center relative">
-        {/* Centered logo */}
-        <Link href="/" aria-label="Ubasti — home">
-          <span
-            className="text-xl tracking-widest uppercase"
-            style={{ fontFamily: "var(--font-cinzel)", color: "var(--ubasti-olive-dark)" }}
+      {/* Floating cat-icon button */}
+      <button
+        onClick={() => setOpen(true)}
+        className="fixed top-4 left-4 z-50 w-14 h-14 rounded-full shadow-lg transition-transform hover:scale-105 active:scale-95 focus-visible:outline-2"
+        aria-label="Open navigation menu"
+        aria-expanded={open}
+        aria-haspopup="dialog"
+        style={{ background: "var(--ubasti-ink)" }}
+      >
+        <Image
+          src="/images/decorative/cat-disco.svg"
+          alt=""
+          fill
+          className="object-contain rounded-full"
+          aria-hidden="true"
+        />
+      </button>
+
+      {/* Backdrop */}
+      {open && (
+        <div
+          className="fixed inset-0 z-50 bg-black/40 backdrop-blur-sm"
+          onClick={() => setOpen(false)}
+          aria-hidden="true"
+        />
+      )}
+
+      {/* Drawer */}
+      <div
+        ref={drawerRef}
+        role="dialog"
+        aria-modal="true"
+        aria-label="Navigation"
+        className="fixed top-0 left-0 h-full z-[60] flex flex-col transition-transform duration-300"
+        style={{
+          width: "min(320px, 85vw)",
+          background: "var(--ubasti-ink)",
+          transform: open ? "translateX(0)" : "translateX(-100%)",
+        }}
+      >
+        {/* Drawer header */}
+        <div className="flex items-center justify-between px-6 py-5">
+          <Link
+            href="/"
+            onClick={() => setOpen(false)}
+            className="text-lg tracking-widest uppercase"
+            style={{ fontFamily: "var(--font-cinzel)", color: "var(--ubasti-cream)" }}
           >
             Ubasti
-          </span>
-        </Link>
+          </Link>
+          <button
+            onClick={() => setOpen(false)}
+            className="p-2 rounded-lg transition-colors hover:bg-white/10"
+            aria-label="Close navigation"
+          >
+            <X size={20} style={{ color: "var(--ubasti-cream)" }} />
+          </button>
+        </div>
 
-        {/* Auth user menu — positioned absolutely so logo stays centered */}
-        {user && (
-          <div className="absolute right-6 md:right-12 lg:right-16">
-            <button
-              onClick={() => setUserMenuOpen((v) => !v)}
-              className="flex items-center gap-2 px-3 py-1.5 rounded-full transition-colors hover:bg-[var(--ubasti-cream)]"
-              aria-expanded={userMenuOpen}
-              aria-haspopup="true"
+        <hr style={{ borderColor: "rgba(242,224,205,0.15)" }} />
+
+        {/* Nav links */}
+        <nav className="flex-1 overflow-y-auto px-4 py-6 flex flex-col gap-1">
+          {NAV_LINKS.map(({ href, label }) => (
+            <Link
+              key={href}
+              href={href}
+              onClick={() => setOpen(false)}
+              className="px-4 py-3 rounded-xl text-base font-medium transition-colors hover:bg-white/10"
+              style={{ color: "var(--ubasti-cream)", fontFamily: "var(--font-cormorant)", fontSize: "1.15rem" }}
             >
-              <span
-                className="w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold"
-                style={{ background: "var(--ubasti-sage)", color: "var(--ubasti-cream)" }}
-              >
-                {(user.displayName ?? "?")[0].toUpperCase()}
-              </span>
-              <ChevronDown size={14} style={{ color: "var(--ubasti-sage)" }} />
-            </button>
+              {label}
+            </Link>
+          ))}
+        </nav>
 
-            {userMenuOpen && (
-              <div
-                className="absolute right-0 mt-2 w-48 rounded-xl shadow-lg py-1 z-50"
-                style={{ background: "var(--ubasti-white)", border: "1px solid var(--ubasti-blush-light)" }}
-              >
-                <Link href="/account" onClick={() => setUserMenuOpen(false)}
-                  className="flex items-center gap-2 px-4 py-2 text-sm hover:bg-[var(--ubasti-cream)]"
-                  style={{ color: "var(--ubasti-ink)" }}>
-                  <User size={14} /> My Account
+        {/* User section */}
+        {user && (
+          <>
+            <hr style={{ borderColor: "rgba(242,224,205,0.15)" }} />
+            <div className="px-4 py-4 flex flex-col gap-1">
+              <Link href="/account" onClick={() => setOpen(false)}
+                className="flex items-center gap-3 px-4 py-3 rounded-xl transition-colors hover:bg-white/10"
+                style={{ color: "var(--ubasti-cream)", fontSize: "0.9rem" }}>
+                <User size={16} /> My Account
+              </Link>
+              {isAdmin && (
+                <Link href="/admin" onClick={() => setOpen(false)}
+                  className="flex items-center gap-3 px-4 py-3 rounded-xl transition-colors hover:bg-white/10"
+                  style={{ color: "var(--ubasti-cream)", fontSize: "0.9rem" }}>
+                  <LayoutDashboard size={16} /> Admin
                 </Link>
-                {isAdmin && (
-                  <Link href="/admin" onClick={() => setUserMenuOpen(false)}
-                    className="flex items-center gap-2 px-4 py-2 text-sm hover:bg-[var(--ubasti-cream)]"
-                    style={{ color: "var(--ubasti-ink)" }}>
-                    <LayoutDashboard size={14} /> Admin
-                  </Link>
-                )}
-                <hr style={{ borderColor: "var(--ubasti-blush-light)" }} className="my-1" />
-                <button
-                  onClick={handleLogout}
-                  className="flex items-center gap-2 w-full px-4 py-2 text-sm hover:bg-[var(--ubasti-cream)]"
-                  style={{ color: "var(--ubasti-danger)" }}
-                >
-                  <LogOut size={14} /> Logout
-                </button>
-              </div>
-            )}
-          </div>
+              )}
+              <button
+                onClick={handleLogout}
+                className="flex items-center gap-3 w-full px-4 py-3 rounded-xl transition-colors hover:bg-white/10"
+                style={{ color: "var(--ubasti-danger)", fontSize: "0.9rem" }}
+              >
+                <LogOut size={16} /> Logout
+              </button>
+            </div>
+          </>
         )}
       </div>
-    </header>
+    </>
   );
 }

@@ -1,12 +1,12 @@
-import Image from "next/image";
 import Link from "next/link";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
+import { ArchImage } from "@/components/decorative/ArchImage";
 
 export function BookingCta() {
   return (
     <section
-      className="py-20 md:py-28 overflow-hidden"
-      style={{ background: "var(--ubasti-blush-light)" }}
+      className="py-20 md:py-28"
+      style={{ background: "var(--ubasti-paper)" }}
     >
       <div className="max-w-[1280px] mx-auto px-6 md:px-12 lg:px-16">
         <ScrollReveal>
@@ -18,24 +18,12 @@ export function BookingCta() {
               Book your snuggle time now
             </h2>
 
-            {/* Brand wordmark */}
-            <div className="relative w-full max-w-[560px] h-28 md:h-36">
-              <Image
-                src="/images/decorative/ubasti-lounge-wordmark.svg"
-                alt="Ubasti Cat Cafe & Lounge"
-                fill
-                className="object-contain"
-              />
-            </div>
-
-            {/* Feature photo */}
-            <div className="relative w-full max-w-[600px] rounded-2xl overflow-hidden aspect-video">
-              <Image
-                src="/images/placeholders/offering-community.svg"
-                alt="Relaxing at Ubasti"
-                fill
-                className="object-cover"
-                sizes="(max-width: 600px) 100vw, 600px"
+            {/* Arch-framed photograph */}
+            <div className="relative w-full max-w-[400px]" style={{ aspectRatio: "3/4", maxHeight: "480px" }}>
+              <ArchImage
+                src="/images/placeholders/offering-coffee.svg"
+                alt="A cozy session at Ubasti"
+                className="w-full h-full"
               />
             </div>
 

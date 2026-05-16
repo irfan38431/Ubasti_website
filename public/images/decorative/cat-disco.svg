@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" fill="none">
+  <!-- TODO: replace with final disco-cat illustration -->
+  <!-- Background circle -->
+  <circle cx="100" cy="100" r="95" fill="#2B2E1F" />
+  <!-- Cat face -->
+  <circle cx="100" cy="108" r="52" stroke="#F2E0CD" stroke-width="2.5" />
+  <!-- Ears -->
+  <polygon points="65,68 52,38 84,62" fill="#2B2E1F" stroke="#F2E0CD" stroke-width="2" stroke-linejoin="round" />
+  <polygon points="135,68 148,38 116,62" fill="#2B2E1F" stroke="#F2E0CD" stroke-width="2" stroke-linejoin="round" />
+  <polygon points="68,66 58,46 82,63" fill="#E8B8AE" stroke="none" />
+  <polygon points="132,66 142,46 118,63" fill="#E8B8AE" stroke="none" />
+  <!-- Eyes - disco sparkle style -->
+  <circle cx="84" cy="100" r="10" stroke="#F2E0CD" stroke-width="2" />
+  <circle cx="116" cy="100" r="10" stroke="#F2E0CD" stroke-width="2" />
+  <circle cx="87" cy="100" r="4.5" fill="#F2E0CD" />
+  <circle cx="119" cy="100" r="4.5" fill="#F2E0CD" />
+  <!-- Star sparkle on left eye -->
+  <path d="M84 88 L85.5 94 L92 96 L85.5 98 L84 104" stroke="#B5A140" stroke-width="1.5" />
+  <!-- Nose -->
+  <circle cx="100" cy="114" r="4" fill="#E8B8AE" />
+  <path d="M96 117 Q100 122 104 117" stroke="#F2E0CD" stroke-width="1.5" />
+  <!-- Whiskers -->
+  <line x1="48" y1="110" x2="88" y2="114" stroke="#F2E0CD" stroke-width="1.2" opacity="0.7" />
+  <line x1="46" y1="118" x2="87" y2="117" stroke="#F2E0CD" stroke-width="1.2" opacity="0.7" />
+  <line x1="112" y1="114" x2="152" y2="110" stroke="#F2E0CD" stroke-width="1.2" opacity="0.7" />
+  <line x1="113" y1="117" x2="154" y2="118" stroke="#F2E0CD" stroke-width="1.2" opacity="0.7" />
+  <!-- Disco sparkles around -->
+  <path d="M32 50 L34 42 L36 50 L44 52 L36 54 L34 62 L32 54 L24 52 Z" fill="#B5A140" />
+  <path d="M158 140 L160 134 L162 140 L168 142 L162 144 L160 150 L158 144 L152 142 Z" fill="#B5A140" />
+  <path d="M160 42 L161.5 37 L163 42 L168 43.5 L163 45 L161.5 50 L160 45 L155 43.5 Z" fill="#E8B8AE" />
+</svg>

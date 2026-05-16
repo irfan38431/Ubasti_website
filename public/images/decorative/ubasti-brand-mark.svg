@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" fill="none">
+  <!-- TODO: replace with final brand mark artwork -->
+  <!-- Outer circle -->
+  <circle cx="200" cy="200" r="185" stroke="#2B2E1F" stroke-width="2.5" />
+  <!-- Inner circle -->
+  <circle cx="200" cy="200" r="165" stroke="#2B2E1F" stroke-width="1" opacity="0.4" />
+  <!-- Stylized U for Ubasti -->
+  <path d="M140 130 L140 210 Q140 265 200 265 Q260 265 260 210 L260 130" stroke="#2B2E1F" stroke-width="8" stroke-linecap="round" />
+  <!-- Cat ears on the U -->
+  <polygon points="140,138 122,95 165,130" fill="#2B2E1F" />
+  <polygon points="260,138 278,95 235,130" fill="#2B2E1F" />
+  <!-- Ubasti text arc at bottom -->
+  <text
+    font-family="Georgia, serif"
+    font-size="22"
+    font-weight="600"
+    letter-spacing="6"
+    fill="#2B2E1F"
+    text-anchor="middle"
+  >
+    <textPath href="#circle-path" startOffset="50%">UBASTI · CHENNAI ·</textPath>
+  </text>
+  <defs>
+    <path id="circle-path" d="M 200,200 m -150,0 a 150,150 0 1,1 300,0 a 150,150 0 1,1 -300,0" />
+  </defs>
+  <!-- Small dots -->
+  <circle cx="200" cy="50" r="4" fill="#B5A140" />
+  <circle cx="200" cy="350" r="4" fill="#B5A140" />
+</svg>
