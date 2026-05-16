@@ -3,38 +3,28 @@ import { ScrollReveal } from "@/components/ui/ScrollReveal";
 export function Ideology() {
   return (
     <section
-      className="py-24 md:py-32"
+      className="py-16 md:py-20"
       style={{ background: "var(--ubasti-paper)" }}
     >
       <div className="max-w-[1280px] mx-auto px-6 md:px-12 lg:px-16">
         <ScrollReveal>
-          <div className="max-w-3xl mx-auto text-center flex flex-col gap-8">
+          <div className="max-w-[65ch] mx-auto text-center flex flex-col gap-5">
             <p
-              className="text-sm font-bold uppercase tracking-widest"
-              style={{ color: "var(--ubasti-mustard)" }}
-            >
-              Our Ideology
-            </p>
-            <h2
-              className="text-4xl md:text-6xl leading-tight"
-              style={{ fontFamily: "var(--font-cormorant)", color: "var(--ubasti-ink)", fontWeight: 600 }}
-            >
-              Inspired by Bastet,<br />
-              goddess of home, cats & calm.
-            </h2>
-            <p
-              className="text-xl leading-relaxed"
-              style={{ fontFamily: "var(--font-caveat)", color: "var(--ubasti-sage)", fontSize: "1.3rem" }}
-            >
-              &ldquo;the world could use more slow mornings, warm cups, and cats on laps&rdquo;
-            </p>
-            <p
-              className="text-base leading-relaxed mx-auto max-w-xl"
-              style={{ color: "var(--ubasti-sage)" }}
+              className="text-lg md:text-xl leading-relaxed"
+              style={{ color: "var(--ubasti-sage)", fontFamily: "var(--font-cormorant)", fontSize: "1.25rem" }}
             >
               Ubasti is a cat cafe and adoption lounge in Chennai. We believe every cat
               deserves a forever home, and every person deserves a few minutes of purring.
               Come for the coffee. Stay for the cats. Leave with a friend.
+            </p>
+            <p
+              className="text-lg md:text-xl leading-relaxed"
+              style={{ color: "var(--ubasti-sage)", fontFamily: "var(--font-cormorant)", fontSize: "1.25rem" }}
+            >
+              Whether you&apos;re looking for a quiet escape from the city or want to unwind
+              in the company of playful felines, Ubasti is a space made for cat lovers of
+              every kind. Come for the coffee, stay for the cats, leave with a smile (and
+              maybe a kitty)!
             </p>
           </div>
         </ScrollReveal>

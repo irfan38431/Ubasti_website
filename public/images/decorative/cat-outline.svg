@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" fill="none" stroke="#2C2E1F" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+  <!-- TODO: replace with final illustration -->
+  <!-- Sitting cat silhouette outline -->
+  <!-- Body -->
+  <ellipse cx="200" cy="275" rx="75" ry="85" />
+  <!-- Head -->
+  <circle cx="200" cy="158" r="62" />
+  <!-- Ears -->
+  <polygon points="150,112 136,65 178,105" />
+  <polygon points="250,112 264,65 222,105" />
+  <polygon points="154,108 144,78 174,104" stroke-width="1.5" />
+  <polygon points="246,108 256,78 226,104" stroke-width="1.5" />
+  <!-- Closed/content eyes -->
+  <path d="M168 150 Q178 143 188 150" stroke-width="2" />
+  <path d="M212 150 Q222 143 232 150" stroke-width="2" />
+  <!-- Nose -->
+  <circle cx="200" cy="168" r="4" fill="#2C2E1F" stroke="none" />
+  <path d="M196 170 Q200 175 204 170" />
+  <!-- Mouth -->
+  <path d="M184 178 Q200 190 216 178" />
+  <!-- Whiskers -->
+  <line x1="138" y1="162" x2="188" y2="168" />
+  <line x1="134" y1="172" x2="186" y2="172" />
+  <line x1="138" y1="182" x2="188" y2="176" />
+  <line x1="212" y1="168" x2="262" y2="162" />
+  <line x1="214" y1="172" x2="266" y2="172" />
+  <line x1="212" y1="176" x2="262" y2="182" />
+  <!-- Tail curled around -->
+  <path d="M275 340 Q340 300 338 248 Q336 200 295 212 Q275 218 278 248" />
+  <!-- Paws tucked -->
+  <ellipse cx="172" cy="342" rx="25" ry="10" />
+  <ellipse cx="228" cy="342" rx="25" ry="10" />
+</svg>

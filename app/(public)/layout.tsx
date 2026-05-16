@@ -1,20 +1,16 @@
 "use client";
 
-import { useState } from "react";
 import { usePathname } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
-import { Navbar }     from "@/components/layout/Navbar";
-import { MobileMenu } from "@/components/layout/MobileMenu";
-import { Footer }     from "@/components/layout/Footer";
+import { Navbar } from "@/components/layout/Navbar";
+import { Footer } from "@/components/layout/Footer";
 
 export default function PublicLayout({ children }: { children: React.ReactNode }) {
-  const [menuOpen, setMenuOpen] = useState(false);
   const pathname = usePathname();
 
   return (
     <>
-      <Navbar onMenuOpen={() => setMenuOpen(true)} />
-      <MobileMenu open={menuOpen} onClose={() => setMenuOpen(false)} />
+      <Navbar />
       <AnimatePresence mode="wait" initial={false}>
         <motion.div
           key={pathname}
@@ -24,7 +20,9 @@ export default function PublicLayout({ children }: { children: React.ReactNode }
           exit={{ opacity: 0, y: -8 }}
           transition={{ duration: 0.2, ease: "easeOut" }}
         >
-          {children}
+          <main id="main-content">
+            {children}
+          </main>
         </motion.div>
       </AnimatePresence>
       <Footer />

@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" fill="none" stroke="#2C2E1F" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+  <!-- TODO: replace with final illustration -->
+  <!-- Curious/alert cat looking up -->
+  <!-- Body crouching -->
+  <ellipse cx="195" cy="300" rx="85" ry="65" />
+  <!-- Head tilted -->
+  <circle cx="210" cy="185" r="60" />
+  <!-- Ears alert/pointed -->
+  <polygon points="165,142 152,92 195,138" />
+  <polygon points="255,138 270,90 235,140" />
+  <polygon points="168,139 158,104 190,136" stroke-width="1.5" />
+  <polygon points="252,136 264,104 242,138" stroke-width="1.5" />
+  <!-- Wide alert eyes -->
+  <circle cx="192" cy="180" r="15" />
+  <circle cx="228" cy="180" r="15" />
+  <circle cx="196" cy="181" r="7" fill="#2C2E1F" stroke="none" />
+  <circle cx="232" cy="181" r="7" fill="#2C2E1F" stroke="none" />
+  <!-- Shine dots -->
+  <circle cx="190" cy="176" r="2.5" fill="white" stroke="none" />
+  <circle cx="226" cy="176" r="2.5" fill="white" stroke="none" />
+  <!-- Nose -->
+  <circle cx="210" cy="198" r="4.5" fill="#2C2E1F" stroke="none" />
+  <path d="M206 201 Q210 207 214 201" />
+  <!-- Mouth pspsps -->
+  <path d="M196 210 Q210 218 224 210" />
+  <!-- Whiskers -->
+  <line x1="148" y1="192" x2="196" y2="196" />
+  <line x1="144" y1="202" x2="194" y2="200" />
+  <line x1="226" y1="196" x2="274" y2="192" />
+  <line x1="226" y1="200" x2="276" y2="202" />
+  <!-- Tail up -->
+  <path d="M280 340 Q320 280 308 220 Q298 172 268 180" />
+  <!-- Paws forward -->
+  <ellipse cx="162" cy="348" rx="28" ry="12" />
+  <ellipse cx="228" cy="348" rx="28" ry="12" />
+  <!-- "pspsps" text effect - small sound lines -->
+  <path d="M270 160 Q280 152 288 160" stroke-width="1.5" stroke-dasharray="3,3" />
+  <path d="M278 148 Q290 138 300 148" stroke-width="1.5" stroke-dasharray="3,3" />
+  <path d="M286 136 Q300 124 312 136" stroke-width="1.5" stroke-dasharray="3,3" />
+</svg>

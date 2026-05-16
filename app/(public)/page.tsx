@@ -2,12 +2,13 @@ import { headers } from "next/headers";
 import { fetchPage } from "@/lib/cms/page-renderer";
 import { BlocksRenderer } from "@/lib/cms/blocks-renderer";
 import { PageEditorClient } from "@/components/admin/PageEditorClient";
-import { Hero }              from "@/components/public/Hero";
-import { Ideology }          from "@/components/public/Ideology";
-import { OfferingsTriptych } from "@/components/public/OfferingsTriptych";
-import { BookingCta }        from "@/components/public/BookingCta";
-import { KittyTeaser }       from "@/components/public/KittyTeaser";
-import { ContactForm }       from "@/components/public/ContactForm";
+import { Hero }               from "@/components/public/Hero";
+import { Ideology }           from "@/components/public/Ideology";
+import { WelcomeFurriends }   from "@/components/public/WelcomeFurriends";
+import { OfferingsTriptych }  from "@/components/public/OfferingsTriptych";
+import { BookingCta }         from "@/components/public/BookingCta";
+import { ContactForm }        from "@/components/public/ContactForm";
+import { FeaturePhoto }       from "@/components/public/FeaturePhoto";
 
 export const metadata = {
   title: "Ubasti — Cat Cafe & Lounge | Chennai",
@@ -37,15 +38,16 @@ export default async function HomePage({ searchParams }: Props) {
     return <BlocksRenderer blocks={activeBlocks} />;
   }
 
-  // Static fallback when DB has no blocks yet (dev without seed)
+  // Static fallback when DB has no blocks yet
   return (
     <>
       <Hero />
       <Ideology />
+      <WelcomeFurriends />
       <OfferingsTriptych />
       <BookingCta />
-      <KittyTeaser />
       <ContactForm />
+      <FeaturePhoto />
     </>
   );
 }

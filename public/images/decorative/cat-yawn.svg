@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" fill="none" stroke="#2C2E1F" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+  <!-- TODO: replace with final illustration -->
+  <!-- Body -->
+  <ellipse cx="200" cy="270" rx="80" ry="90" />
+  <!-- Head -->
+  <circle cx="200" cy="155" r="65" />
+  <!-- Ears -->
+  <polygon points="148,105 132,60 175,98" />
+  <polygon points="252,105 268,60 225,98" />
+  <!-- Inner ears -->
+  <polygon points="152,102 140,72 172,98" stroke="#2C2E1F" stroke-width="1.5" />
+  <polygon points="248,102 260,72 228,98" stroke="#2C2E1F" stroke-width="1.5" />
+  <!-- Eyes (wide open, yawning) -->
+  <circle cx="178" cy="148" r="14" />
+  <circle cx="222" cy="148" r="14" />
+  <circle cx="182" cy="148" r="6" fill="#2C2E1F" stroke="none" />
+  <circle cx="226" cy="148" r="6" fill="#2C2E1F" stroke="none" />
+  <!-- Nose -->
+  <path d="M195 168 Q200 173 205 168" />
+  <circle cx="200" cy="166" r="4" fill="#2C2E1F" stroke="none" />
+  <!-- Yawning mouth -->
+  <path d="M178 182 Q200 210 222 182" stroke-width="2.5" />
+  <!-- Tongue -->
+  <path d="M188 194 Q200 208 212 194" />
+  <!-- Whiskers -->
+  <line x1="135" y1="162" x2="185" y2="168" />
+  <line x1="130" y1="172" x2="183" y2="172" />
+  <line x1="135" y1="182" x2="185" y2="176" />
+  <line x1="215" y1="168" x2="265" y2="162" />
+  <line x1="217" y1="172" x2="270" y2="172" />
+  <line x1="215" y1="176" x2="265" y2="182" />
+  <!-- Tail -->
+  <path d="M280 320 Q340 290 330 240 Q320 200 290 220" />
+  <!-- Paws -->
+  <ellipse cx="165" cy="340" rx="22" ry="12" />
+  <ellipse cx="235" cy="340" rx="22" ry="12" />
+  <!-- Paw toes -->
+  <path d="M150 334 Q155 326 162 334" stroke-width="1.5" />
+  <path d="M162 332 Q167 324 174 332" stroke-width="1.5" />
+  <path d="M174 334 Q179 326 186 334" stroke-width="1.5" />
+  <path d="M220 334 Q225 326 232 334" stroke-width="1.5" />
+  <path d="M232 332 Q237 324 244 332" stroke-width="1.5" />
+  <path d="M244 334 Q249 326 256 334" stroke-width="1.5" />
+</svg>

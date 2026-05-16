@@ -32,30 +32,43 @@ export function ContactForm() {
 
   return (
     <section
-      className="py-24 md:py-32"
-      style={{ background: "var(--ubasti-blush-light)" }}
+      className="py-16 md:py-24"
+      style={{ background: "var(--ubasti-cream)" }}
     >
       <div className="max-w-[1280px] mx-auto px-6 md:px-12 lg:px-16">
         <ScrollReveal>
-          <div className="max-w-xl mx-auto">
-            <p className="text-sm font-bold uppercase tracking-widest text-center mb-3"
-              style={{ color: "var(--ubasti-mustard)" }}>
-              Say Hello
-            </p>
+          <div className="max-w-xl mx-auto flex flex-col gap-6">
             <h2
-              className="text-4xl md:text-5xl text-center mb-10"
+              className="text-4xl md:text-5xl text-center"
               style={{ fontFamily: "var(--font-cormorant)", color: "var(--ubasti-ink)", fontWeight: 600 }}
             >
-              Get in Touch
+              Connect with US
             </h2>
 
+            {/* Instagram handle */}
+            <a
+              href="https://instagram.com/ubasti.cafe"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-center block transition-opacity hover:opacity-70"
+              style={{
+                fontFamily: "var(--font-caveat)",
+                fontSize: "2rem",
+                fontStyle: "italic",
+                color: "var(--ubasti-olive-dark)",
+                letterSpacing: "0.02em",
+              }}
+            >
+              @ubasti.cafe
+            </a>
+
             {done ? (
-              <div className="rounded-2xl p-8 text-center" style={{ background: "var(--ubasti-white)" }}>
+              <div className="rounded-2xl p-8 text-center mt-2" style={{ background: "var(--ubasti-white)" }}>
                 <p className="text-2xl mb-2" style={{ fontFamily: "var(--font-cormorant)", color: "var(--ubasti-olive-dark)", fontWeight: 600 }}>
                   Thanks, we&apos;ll be in touch!
                 </p>
                 <p className="text-sm" style={{ color: "var(--ubasti-sage)" }}>
-                  Expect a reply within 24 hours. 🐱
+                  Expect a reply within 24 hours.
                 </p>
               </div>
             ) : (

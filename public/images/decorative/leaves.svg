@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" fill="none" stroke="#2C2E1F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <!-- Leaf cluster - 3 large leaves -->
+  <!-- Leaf 1 - main center -->
+  <path d="M200 340 C200 300 240 240 280 200 C240 220 200 260 200 340 Z" />
+  <line x1="200" y1="340" x2="268" y2="212" stroke-width="1.5" />
+  <!-- Veins leaf 1 -->
+  <path d="M215 310 C230 295 248 280 258 268" stroke-width="1" />
+  <path d="M228 285 C240 272 252 260 260 250" stroke-width="1" />
+  <!-- Leaf 2 - left -->
+  <path d="M190 330 C185 290 155 238 120 205 C155 222 190 275 190 330 Z" />
+  <line x1="190" y1="330" x2="128" y2="218" stroke-width="1.5" />
+  <!-- Leaf 3 - upper right -->
+  <path d="M240 280 C250 245 280 195 310 165 C278 182 242 235 240 280 Z" />
+  <line x1="240" y1="280" x2="308" y2="175" stroke-width="1.5" />
+  <!-- Small accent leaf -->
+  <path d="M160 260 C158 240 145 220 132 208 C146 218 160 242 160 260 Z" />
+  <line x1="160" y1="260" x2="136" y2="214" stroke-width="1" />
+  <!-- Stem -->
+  <path d="M200 350 Q198 370 195 390" stroke-width="2.5" />
+</svg>

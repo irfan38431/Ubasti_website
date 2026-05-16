@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 400" fill="none">
+  <!-- TODO: replace with final brand wordmark artwork -->
+  <!-- Ubasti wordmark -->
+  <text
+    x="400"
+    y="190"
+    text-anchor="middle"
+    font-family="Georgia, serif"
+    font-size="120"
+    font-weight="700"
+    letter-spacing="24"
+    fill="#2C2E1F"
+    opacity="0.85"
+  >UBASTI</text>
+  <!-- Decorative divider line -->
+  <line x1="120" y1="220" x2="680" y2="220" stroke="#2C2E1F" stroke-width="1.5" opacity="0.4" />
+  <!-- Subtitle -->
+  <text
+    x="400"
+    y="260"
+    text-anchor="middle"
+    font-family="Georgia, serif"
+    font-size="22"
+    letter-spacing="8"
+    fill="#2C2E1F"
+    opacity="0.65"
+  >CAT CAFE &amp; LOUNGE</text>
+  <!-- Small paw print decorations -->
+  <circle cx="100" cy="200" r="8" fill="#2C2E1F" opacity="0.25" />
+  <circle cx="700" cy="200" r="8" fill="#2C2E1F" opacity="0.25" />
+</svg>

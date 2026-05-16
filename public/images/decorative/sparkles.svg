@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" fill="none" stroke="#2C2E1F" stroke-width="2" stroke-linecap="round">
+  <!-- Large 4-point star -->
+  <path d="M200 80 L210 170 L300 180 L210 190 L200 280 L190 190 L100 180 L190 170 Z" />
+  <!-- Medium star top-right -->
+  <path d="M310 80 L316 120 L356 126 L316 132 L310 172 L304 132 L264 126 L304 120 Z" />
+  <!-- Small star bottom-left -->
+  <path d="M90 270 L94 298 L122 302 L94 306 L90 334 L86 306 L58 302 L86 298 Z" />
+  <!-- Tiny dots -->
+  <circle cx="148" cy="100" r="5" fill="#2C2E1F" stroke="none" />
+  <circle cx="320" cy="280" r="4" fill="#2C2E1F" stroke="none" />
+  <circle cx="80" cy="160" r="3" fill="#2C2E1F" stroke="none" />
+  <circle cx="350" cy="200" r="3" fill="#2C2E1F" stroke="none" />
+  <circle cx="240" cy="320" r="4" fill="#2C2E1F" stroke="none" />
+  <!-- Small 4-point star -->
+  <path d="M340 310 L344 334 L368 338 L344 342 L340 366 L336 342 L312 338 L336 334 Z" stroke-width="1.5" />
+</svg>
