@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800">
+  <rect width="1200" height="800" fill="#5C6A3A"/>
+  <text x="600" y="394.4" font-family="monospace" font-size="20" font-weight="bold" fill="#F2E0CD" text-anchor="middle">EVENT</text>
+  <text x="600" y="422.4" font-family="monospace" font-size="20" font-weight="bold" fill="#F2E0CD" text-anchor="middle">COVER 1</text>
+  <text x="600" y="784" font-family="monospace" font-size="13" fill="#F2E0CD" opacity="0.6" text-anchor="middle">1200×800</text>
+</svg>
