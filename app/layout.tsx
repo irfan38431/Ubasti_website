@@ -44,7 +44,7 @@ const localBusinessJsonLd = {
   name: "Ubasti Cat Cafe & Lounge",
   description: "Serene cat cafe & adoption lounge in Chennai. Sip coffee, cuddle cats, find your forever friend.",
   url: process.env.NEXT_PUBLIC_APP_URL ?? "https://ubasti.cafe",
-  image: `${process.env.NEXT_PUBLIC_APP_URL ?? "https://ubasti.cafe"}/images/placeholders/Ubasti Logo_Pink.jpg`,
+  image: `${process.env.NEXT_PUBLIC_APP_URL ?? "https://ubasti.cafe"}/images/placeholders/Ubasti Logo_Green Pink.png`,
   address: {
     "@type": "PostalAddress",
     addressLocality: "Chennai",

@@ -52,12 +52,11 @@ export function Hero() {
             style={{ width: 280, height: 140 }}
           >
             <Image
-              src="/images/placeholders/Ubasti Logo_Pink.jpg"
+              src="/images/placeholders/Ubasti Logo_Green Pink.png"
               alt="Ubasti — Cat Cafe & Lounge"
               fill
               className="object-contain"
               priority
-              style={{ borderRadius: "0.75rem" }}
             />
           </div>
         </div>

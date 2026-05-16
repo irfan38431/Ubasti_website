@@ -70,11 +70,10 @@ export function VideoBackgroundBlock() {
       <div className="absolute inset-0 flex items-center justify-center z-10 px-6">
         <div className="relative w-full max-w-[520px] h-28 md:h-40">
           <Image
-            src="/images/placeholders/Ubasti Logo_Pink.jpg"
+            src="/images/placeholders/Ubasti Logo_Green Pink.png"
             alt="Ubasti Cat Cafe & Lounge"
             fill
             className="object-contain"
-            style={{ borderRadius: "0.75rem" }}
           />
         </div>
       </div>

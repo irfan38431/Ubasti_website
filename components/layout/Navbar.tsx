@@ -81,7 +81,7 @@ export function Navbar() {
         style={{ background: "var(--ubasti-ink)" }}
       >
         <Image
-          src="/images/placeholders/Ubasti Symbol_Pink.jpg"
+          src="/images/placeholders/Ubasti Symbol_Green.jpg"
           alt=""
           fill
           className="object-cover rounded-full"
