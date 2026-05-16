@@ -1,84 +1,74 @@
 "use client";
 
 import Image from "next/image";
-import { useRef, useState, useEffect, useCallback } from "react";
 import { ScallopDivider } from "@/components/decorative/ScallopDivider";
 
-const VIDEOS = [
-  "/videos/cafe-1.mp4",
-  "/videos/cafe-2.mp4",
-  "/videos/cafe-3.mp4",
-  "/videos/cafe-4.mp4",
-  "/videos/cafe-5.mp4",
-];
-
 export function Hero() {
-  const videoRef = useRef<HTMLVideoElement>(null);
-  const [index, setIndex] = useState(0);
-
-  const advance = useCallback(() => {
-    setIndex((i) => (i + 1) % VIDEOS.length);
-  }, []);
-
-  useEffect(() => {
-    const v = videoRef.current;
-    if (!v) return;
-    v.load();
-    v.play().catch(() => {});
-  }, [index]);
-
   return (
     <>
       <section
         className="relative overflow-hidden flex items-center justify-center"
-        style={{ height: "max(100svh, 133vw)", minHeight: 480 }}
+        style={{
+          height: "clamp(340px, 55vh, 600px)",
+          minHeight: 340,
+        }}
       >
-        {/* Placeholder background while no video loaded */}
-        <div
-          className="absolute inset-0"
-          style={{ background: "var(--ubasti-ink)" }}
-          aria-hidden="true"
+        {/* Background image */}
+        <Image
+          src="/images/hero-banner.png"
+          alt="Cozy interior of Ubasti Cat Cafe"
+          fill
+          className="object-cover"
+          priority
+          sizes="100vw"
         />
 
-        {/* Cycling video background */}
-        <video
-          ref={videoRef}
-          key={VIDEOS[index]}
-          className="absolute inset-0 w-full h-full object-cover"
-          autoPlay
-          muted
-          playsInline
-          preload="auto"
-          onEnded={advance}
-          onError={advance}
-          aria-hidden="true"
-        >
-          <source src={VIDEOS[index]} type="video/mp4" />
-        </video>
-
-        {/* Light overlay — keeps video visible but adds depth */}
+        {/* Dark overlay for contrast */}
         <div
           className="absolute inset-0"
-          style={{ background: "rgba(20,22,14,0.35)" }}
+          style={{
+            background:
+              "linear-gradient(180deg, rgba(20,22,14,0.3) 0%, rgba(20,22,14,0.5) 100%)",
+          }}
           aria-hidden="true"
         />
 
         {/* Frosted glass logo card */}
         <div
-          className="relative z-10 flex items-center justify-center px-8 py-6 md:px-12 md:py-8"
+          className="relative z-10 flex flex-col items-center justify-center gap-3 px-10 py-8 md:px-16 md:py-10"
           style={{
-            background: "rgba(255,255,255,0.18)",
-            backdropFilter: "blur(16px)",
-            WebkitBackdropFilter: "blur(16px)",
+            background: "rgba(255,255,255,0.15)",
+            backdropFilter: "blur(18px)",
+            WebkitBackdropFilter: "blur(18px)",
             borderRadius: "1.5rem",
-            border: "1px solid rgba(255,255,255,0.35)",
-            boxShadow: "0 8px 32px rgba(0,0,0,0.25)",
+            border: "1px solid rgba(255,255,255,0.3)",
+            boxShadow:
+              "0 8px 32px rgba(0,0,0,0.25), inset 0 1px 0 rgba(255,255,255,0.2)",
           }}
         >
-          <div className="relative w-[220px] h-[90px] md:w-[320px] md:h-[130px]">
+          {/* Brand mark (circular logo) */}
+          <div
+            className="relative"
+            style={{ width: 72, height: 72 }}
+          >
             <Image
-              src="/images/logo.png"
-              alt="Ubasti Cat Cafe & Lounge"
+              src="/images/decorative/ubasti-brand-mark.svg"
+              alt=""
+              fill
+              className="object-contain"
+              style={{ filter: "brightness(0) invert(1)" }}
+              aria-hidden="true"
+            />
+          </div>
+
+          {/* Wordmark */}
+          <div
+            className="relative"
+            style={{ width: 260, height: 80 }}
+          >
+            <Image
+              src="/images/decorative/ubasti-lounge-wordmark.svg"
+              alt="Ubasti — Cat Cafe & Lounge"
               fill
               className="object-contain"
               priority
