@@ -33,14 +33,6 @@ export function VideoBackgroundBlock() {
       className="relative overflow-hidden"
       style={{ height: "clamp(280px, 60vh, 600px)", background: "var(--ubasti-ink)" }}
     >
-      {/* Fallback when no videos loaded yet */}
-      <Image
-        src="/images/placeholders/offering-community.svg"
-        alt=""
-        fill
-        className="object-cover"
-        aria-hidden="true"
-      />
 
       {VIDEOS.length > 0 && !hasError && (
         <video
