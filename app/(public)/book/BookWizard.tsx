@@ -210,8 +210,8 @@ export function BookWizard({ dates }: Props) {
           ["Date",       formatDate(date)],
           ["Time",       slotLabel],
           ["Party size", `${partySize} guest${partySize > 1 ? "s" : ""}`],
-          notes && ["Notes", notes],
-        ].filter(Boolean).map(([label, val]) => (
+          notes ? ["Notes", notes] : null,
+        ].filter((x): x is [string, string] => x !== null).map(([label, val]) => (
           <div key={label as string} className="flex justify-between gap-4">
             <dt style={{ color: "var(--ubasti-sage)" }}>{label}</dt>
             <dd className="text-right font-medium" style={{ color: "var(--ubasti-ink)" }}>{val as string}</dd>
