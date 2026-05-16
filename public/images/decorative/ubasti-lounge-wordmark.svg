@@ -1,31 +1,29 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 400" fill="none">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 300" fill="none">
   <!-- TODO: replace with final brand wordmark artwork -->
-  <!-- Ubasti wordmark -->
+  <!-- Decorative top line -->
+  <line x1="100" y1="88" x2="700" y2="88" stroke="#F2E0CD" stroke-width="1" opacity="0.5"/>
+  <!-- UBASTI wordmark — light cream so it reads on dark backgrounds without filter -->
   <text
     x="400"
-    y="190"
+    y="168"
     text-anchor="middle"
-    font-family="Georgia, serif"
-    font-size="120"
+    font-family="Georgia, 'Times New Roman', serif"
+    font-size="108"
     font-weight="700"
-    letter-spacing="24"
-    fill="#2C2E1F"
-    opacity="0.85"
+    letter-spacing="20"
+    fill="#F2E0CD"
   >UBASTI</text>
-  <!-- Decorative divider line -->
-  <line x1="120" y1="220" x2="680" y2="220" stroke="#2C2E1F" stroke-width="1.5" opacity="0.4" />
+  <!-- Decorative bottom line -->
+  <line x1="100" y1="192" x2="700" y2="192" stroke="#F2E0CD" stroke-width="1" opacity="0.5"/>
   <!-- Subtitle -->
   <text
     x="400"
-    y="260"
+    y="228"
     text-anchor="middle"
-    font-family="Georgia, serif"
-    font-size="22"
-    letter-spacing="8"
-    fill="#2C2E1F"
-    opacity="0.65"
+    font-family="Georgia, 'Times New Roman', serif"
+    font-size="18"
+    letter-spacing="7"
+    fill="#F2E0CD"
+    opacity="0.7"
   >CAT CAFE &amp; LOUNGE</text>
-  <!-- Small paw print decorations -->
-  <circle cx="100" cy="200" r="8" fill="#2C2E1F" opacity="0.25" />
-  <circle cx="700" cy="200" r="8" fill="#2C2E1F" opacity="0.25" />
 </svg>

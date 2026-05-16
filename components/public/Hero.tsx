@@ -17,10 +17,10 @@ export function Hero() {
           priority
           aria-hidden="true"
         />
-        {/* Dark overlay */}
+        {/* Dark overlay — opacity high enough to hide placeholder label text */}
         <div
           className="absolute inset-0"
-          style={{ background: "rgba(44,46,31,0.48)" }}
+          style={{ background: "rgba(44,46,31,0.82)" }}
           aria-hidden="true"
         />
 
@@ -32,7 +32,6 @@ export function Hero() {
               alt="Ubasti Cat Cafe & Lounge"
               fill
               className="object-contain"
-              style={{ filter: "invert(1) brightness(2)" }}
             />
           </div>
         </div>
@@ -40,7 +39,7 @@ export function Hero() {
 
       {/* Wavy transition into dark headline block */}
       <ScallopDivider
-        top="rgba(44,46,31,0.48)"
+        top="var(--ubasti-ink)"
         bottom="var(--ubasti-ink)"
       />
     </>

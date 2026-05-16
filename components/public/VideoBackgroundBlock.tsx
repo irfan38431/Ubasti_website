@@ -32,7 +32,7 @@ export function VideoBackgroundBlock() {
       {/* Overlay */}
       <div
         className="absolute inset-0"
-        style={{ background: "rgba(44,46,31,0.55)" }}
+        style={{ background: "rgba(44,46,31,0.82)" }}
         aria-hidden="true"
       />
 
@@ -44,7 +44,6 @@ export function VideoBackgroundBlock() {
             alt="Ubasti Cat Cafe & Lounge"
             fill
             className="object-contain"
-            style={{ filter: "invert(1) brightness(2)" }}
           />
         </div>
       </div>
