@@ -3,6 +3,7 @@ import { z } from "zod";
 import { db } from "@/lib/db/client";
 import { contactSubmissions } from "@/lib/db/schema";
 import { audit } from "@/lib/audit";
+import { checkContactLimit } from "@/lib/ratelimit";
 
 const bodySchema = z.object({
   name:    z.string().min(1).max(100),
@@ -11,6 +12,12 @@ const bodySchema = z.object({
 });
 
 export async function POST(req: NextRequest) {
+  const ip = req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ?? "unknown";
+  const limit = await checkContactLimit(ip);
+  if (!limit.success) {
+    return NextResponse.json({ error: "Too many requests. Try again later." }, { status: 429 });
+  }
+
   let body: z.infer<typeof bodySchema>;
   try {
     body = bodySchema.parse(await req.json());

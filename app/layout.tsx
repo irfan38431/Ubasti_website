@@ -38,6 +38,29 @@ const jetbrains = JetBrains_Mono({
   display: "swap",
 });
 
+const localBusinessJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "CafeOrCoffeeShop",
+  name: "Ubasti Cat Cafe & Lounge",
+  description: "Serene cat cafe & adoption lounge in Chennai. Sip coffee, cuddle cats, find your forever friend.",
+  url: process.env.NEXT_PUBLIC_APP_URL ?? "https://ubasti.cafe",
+  image: `${process.env.NEXT_PUBLIC_APP_URL ?? "https://ubasti.cafe"}/images/placeholders/hero-cat-portrait.svg`,
+  address: {
+    "@type": "PostalAddress",
+    addressLocality: "Chennai",
+    addressRegion: "Tamil Nadu",
+    addressCountry: "IN",
+  },
+  geo: { "@type": "GeoCoordinates", latitude: 13.0827, longitude: 80.2707 },
+  telephone: "+919445077270",
+  priceRange: "₹",
+  servesCuisine: "Coffee, Tea, Light Bites",
+  openingHoursSpecification: [
+    { "@type": "OpeningHoursSpecification", dayOfWeek: ["Monday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"], opens: "11:00", closes: "19:00" },
+  ],
+  sameAs: [],
+};
+
 export const metadata: Metadata = {
   title: "Ubasti — Cat Cafe & Lounge | Chennai",
   description:
@@ -62,6 +85,10 @@ export default function RootLayout({
       ].join(" ")}
     >
       <body className="min-h-full flex flex-col">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessJsonLd) }}
+        />
         <a href="#main-content" className="skip-to-content">
           Skip to content
         </a>

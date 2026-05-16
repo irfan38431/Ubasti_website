@@ -5,6 +5,7 @@ import { db } from "@/lib/db/client";
 import { privatePartyInquiries, users } from "@/lib/db/schema";
 import { getSmsProvider } from "@/lib/sms";
 import { audit } from "@/lib/audit";
+import { checkInquiryLimit } from "@/lib/ratelimit";
 
 const bodySchema = z.object({
   fullName:      z.string().min(1).max(100),
@@ -17,6 +18,12 @@ const bodySchema = z.object({
 });
 
 export async function POST(req: NextRequest) {
+  const ip = req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ?? "unknown";
+  const limit = await checkInquiryLimit(ip);
+  if (!limit.success) {
+    return NextResponse.json({ error: "Too many requests. Try again later." }, { status: 429 });
+  }
+
   let body: z.infer<typeof bodySchema>;
   try { body = bodySchema.parse(await req.json()); }
   catch { return NextResponse.json({ error: "Invalid request" }, { status: 400 }); }

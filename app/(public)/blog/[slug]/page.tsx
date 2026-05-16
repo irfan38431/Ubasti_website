@@ -32,8 +32,27 @@ export default async function BlogPostPage({ params }: Props) {
 
   if (!post) notFound();
 
+  const appUrl = process.env.NEXT_PUBLIC_APP_URL ?? "https://ubasti.cafe";
+  const blogPostJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    headline: post.title,
+    description: post.excerpt ?? "",
+    image: post.coverImageUrl ?? `${appUrl}/images/placeholders/blog-cover-1.svg`,
+    datePublished: post.publishedAt?.toISOString() ?? post.updatedAt.toISOString(),
+    dateModified: post.updatedAt.toISOString(),
+    author: { "@type": "Organization", name: "Ubasti Cat Cafe & Lounge" },
+    publisher: {
+      "@type": "Organization",
+      name: "Ubasti Cat Cafe & Lounge",
+      logo: { "@type": "ImageObject", url: `${appUrl}/images/placeholders/logo-mark.svg` },
+    },
+    mainEntityOfPage: { "@type": "WebPage", "@id": `${appUrl}/blog/${slug}` },
+  };
+
   return (
     <div style={{ background: "var(--ubasti-paper)" }}>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(blogPostJsonLd) }} />
       {/* Hero */}
       <div className="relative h-[50vh] min-h-[320px]">
         <Image

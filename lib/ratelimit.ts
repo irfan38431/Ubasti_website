@@ -31,14 +31,18 @@ export type RateLimitResult = { success: boolean; remaining?: number };
 let _sendByPhone: Ratelimit | null = null;
 let _sendByIp:    Ratelimit | null = null;
 let _verifyPhone: Ratelimit | null = null;
+let _contactIp:   Ratelimit | null = null;
+let _inquiryIp:   Ratelimit | null = null;
 
 function getLimiters() {
   const redis = makeRedis();
   if (!redis) return null;
-  _sendByPhone ??= new Ratelimit({ redis, limiter: Ratelimit.slidingWindow(3, "15m"),  prefix: "rl:otp:phone" });
-  _sendByIp    ??= new Ratelimit({ redis, limiter: Ratelimit.slidingWindow(10, "1h"),   prefix: "rl:otp:ip" });
-  _verifyPhone ??= new Ratelimit({ redis, limiter: Ratelimit.slidingWindow(10, "15m"),  prefix: "rl:verify:phone" });
-  return { sendByPhone: _sendByPhone, sendByIp: _sendByIp, verifyPhone: _verifyPhone };
+  _sendByPhone ??= new Ratelimit({ redis, limiter: Ratelimit.slidingWindow(3,  "15m"), prefix: "rl:otp:phone" });
+  _sendByIp    ??= new Ratelimit({ redis, limiter: Ratelimit.slidingWindow(10, "1h"),  prefix: "rl:otp:ip" });
+  _verifyPhone ??= new Ratelimit({ redis, limiter: Ratelimit.slidingWindow(10, "15m"), prefix: "rl:verify:phone" });
+  _contactIp   ??= new Ratelimit({ redis, limiter: Ratelimit.slidingWindow(10, "1h"),  prefix: "rl:contact:ip" });
+  _inquiryIp   ??= new Ratelimit({ redis, limiter: Ratelimit.slidingWindow(5,  "1h"),  prefix: "rl:inquiry:ip" });
+  return { sendByPhone: _sendByPhone, sendByIp: _sendByIp, verifyPhone: _verifyPhone, contactIp: _contactIp, inquiryIp: _inquiryIp };
 }
 
 export async function checkSendOtpLimits(
@@ -68,4 +72,18 @@ export async function checkVerifyOtpLimit(
   }
   const result = await limiters.verifyPhone.limit(phoneE164);
   return { success: result.success, remaining: result.remaining };
+}
+
+export async function checkContactLimit(ip: string): Promise<RateLimitResult> {
+  const limiters = getLimiters();
+  if (!limiters) return { success: devCheck(`contact:${ip}`, 10, 60 * 60 * 1000) };
+  const result = await limiters.contactIp.limit(ip);
+  return { success: result.success };
+}
+
+export async function checkInquiryLimit(ip: string): Promise<RateLimitResult> {
+  const limiters = getLimiters();
+  if (!limiters) return { success: devCheck(`inquiry:${ip}`, 5, 60 * 60 * 1000) };
+  const result = await limiters.inquiryIp.limit(ip);
+  return { success: result.success };
 }
