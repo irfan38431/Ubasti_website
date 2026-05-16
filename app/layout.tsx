@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Cinzel, Cormorant_Garamond, Inter, Caveat, JetBrains_Mono } from "next/font/google";
+import { Providers } from "@/lib/contexts/providers";
 import "./globals.css";
 
 const cinzel = Cinzel({
@@ -42,9 +43,7 @@ export const metadata: Metadata = {
   description:
     "Serene cat cafe & adoption lounge in Chennai. Sip coffee, cuddle cats, find your forever friend.",
   metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL ?? "http://localhost:3000"),
-  openGraph: {
-    locale: "en_IN",
-  },
+  openGraph: { locale: "en_IN" },
 };
 
 export default function RootLayout({
@@ -66,9 +65,11 @@ export default function RootLayout({
         <a href="#main-content" className="skip-to-content">
           Skip to content
         </a>
-        <main id="main-content" className="flex-1 flex flex-col">
-          {children}
-        </main>
+        <Providers>
+          <div id="main-content" className="flex-1 flex flex-col">
+            {children}
+          </div>
+        </Providers>
       </body>
     </html>
   );
