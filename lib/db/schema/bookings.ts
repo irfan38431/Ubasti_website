@@ -8,6 +8,7 @@ import {
   check,
   index,
   unique,
+  jsonb,
 } from "drizzle-orm/pg-core";
 import { sql } from "drizzle-orm";
 import { users } from "./auth";
@@ -103,3 +104,16 @@ export const eventRegistrations = pgTable(
     ),
   ]
 );
+
+// ── lounge_settings ────────────────────────────────────────────────────────
+// Single row; updated by admin. Key fields stored as columns for type safety.
+
+export const loungeSettings = pgTable("lounge_settings", {
+  id:              integer("id").primaryKey().default(1),  // always row 1
+  openHour:        integer("open_hour").notNull().default(11),   // 11 = 11:00 IST
+  closeHour:       integer("close_hour").notNull().default(19),  // 19 = 19:00 IST
+  slotDurationMin: integer("slot_duration_min").notNull().default(60),
+  maxConcurrent:   integer("max_concurrent").notNull().default(3),
+  closedDays:      jsonb("closed_days").notNull().default([2]),   // 0=Sun..6=Sat; default: Tue=2
+  updatedAt:       timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
+});
