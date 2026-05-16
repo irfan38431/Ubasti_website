@@ -3,16 +3,16 @@
 /* ── Design tokens ── */
 :root {
   /* Primary earth tones */
-  --ubasti-olive-dark:  #5C6A3A;
-  --ubasti-sage:        #909A6B;
+  --ubasti-olive-dark:  #535D3A;
+  --ubasti-sage:        #95996D;
   --ubasti-sage-light:  #B5BC91;
 
   /* Soft pinks */
-  --ubasti-blush:       #E8B8AE;
+  --ubasti-blush:       #E4B6AE;
   --ubasti-blush-light: #F2D4CC;
 
   /* Creams & neutrals */
-  --ubasti-cream:       #F2E0CD;
+  --ubasti-cream:       #F2DAC5;
   --ubasti-paper:       #FAF6F0;
   --ubasti-ink:         #2B2E1F;
 

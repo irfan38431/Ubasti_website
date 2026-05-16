@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 
 export function Footer() {
   return (
@@ -7,6 +8,15 @@ export function Footer() {
       style={{ background: "var(--ubasti-ink)", color: "var(--ubasti-cream)" }}
     >
       <div className="max-w-[640px] mx-auto px-6 flex flex-col items-center gap-4 text-center">
+        {/* Brand symbol */}
+        <div className="relative w-14 h-14 rounded-full overflow-hidden mb-1">
+          <Image
+            src="/images/placeholders/Ubasti Symbol_Pink.jpg"
+            alt="Ubasti"
+            fill
+            className="object-cover"
+          />
+        </div>
         {/* Inline link row */}
         <nav aria-label="Footer quick links" className="flex items-center gap-3 text-sm opacity-70">
           <Link href="/about" className="hover:opacity-100 transition-opacity">about</Link>

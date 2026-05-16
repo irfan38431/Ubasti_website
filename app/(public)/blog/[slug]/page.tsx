@@ -45,7 +45,7 @@ export default async function BlogPostPage({ params }: Props) {
     publisher: {
       "@type": "Organization",
       name: "Ubasti Cat Cafe & Lounge",
-      logo: { "@type": "ImageObject", url: `${appUrl}/images/placeholders/logo-mark.svg` },
+      logo: { "@type": "ImageObject", url: `${appUrl}/images/placeholders/Ubasti Symbol_Pink.jpg` },
     },
     mainEntityOfPage: { "@type": "WebPage", "@id": `${appUrl}/blog/${slug}` },
   };

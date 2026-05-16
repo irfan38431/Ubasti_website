@@ -40,12 +40,12 @@ export function ContactForm() {
         <ScrollReveal>
           <div className="max-w-xl mx-auto flex flex-col items-center gap-6">
             {/* Brand mark */}
-            <div className="relative w-24 h-24 md:w-32 md:h-32">
+            <div className="relative w-24 h-24 md:w-32 md:h-32 rounded-full overflow-hidden">
               <Image
-                src="/images/decorative/ubasti-brand-mark.svg"
+                src="/images/placeholders/Ubasti Symbol_Pink.jpg"
                 alt=""
                 fill
-                className="object-contain"
+                className="object-cover"
                 aria-hidden="true"
               />
             </div>

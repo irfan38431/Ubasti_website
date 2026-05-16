@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 import { X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -63,12 +64,14 @@ export function MobileMenu({ open, onClose }: Props) {
           aria-label="Navigation menu"
         >
           <div className="flex items-center justify-between px-6 h-[72px]">
-            <span
-              className="text-xl tracking-widest uppercase"
-              style={{ fontFamily: "var(--font-cinzel)", color: "var(--ubasti-cream)" }}
-            >
-              Ubasti
-            </span>
+            <Link href="/" onClick={onClose} className="relative block rounded-full overflow-hidden" style={{ width: 48, height: 48 }}>
+              <Image
+                src="/images/placeholders/Ubasti Symbol_Pink.jpg"
+                alt="Ubasti — Home"
+                fill
+                className="object-cover"
+              />
+            </Link>
             <button
               ref={closeRef}
               onClick={onClose}

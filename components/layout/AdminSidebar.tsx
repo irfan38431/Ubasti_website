@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import NextImage from "next/image";
 import { usePathname } from "next/navigation";
 import {
   LayoutDashboard, Calendar, BookOpen, FileText,
@@ -46,14 +47,14 @@ export function AdminSidebar() {
     >
       {/* Logo + collapse */}
       <div className="flex items-center justify-between h-14 px-3 shrink-0">
-        {!collapsed && (
-          <span
-            className="text-base tracking-widest uppercase"
-            style={{ fontFamily: "var(--font-cinzel)", color: "var(--ubasti-olive-dark)" }}
-          >
-            Ubasti
-          </span>
-        )}
+        <Link href="/admin" className="relative block shrink-0 rounded-full overflow-hidden" style={{ width: 36, height: 36 }}>
+          <NextImage
+            src="/images/placeholders/Ubasti Symbol_Pink.jpg"
+            alt="Ubasti Admin"
+            fill
+            className="object-cover"
+          />
+        </Link>
         <button
           onClick={() => setCollapsed((v) => !v)}
           className="p-1.5 rounded-lg hover:bg-[var(--ubasti-cream)] ml-auto"

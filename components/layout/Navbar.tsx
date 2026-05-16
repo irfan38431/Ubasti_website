@@ -71,20 +71,20 @@ export function Navbar() {
         Skip to content
       </a>
 
-      {/* Floating cat-icon button */}
+      {/* Floating brand-icon button */}
       <button
         onClick={() => setOpen(true)}
-        className="fixed top-4 left-4 z-50 w-14 h-14 rounded-full shadow-lg transition-transform hover:scale-105 active:scale-95 focus-visible:outline-2"
+        className="fixed top-4 left-4 z-50 w-14 h-14 rounded-full shadow-lg transition-transform hover:scale-105 active:scale-95 focus-visible:outline-2 overflow-hidden"
         aria-label="Open navigation menu"
         aria-expanded={open}
         aria-haspopup="dialog"
         style={{ background: "var(--ubasti-ink)" }}
       >
         <Image
-          src="/images/decorative/cat-disco.svg"
+          src="/images/placeholders/Ubasti Symbol_Pink.jpg"
           alt=""
           fill
-          className="object-contain rounded-full"
+          className="object-cover rounded-full"
           aria-hidden="true"
         />
       </button>
@@ -116,10 +116,15 @@ export function Navbar() {
           <Link
             href="/"
             onClick={() => setOpen(false)}
-            className="text-lg tracking-widest uppercase"
-            style={{ fontFamily: "var(--font-cinzel)", color: "var(--ubasti-cream)" }}
+            className="relative block"
+            style={{ width: 44, height: 44 }}
           >
-            Ubasti
+            <Image
+              src="/images/placeholders/Ubasti Symbol_Pink.jpg"
+              alt="Ubasti — Home"
+              fill
+              className="object-cover rounded-full"
+            />
           </Link>
           <button
             onClick={() => setOpen(false)}

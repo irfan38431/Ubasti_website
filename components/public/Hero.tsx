@@ -35,7 +35,7 @@ export function Hero() {
 
         {/* Frosted glass logo card */}
         <div
-          className="relative z-10 flex flex-col items-center justify-center gap-3 px-10 py-8 md:px-16 md:py-10"
+          className="relative z-10 flex items-center justify-center px-10 py-8 md:px-16 md:py-10"
           style={{
             background: "rgba(255,255,255,0.15)",
             backdropFilter: "blur(18px)",
@@ -46,32 +46,18 @@ export function Hero() {
               "0 8px 32px rgba(0,0,0,0.25), inset 0 1px 0 rgba(255,255,255,0.2)",
           }}
         >
-          {/* Brand mark (circular logo) */}
+          {/* Official Ubasti logo (symbol + text) */}
           <div
             className="relative"
-            style={{ width: 72, height: 72 }}
+            style={{ width: 280, height: 140 }}
           >
             <Image
-              src="/images/decorative/ubasti-brand-mark.svg"
-              alt=""
-              fill
-              className="object-contain"
-              style={{ filter: "brightness(0) invert(1)" }}
-              aria-hidden="true"
-            />
-          </div>
-
-          {/* Wordmark */}
-          <div
-            className="relative"
-            style={{ width: 260, height: 80 }}
-          >
-            <Image
-              src="/images/decorative/ubasti-lounge-wordmark.svg"
+              src="/images/placeholders/Ubasti Logo_Pink.jpg"
               alt="Ubasti — Cat Cafe & Lounge"
               fill
               className="object-contain"
               priority
+              style={{ borderRadius: "0.75rem" }}
             />
           </div>
         </div>
