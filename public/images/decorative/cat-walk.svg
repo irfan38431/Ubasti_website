@@ -1,45 +1,57 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" fill="none" stroke="#2C2E1F" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-  <!-- Walking cat — in motion, tail raised high -->
-  <!-- Body (horizontal, elongated) -->
-  <ellipse cx="200" cy="220" rx="110" ry="50" />
+  <!-- Realistic cat walking — mid-stride, tail up, looking forward -->
+  <!-- Top body contour (back) -->
+  <path d="
+    M 60 200
+    Q 80 185 110 178
+    Q 140 172 170 170
+    Q 200 168 230 168
+    Q 260 170 280 175
+    Q 295 180 305 190
+  " />
+  <!-- Bottom body contour (belly) -->
+  <path d="
+    M 95 235
+    Q 120 242 150 244
+    Q 180 245 210 244
+    Q 240 242 265 238
+    Q 280 234 290 225
+  " />
   <!-- Head -->
-  <circle cx="310" cy="185" r="48" />
-  <!-- Ears -->
-  <polygon points="282,152 272,108 302,145" />
-  <polygon points="335,148 348,106 320,142" />
-  <!-- Inner ears -->
-  <polygon points="285,150 278,118 298,145" stroke-width="1.5" />
-  <polygon points="332,148 342,118 324,142" stroke-width="1.5" />
-  <!-- Eyes (forward-looking, focused) -->
-  <circle cx="298" cy="180" r="10" />
-  <circle cx="326" cy="178" r="10" />
-  <circle cx="300" cy="180" r="4" fill="#2C2E1F" stroke="none" />
-  <circle cx="328" cy="178" r="4" fill="#2C2E1F" stroke="none" />
+  <path d="
+    M 305 190
+    Q 315 185 325 183
+    Q 338 182 345 188
+    Q 350 195 348 205
+    Q 344 215 335 220
+    Q 325 224 315 222
+    Q 308 218 305 212
+    Q 302 205 305 198
+  " />
+  <!-- Ear left -->
+  <path d="M 315 185 Q 308 168 312 155 Q 320 165 325 183" />
+  <!-- Ear right -->
+  <path d="M 338 182 Q 340 164 352 155 Q 350 168 348 185" />
+  <!-- Eye -->
+  <circle cx="332" cy="198" r="3" fill="#2C2E1F" stroke="none" />
   <!-- Nose -->
-  <circle cx="340" cy="192" r="3" fill="#2C2E1F" stroke="none" />
-  <path d="M337 194 Q340 198 343 194" />
-  <!-- Mouth -->
-  <path d="M332 200 Q340 206 348 200" />
+  <circle cx="347" cy="207" r="2" fill="#2C2E1F" stroke="none" />
   <!-- Whiskers -->
-  <line x1="350" y1="188" x2="388" y2="182" />
-  <line x1="352" y1="194" x2="392" y2="192" />
-  <line x1="350" y1="200" x2="388" y2="204" />
-  <line x1="282" y1="190" x2="260" y2="186" />
-  <line x1="280" y1="196" x2="256" y2="196" />
-  <!-- Front legs (walking stride) -->
-  <!-- Front left (forward) -->
-  <path d="M270 260 Q278 300 285 330 Q288 342 275 342" />
-  <ellipse cx="278" cy="345" rx="14" ry="6" />
-  <!-- Front right (back) -->
-  <path d="M240 262 Q235 295 230 325 Q228 336 242 336" />
-  <ellipse cx="238" cy="339" rx="14" ry="6" />
-  <!-- Hind legs (walking stride) -->
-  <!-- Hind left (back, extended) -->
-  <path d="M130 258 Q110 300 100 330 Q96 342 112 342" />
-  <ellipse cx="108" cy="345" rx="14" ry="6" />
-  <!-- Hind right (forward) -->
-  <path d="M155 260 Q165 298 170 328 Q172 340 158 340" />
-  <ellipse cx="162" cy="343" rx="14" ry="6" />
-  <!-- Tail (raised high, graceful curve) -->
-  <path d="M90 210 Q55 170 50 130 Q48 100 65 85 Q80 75 88 90" />
+  <line x1="349" y1="204" x2="375" y2="196" stroke-width="1.5" />
+  <line x1="350" y1="208" x2="378" y2="206" stroke-width="1.5" />
+  <line x1="349" y1="212" x2="375" y2="218" stroke-width="1.5" />
+  <!-- Front left leg (forward stride) -->
+  <path d="M 280 175 Q 290 200 298 230 Q 302 250 308 270 Q 310 285 312 295 Q 312 305 305 308" />
+  <path d="M 305 308 L 295 310" stroke-width="2" />
+  <!-- Front right leg (back stride) -->
+  <path d="M 265 238 Q 270 255 272 275 Q 274 290 270 302 Q 268 310 260 312" />
+  <path d="M 260 312 L 250 312" stroke-width="2" />
+  <!-- Hind left leg (back, extended) -->
+  <path d="M 110 178 Q 100 195 92 218 Q 86 238 78 258 Q 72 275 65 290 Q 60 302 55 308" />
+  <path d="M 55 308 L 45 308" stroke-width="2" />
+  <!-- Hind right leg (forward stride) -->
+  <path d="M 95 235 Q 105 252 115 272 Q 122 288 128 300 Q 130 308 125 312" />
+  <path d="M 125 312 L 115 312" stroke-width="2" />
+  <!-- Tail (raised high, elegant S-curve) -->
+  <path d="M 60 200 Q 42 180 30 155 Q 22 135 25 115 Q 28 100 38 92 Q 48 88 55 95" stroke-width="2.5" />
 </svg>
