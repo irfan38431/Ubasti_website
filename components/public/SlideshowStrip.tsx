@@ -15,7 +15,7 @@ export function SlideshowStrip() {
     if (!track) return;
     let start: number | null = null;
     let raf: number;
-    const speed = track.scrollWidth / 2 / (60 * 60);
+    const speed = track.scrollWidth / 2 / (60 * 300);
 
     function step(ts: number) {
       if (!start) start = ts;

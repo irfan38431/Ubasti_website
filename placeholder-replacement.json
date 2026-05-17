@@ -1,35 +1,29 @@
 {
   "_comment": "SINGLE SOURCE OF TRUTH — edit values here and they propagate automatically across the entire codebase. Do not hardcode any of these values in components.",
-
   "brand": {
     "logoGreenPink": "/images/placeholders/Ubasti Logo_Green Pink.png",
-    "symbolBeige": "/images/Ubasti Cat Symbol_Beige.png",
+    "symbolBeige": "/images/Ubasti Symbol_beige.png",
     "symbolPink": "/images/placeholders/Ubasti Symbol_Pink.jpg",
     "symbolGreen": "/images/placeholders/Ubasti Symbol_Green.jpg",
     "name": "Ubasti Cat Cafe & Lounge",
     "tagline": "Coffee, cats, and the occasional miracle."
   },
-
   "social": {
     "instagram": "https://www.instagram.com/ubasticatcafe?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="
   },
-
   "contact": {
-    "address": "Chennai, Tamil Nadu, India",
+    "address": "Beasant Nagar, Chennai, Tamil Nadu, India",
     "phone": "",
     "email": "",
     "whatsapp": "",
     "googleMapsUrl": ""
   },
-
   "adoption": {
     "formUrl": "https://forms.google.com/placeholder"
   },
-
   "hero": {
     "banner": "/images/hero-banner.png"
   },
-
   "slideshow": [
     "/images/slideshow_images/Image-1.jpeg",
     "/images/slideshow_images/image-2.jpeg",
@@ -42,7 +36,6 @@
     "/images/slideshow_images/image-9.jpeg",
     "/images/slideshow_images/image-10.jpeg"
   ],
-
   "videos": [
     "/videos/cafe-1.mp4",
     "/videos/cafe-2.mp4",
@@ -50,38 +43,31 @@
     "/videos/cafe-4.mp4",
     "/videos/cafe-5.mp4"
   ],
-
   "offerings": {
     "coffee": "/images/placeholders/offering-coffee.svg",
-    "cats":   "/images/placeholders/offering-cats.svg",
+    "cats": "/images/placeholders/Offering_cats.png",
     "community": "/images/placeholders/offering-community.svg"
   },
-
   "about": {
-    "photo": "/images/placeholders/offering-cats.svg",
-    "story": "/images/placeholders/about-story.svg",
-    "team":  "/images/placeholders/about-team.svg"
+    "photo": "/images/placeholders/About_story.jpeg",
+    "story": "/images/placeholders/About_story.jpeg",
+    "team": "/images/placeholders/About_story.jpeg"
   },
-
   "adoptionReasons": [
-    "/images/placeholders/adopt-reason-1.svg",
-    "/images/placeholders/adopt-reason-2.svg",
-    "/images/placeholders/adopt-reason-3.svg",
-    "/images/placeholders/adopt-reason-4.svg"
+    "/images/placeholders/Adoption-1.jpeg",
+    "/images/placeholders/Adoption-2.jpeg",
+    "/images/placeholders/Adoption-3.jpeg",
+    "/images/placeholders/Adoption-4.jpeg"
   ],
-
   "kitties": {
     "placeholder": "/images/placeholders/kitty-placeholder.svg"
   },
-
   "blog": {
     "defaultCover": "/images/placeholders/blog-cover-1.svg"
   },
-
   "events": {
     "defaultCover": "/images/placeholders/event-cover-1.svg"
   },
-
   "privateParties": {
     "heroImage": "/images/placeholders/party-birthday.svg",
     "gallery": [
@@ -93,19 +79,17 @@
       "/images/placeholders/party-gallery-6.svg"
     ]
   },
-
   "decorative": {
     "catOutline": "/images/decorative/cat-outline.svg",
-    "catYawn":    "/images/decorative/cat-yawn.svg",
-    "catPspsps":  "/images/decorative/cat-pspsps.svg",
-    "sparkles":   "/images/decorative/sparkles.svg",
-    "leaves":     "/images/decorative/leaves.svg"
+    "catYawn": "/images/decorative/cat-yawn.svg",
+    "catPspsps": "/images/decorative/cat-pspsps.svg",
+    "sparkles": "/images/decorative/sparkles.svg",
+    "leaves": "/images/decorative/leaves.svg"
   },
-
   "badges": {
-    "coffeeCause":      "/images/placeholders/badge-coffee-cause.svg",
-    "foreverFriend":    "/images/placeholders/badge-forever-friend.svg",
+    "coffeeCause": "/images/placeholders/badge-coffee-cause.svg",
+    "foreverFriend": "/images/placeholders/badge-forever-friend.svg",
     "purrfectPartners": "/images/placeholders/badge-purrfect-partners.svg",
-    "sipCuddleRelax":   "/images/placeholders/badge-sip-cuddle-relax.svg"
+    "sipCuddleRelax": "/images/placeholders/badge-sip-cuddle-relax.svg"
   }
 }

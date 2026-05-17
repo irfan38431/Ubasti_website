@@ -80,7 +80,7 @@ export function Navbar() {
         aria-label="Open navigation menu"
         aria-expanded={open}
         aria-haspopup="dialog"
-        style={{ background: "var(--ubasti-ink)" }}
+        style={{ background: "var(--ubasti-ink)", opacity: open ? 0 : 1, pointerEvents: open ? "none" : "auto" }}
       >
         <Image
           src={BRAND.symbolGreen}
@@ -122,7 +122,7 @@ export function Navbar() {
             style={{ width: 44, height: 44 }}
           >
             <Image
-              src={BRAND.symbolPink}
+              src={BRAND.symbolBeige}
               alt={`${BRAND.name} — Home`}
               fill
               className="object-cover rounded-full"

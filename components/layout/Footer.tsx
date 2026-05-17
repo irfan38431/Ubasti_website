@@ -10,12 +10,12 @@ export function Footer() {
     >
       <div className="max-w-[640px] mx-auto px-6 flex flex-col items-center gap-4 text-center">
         {/* Brand symbol */}
-        <div className="relative w-14 h-14 rounded-full overflow-hidden mb-1">
+        <div className="relative w-20 h-20 mb-1">
           <Image
-            src={BRAND.symbolPink}
+            src="/images/Ubasti Symbol_beige.png"
             alt={BRAND.name}
             fill
-            className="object-cover"
+            className="object-contain"
           />
         </div>
         {/* Inline link row */}

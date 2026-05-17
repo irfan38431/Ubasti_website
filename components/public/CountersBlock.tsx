@@ -49,7 +49,15 @@ export function CountersBlock() {
   ];
 
   return (
-    <section className="py-16 md:py-24" style={{ background: "var(--ubasti-paper)" }}>
+    <section className="relative py-16 md:py-24" style={{ background: "var(--ubasti-paper)" }}>
+      {/* Flanking beige cat symbols */}
+      <div className="absolute left-0 bottom-0 w-32 h-40 md:w-48 md:h-60 pointer-events-none select-none" aria-hidden="true">
+        <Image src="/images/Ubasti Cat Symbol_Beige.png" alt="" fill className="object-contain object-bottom" />
+      </div>
+      <div className="absolute right-0 bottom-0 w-32 h-40 md:w-48 md:h-60 pointer-events-none select-none" aria-hidden="true" style={{ transform: "scaleX(-1)" }}>
+        <Image src="/images/Ubasti Cat Symbol_Beige.png" alt="" fill className="object-contain object-bottom" />
+      </div>
+
       <div className="max-w-[1280px] mx-auto px-6 md:px-12 lg:px-16">
         {/* Arched box container */}
         <div
