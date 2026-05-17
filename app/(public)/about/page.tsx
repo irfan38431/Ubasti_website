@@ -88,7 +88,7 @@ export default async function AboutPage({ searchParams }: Props) {
             </ScrollReveal>
             <ScrollReveal delay={0.1}>
               <div className="relative aspect-[4/3] rounded-2xl overflow-hidden">
-                <Image src="/images/placeholders/about-story.svg" alt="The Ubasti lounge" fill className="object-cover" />
+                <Image src="/images/placeholders/About_story.jpeg" alt="The Ubasti lounge" fill className="object-cover" />
               </div>
             </ScrollReveal>
           </div>
