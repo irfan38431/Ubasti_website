@@ -22,7 +22,7 @@ export function AdoptNowRibbon() {
       {/* Animated cat pointer — appears to the right of the ribbon */}
       <motion.div
         className="absolute pointer-events-none"
-        style={{ right: -36, top: "50%", transform: "translateY(-50%)", width: 32, height: 32 }}
+        style={{ right: -64, top: "50%", transform: "translateY(-50%)", width: 60, height: 60 }}
         aria-hidden="true"
         animate={shouldReduce ? {} : {
           rotate: [0, 15, -5, 10, 0],

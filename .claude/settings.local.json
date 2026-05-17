@@ -8,7 +8,9 @@
       "Bash(xargs grep -l \"msg91\\\\|twilio\")",
       "Bash(New-Item -ItemType Directory -Force \"D:\\\\UBASTI\\\\ubasti-cafe\\\\app\\\\api\\\\webhooks\\\\whatsapp\")",
       "Bash(Out-Null)",
-      "Bash(pnpm typecheck *)"
+      "Bash(pnpm typecheck *)",
+      "Bash(cd D:\\\\\\\\UBASTI\\\\\\\\ubasti-cafe)",
+      "Bash(powershell *)"
     ]
   },
   "enableAllProjectMcpServers": true,

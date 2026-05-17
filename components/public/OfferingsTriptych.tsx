@@ -1,22 +1,11 @@
 import Image from "next/image";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
+import { OFFERINGS as O, DECORATIVE } from "@/lib/replacements";
 
 const OFFERINGS = [
-  {
-    image: "/images/placeholders/offering-coffee.svg",
-    label: "coffee",
-    alt: "Craft coffee at Ubasti",
-  },
-  {
-    image: "/images/placeholders/offering-cats.svg",
-    label: "cats",
-    alt: "Resident cats at Ubasti",
-  },
-  {
-    image: "/images/placeholders/offering-community.svg",
-    label: "cuddles",
-    alt: "Cuddles and community at Ubasti",
-  },
+  { image: O.coffee,    label: "coffee",  alt: "Craft coffee at Ubasti" },
+  { image: O.cats,      label: "cats",    alt: "Resident cats at Ubasti" },
+  { image: O.community, label: "cuddles", alt: "Cuddles and community at Ubasti" },
 ];
 
 export function OfferingsTriptych() {
@@ -32,21 +21,21 @@ export function OfferingsTriptych() {
           style={{ transform: "rotate(-20deg)" }}
           aria-hidden="true"
         >
-          <Image src="/images/decorative/leaves.svg" alt="" fill className="object-contain" />
+          <Image src={DECORATIVE.leaves} alt="" fill className="object-contain" />
         </div>
         <div
           className="absolute top-1/3 right-0 w-16 h-16 md:w-24 md:h-24 opacity-50 hidden sm:block"
           style={{ transform: "rotate(10deg)" }}
           aria-hidden="true"
         >
-          <Image src="/images/decorative/leaves.svg" alt="" fill className="object-contain" />
+          <Image src={DECORATIVE.leaves} alt="" fill className="object-contain" />
         </div>
         <div
           className="absolute -bottom-4 left-1/3 w-14 h-14 md:w-20 md:h-20 opacity-45 hidden md:block"
           style={{ transform: "rotate(30deg) scaleX(-1)" }}
           aria-hidden="true"
         >
-          <Image src="/images/decorative/leaves.svg" alt="" fill className="object-contain" />
+          <Image src={DECORATIVE.leaves} alt="" fill className="object-contain" />
         </div>
 
         <ScrollReveal>

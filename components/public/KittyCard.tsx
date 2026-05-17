@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { KITTIES } from "@/lib/replacements";
 
 interface Props {
   name: string;
@@ -14,7 +15,7 @@ export function KittyCard({ name, imageUrl, age, sex }: Props) {
       style={{ background: "var(--ubasti-cream)", boxShadow: "0 8px 24px rgba(44,46,31,0.08)" }}>
       <div className="relative aspect-[3/4]">
         <Image
-          src={imageUrl ?? "/images/placeholders/kitty-placeholder.svg"}
+          src={imageUrl ?? KITTIES.placeholder}
           alt={name}
           fill
           className="object-cover transition-transform duration-300 hover:scale-105"

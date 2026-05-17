@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { ScallopDivider } from "@/components/decorative/ScallopDivider";
+import { BRAND, HERO } from "@/lib/replacements";
 
 export function Hero() {
   return (
@@ -15,7 +16,7 @@ export function Hero() {
       >
         {/* Background image */}
         <Image
-          src="/images/hero-banner.png"
+          src={HERO.banner}
           alt="Cozy interior of Ubasti Cat Cafe"
           fill
           className="object-cover"
@@ -40,7 +41,7 @@ export function Hero() {
           aria-hidden="true"
         >
           <Image
-            src="/images/Ubasti Cat Symbol_Beige.png"
+            src={BRAND.symbolBeige}
             alt=""
             fill
             className="object-contain"
@@ -54,7 +55,7 @@ export function Hero() {
           aria-hidden="true"
         >
           <Image
-            src="/images/Ubasti Cat Symbol_Beige.png"
+            src={BRAND.symbolBeige}
             alt=""
             fill
             className="object-contain"
@@ -80,8 +81,8 @@ export function Hero() {
             style={{ width: 280, height: 140 }}
           >
             <Image
-              src="/images/placeholders/Ubasti Logo_Green Pink.png"
-              alt="Ubasti — Cat Cafe & Lounge"
+              src={BRAND.logoGreenPink}
+              alt={BRAND.name}
               fill
               className="object-contain"
               priority

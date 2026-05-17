@@ -2,14 +2,9 @@
 
 import Image from "next/image";
 import { useRef, useState, useEffect, useCallback } from "react";
+import { BRAND, VIDEOS as VIDEO_LIST } from "@/lib/replacements";
 
-const VIDEOS = [
-  "/videos/cafe-1.mp4",
-  "/videos/cafe-2.mp4",
-  "/videos/cafe-3.mp4",
-  "/videos/cafe-4.mp4",
-  "/videos/cafe-5.mp4",
-].filter(Boolean);
+const VIDEOS = VIDEO_LIST.filter(Boolean);
 
 export function VideoBackgroundBlock() {
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -62,8 +57,8 @@ export function VideoBackgroundBlock() {
       <div className="absolute inset-0 flex items-center justify-center z-10 px-6">
         <div className="relative w-full max-w-[520px] h-28 md:h-40">
           <Image
-            src="/images/placeholders/Ubasti Logo_Green Pink.png"
-            alt="Ubasti Cat Cafe & Lounge"
+            src={BRAND.logoGreenPink}
+            alt={BRAND.name}
             fill
             className="object-contain"
           />

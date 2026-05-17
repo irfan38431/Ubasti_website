@@ -2,19 +2,7 @@
 import Image from "next/image";
 import { useReducedMotion } from "framer-motion";
 import { useRef, useEffect, useState } from "react";
-
-const IMAGES = [
-  "/images/slideshow_images/Image-1.jpeg",
-  "/images/slideshow_images/image-2.jpeg",
-  "/images/slideshow_images/image-3.jpeg",
-  "/images/slideshow_images/image-4.jpeg",
-  "/images/slideshow_images/image-5.jpeg",
-  "/images/slideshow_images/image-6.jpeg",
-  "/images/slideshow_images/image-7.jpeg",
-  "/images/slideshow_images/image-8.jpeg",
-  "/images/slideshow_images/image-9.jpeg",
-  "/images/slideshow_images/image-10.jpeg",
-];
+import { SLIDESHOW_IMAGES as IMAGES } from "@/lib/replacements";
 
 export function SlideshowStrip() {
   const shouldReduce = useReducedMotion();

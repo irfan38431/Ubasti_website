@@ -2,6 +2,7 @@ import Image from "next/image";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
 import { ArchImage } from "@/components/decorative/ArchImage";
 import { WavyUnderline } from "@/components/decorative/WavyUnderline";
+import { ABOUT, DECORATIVE } from "@/lib/replacements";
 
 export function AboutBlock() {
   return (
@@ -16,7 +17,7 @@ export function AboutBlock() {
         aria-hidden="true"
       >
         <Image
-          src="/images/decorative/cat-outline.svg"
+          src={DECORATIVE.catOutline}
           alt=""
           fill
           className="object-contain"
@@ -30,7 +31,7 @@ export function AboutBlock() {
         aria-hidden="true"
       >
         <Image
-          src="/images/decorative/sparkles.svg"
+          src={DECORATIVE.sparkles}
           alt=""
           fill
           className="object-contain"
@@ -74,7 +75,7 @@ export function AboutBlock() {
             {/* Right — arch-framed photo */}
             <div className="relative w-full" style={{ aspectRatio: "3/4", maxHeight: "520px" }}>
               <ArchImage
-                src="/images/placeholders/offering-cats.svg"
+                src={ABOUT.photo}
                 alt="A cat lounging at Ubasti"
                 className="w-full h-full"
               />

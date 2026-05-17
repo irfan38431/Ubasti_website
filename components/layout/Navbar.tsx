@@ -6,6 +6,7 @@ import Image from "next/image";
 import { X, User, LogOut, LayoutDashboard } from "lucide-react";
 import { useAuth } from "@/lib/contexts/auth";
 import { useRouter } from "next/navigation";
+import { BRAND } from "@/lib/replacements";
 
 const NAV_LINKS = [
   { href: "/",                label: "Home" },
@@ -82,7 +83,7 @@ export function Navbar() {
         style={{ background: "var(--ubasti-ink)" }}
       >
         <Image
-          src="/images/placeholders/Ubasti Symbol_Green.jpg"
+          src={BRAND.symbolGreen}
           alt=""
           fill
           className="object-cover rounded-full"
@@ -121,8 +122,8 @@ export function Navbar() {
             style={{ width: 44, height: 44 }}
           >
             <Image
-              src="/images/placeholders/Ubasti Symbol_Pink.jpg"
-              alt="Ubasti — Home"
+              src={BRAND.symbolPink}
+              alt={`${BRAND.name} — Home`}
               fill
               className="object-cover rounded-full"
             />

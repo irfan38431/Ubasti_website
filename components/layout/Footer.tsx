@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import { INSTAGRAM_URL } from "@/lib/constants/social";
+import { INSTAGRAM_URL, BRAND } from "@/lib/replacements";
 
 export function Footer() {
   return (
@@ -12,8 +12,8 @@ export function Footer() {
         {/* Brand symbol */}
         <div className="relative w-14 h-14 rounded-full overflow-hidden mb-1">
           <Image
-            src="/images/placeholders/Ubasti Symbol_Pink.jpg"
-            alt="Ubasti"
+            src={BRAND.symbolPink}
+            alt={BRAND.name}
             fill
             className="object-cover"
           />
