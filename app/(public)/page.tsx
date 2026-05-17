@@ -44,7 +44,8 @@ export default async function HomePage({ searchParams }: Props) {
         />
       );
     }
-    return <BlocksRenderer blocks={activeBlocks} />;
+    const filteredBlocks = activeBlocks.filter((b) => b.type !== "offerings");
+    return <BlocksRenderer blocks={filteredBlocks} />;
   }
 
   // Static home page: assembles all blocks with scallop dividers between sections

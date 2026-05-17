@@ -4,8 +4,10 @@ import { eq, asc } from "drizzle-orm";
 import { KittyCard } from "@/components/public/KittyCard";
 import { SectionTitle } from "@/components/ui/SectionTitle";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
+import { ArchImage } from "@/components/decorative/ArchImage";
 import { buildMetadata } from "@/lib/seo/metadata";
 import { ADOPTION_FORM_URL } from "@/lib/constants/social";
+import { ADOPTION_REASONS } from "@/lib/content/adoption-reasons";
 
 export const metadata = buildMetadata({
   title: "Adopt a Cat — Give a Rescue a Forever Home",
@@ -13,12 +15,6 @@ export const metadata = buildMetadata({
   path: "/adoption",
   keywords: ["adopt a cat chennai", "cat adoption chennai", "rescue cat adoption tamil nadu"],
 });
-
-const WHY_ADOPT = [
-  { title: "Rescue a Life",    desc: "Every cat at Ubasti is rescued. Adopting means giving a second chance to a cat who deserves it." },
-  { title: "Know Your Cat",    desc: "You'll spend real time with them in the lounge before applying — no surprises, just connection." },
-  { title: "Full Support",     desc: "We guide you through vet checks, diet, and settling-in. You're never alone in the process." },
-];
 
 const STEPS = [
   { step: "01", title: "Meet",         desc: "Visit the lounge and spend time with the cats. See who you connect with." },
@@ -37,43 +33,96 @@ export default async function AdoptionPage() {
 
   return (
     <div style={{ background: "var(--ubasti-paper)" }}>
-      {/* Hero */}
-      <section className="py-24 md:py-36 text-center relative overflow-hidden"
-        style={{ background: "var(--ubasti-sage)" }}>
+
+      {/* Hero — arched banner */}
+      <section
+        className="relative py-24 md:py-36 text-center overflow-hidden"
+        style={{
+          background: "var(--ubasti-sage)",
+          borderBottomLeftRadius: "50% 8%",
+          borderBottomRightRadius: "50% 8%",
+        }}
+      >
         <div className="max-w-[1280px] mx-auto px-6 relative z-10">
           <p className="text-xs font-bold uppercase tracking-widest mb-4" style={{ color: "var(--ubasti-cream)", opacity: 0.8 }}>
             Open Hearts, Open Homes
           </p>
-          <h1 className="text-5xl md:text-7xl mb-6"
-            style={{ fontFamily: "var(--font-cormorant)", color: "var(--ubasti-cream)", fontWeight: 600 }}>
+          <h1
+            className="text-5xl md:text-7xl mb-6"
+            style={{ fontFamily: "var(--font-cormorant)", color: "var(--ubasti-cream)", fontWeight: 600 }}
+          >
             Adopt a Cat
           </h1>
           <p className="text-lg max-w-xl mx-auto mb-8" style={{ color: "var(--ubasti-cream)", opacity: 0.85 }}>
             Every cat here is rescued and waiting for a forever home. Could yours be the one?
           </p>
-          <a href="#adoptable-cats"
+          <a
+            href="#adoptable-cats"
             className="inline-flex h-12 items-center px-8 rounded-full font-medium text-sm transition-opacity hover:opacity-90"
-            style={{ background: "var(--ubasti-cream)", color: "var(--ubasti-olive-dark)" }}>
+            style={{ background: "var(--ubasti-cream)", color: "var(--ubasti-olive-dark)" }}
+          >
             Meet the Cats ↓
           </a>
         </div>
       </section>
 
-      {/* Why Adopt */}
-      <section className="py-16 md:py-24" style={{ background: "var(--ubasti-cream)" }}>
+      {/* Why Adopt — zig-zag alternating layout */}
+      <section className="py-16 md:py-28 overflow-hidden" style={{ background: "var(--ubasti-cream)" }}>
         <div className="max-w-[1280px] mx-auto px-6 md:px-12 lg:px-16">
-          <ScrollReveal><SectionTitle eyebrow="Why Adopt" title="Every Cat Deserves a Home" className="mb-12" /></ScrollReveal>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {WHY_ADOPT.map((item, i) => (
-              <ScrollReveal key={item.title} delay={i * 0.1}>
-                <div className="flex flex-col gap-3">
-                  <h3 className="text-2xl" style={{ fontFamily: "var(--font-cormorant)", color: "var(--ubasti-ink)", fontWeight: 600 }}>
-                    {item.title}
-                  </h3>
-                  <p className="text-sm leading-relaxed" style={{ color: "var(--ubasti-sage)" }}>{item.desc}</p>
-                </div>
-              </ScrollReveal>
-            ))}
+          <ScrollReveal>
+            <SectionTitle eyebrow="Why Adopt" title="Every Cat Deserves a Home" className="mb-16" />
+          </ScrollReveal>
+
+          <div className="flex flex-col gap-20 md:gap-28">
+            {ADOPTION_REASONS.map((reason, i) => {
+              const isEven = i % 2 === 0;
+              return (
+                <ScrollReveal key={reason.title} delay={0.1}>
+                  <div
+                    className={`flex flex-col md:flex-row gap-10 md:gap-16 items-center ${!isEven ? "md:flex-row-reverse" : ""}`}
+                  >
+                    {/* Arch image */}
+                    <div
+                      className="w-full md:w-1/2 shrink-0"
+                      style={{
+                        aspectRatio: "3/4",
+                        maxHeight: 480,
+                        transform: isEven ? "translateY(0)" : "translateY(20px)",
+                      }}
+                    >
+                      <ArchImage
+                        src={reason.imagePlaceholder}
+                        alt={reason.imageAlt}
+                        className="w-full h-full"
+                      />
+                    </div>
+
+                    {/* Text */}
+                    <div
+                      className="flex flex-col gap-4 md:w-1/2"
+                      style={{ transform: isEven ? "translateY(20px)" : "translateY(0)" }}
+                    >
+                      <span
+                        className="text-4xl md:text-5xl font-bold select-none"
+                        style={{ fontFamily: "var(--font-cinzel)", color: "var(--ubasti-blush)", opacity: 0.35 }}
+                        aria-hidden="true"
+                      >
+                        {String(i + 1).padStart(2, "0")}
+                      </span>
+                      <h3
+                        className="text-3xl md:text-4xl leading-tight"
+                        style={{ fontFamily: "var(--font-cormorant)", color: "var(--ubasti-ink)", fontWeight: 600 }}
+                      >
+                        {reason.title}
+                      </h3>
+                      <p className="text-base md:text-lg leading-relaxed" style={{ color: "var(--ubasti-sage)" }}>
+                        {reason.desc}
+                      </p>
+                    </div>
+                  </div>
+                </ScrollReveal>
+              );
+            })}
           </div>
         </div>
       </section>

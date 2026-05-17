@@ -33,6 +33,34 @@ export function Hero() {
           aria-hidden="true"
         />
 
+        {/* Left cat symbol */}
+        <div
+          className="absolute left-6 md:left-12 top-1/2 hidden md:block z-10"
+          style={{ transform: "translateY(-50%)", width: 120, height: 120, opacity: 0.75 }}
+          aria-hidden="true"
+        >
+          <Image
+            src="/images/Ubasti Cat Symbol_Beige.png"
+            alt=""
+            fill
+            className="object-contain"
+          />
+        </div>
+
+        {/* Right cat symbol (mirrored) */}
+        <div
+          className="absolute right-6 md:right-12 top-1/2 hidden md:block z-10"
+          style={{ transform: "translateY(-50%) scaleX(-1)", width: 120, height: 120, opacity: 0.75 }}
+          aria-hidden="true"
+        >
+          <Image
+            src="/images/Ubasti Cat Symbol_Beige.png"
+            alt=""
+            fill
+            className="object-contain"
+          />
+        </div>
+
         {/* Frosted glass logo card */}
         <div
           className="relative z-10 flex items-center justify-center px-10 py-8 md:px-16 md:py-10"

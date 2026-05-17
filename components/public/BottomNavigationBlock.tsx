@@ -1,4 +1,3 @@
-import Image from "next/image";
 import Link from "next/link";
 import { INSTAGRAM_URL } from "@/lib/constants/social";
 
@@ -35,18 +34,6 @@ export function BottomNavigationBlock() {
       >
         Connect with US
       </h2>
-
-      {/* Full-width feature photograph */}
-      <div className="relative w-full mt-8" style={{ aspectRatio: "21/9", maxHeight: "420px" }}>
-        <Image
-          src="/images/placeholders/offering-community.svg"
-          alt=""
-          fill
-          className="object-cover"
-          aria-hidden="true"
-          sizes="100vw"
-        />
-      </div>
 
       {/* Bottom mini-nav row */}
       <nav
