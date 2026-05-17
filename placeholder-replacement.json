@@ -44,12 +44,12 @@
     "/videos/cafe-5.mp4"
   ],
   "offerings": {
-    "coffee": "/images/placeholders/offering-coffee.svg",
+    "coffee": "/images/placeholders/Offering_cats.png",
     "cats": "/images/placeholders/Offering_cats.png",
-    "community": "/images/placeholders/offering-community.svg"
+    "community": "/images/placeholders/Offering_cats.png"
   },
   "about": {
-    "photo": "/images/placeholders/About_story.jpeg",
+    "photo": "/images/placeholders/Offering_cats.png",
     "story": "/images/placeholders/About_story.jpeg",
     "team": "/images/placeholders/About_story.jpeg"
   },
@@ -60,7 +60,8 @@
     "/images/placeholders/Adoption-4.jpeg"
   ],
   "kitties": {
-    "placeholder": "/images/placeholders/kitty-placeholder.svg"
+    "placeholder": "/images/placeholders/kitty-placeholder.svg",
+    "heroImage": "/images/kitties/kitties-hero.png"
   },
   "blog": {
     "defaultCover": "/images/placeholders/blog-cover-1.svg"
