@@ -21,11 +21,11 @@ export function HeadlineBlock() {
           transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
         >
           <Image
-            src="/images/decorative/cat-yawn.svg"
+            src="/images/decorative/cat_outline_1.png"
             alt=""
             fill
             className="object-contain"
-            style={{ filter: "invert(1) brightness(1.6)" }}
+            style={{ mixBlendMode: "screen" }}
           />
         </motion.div>
 
@@ -38,11 +38,11 @@ export function HeadlineBlock() {
           transition={{ duration: 4.7, repeat: Infinity, ease: "easeInOut" }}
         >
           <Image
-            src="/images/decorative/cat-outline.svg"
+            src="/images/decorative/cat_outline_2.png"
             alt=""
             fill
             className="object-contain"
-            style={{ filter: "invert(1) brightness(1.6)" }}
+            style={{ mixBlendMode: "screen" }}
           />
         </motion.div>
 
@@ -55,11 +55,11 @@ export function HeadlineBlock() {
           transition={{ duration: 5.4, repeat: Infinity, ease: "easeInOut" }}
         >
           <Image
-            src="/images/decorative/cat-pspsps.svg"
+            src="/images/decorative/cat_outline_3.png"
             alt=""
             fill
             className="object-contain"
-            style={{ filter: "invert(1) brightness(1.6)" }}
+            style={{ mixBlendMode: "screen" }}
           />
         </motion.div>
 
