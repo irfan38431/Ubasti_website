@@ -1,6 +1,7 @@
 import { db } from "@/lib/db/client";
 import { kitties } from "@/lib/db/schema";
 import { eq, asc } from "drizzle-orm";
+import Image from "next/image";
 import { KittyCard } from "@/components/public/KittyCard";
 import { SectionTitle } from "@/components/ui/SectionTitle";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
@@ -8,6 +9,7 @@ import { ArchImage } from "@/components/decorative/ArchImage";
 import { buildMetadata } from "@/lib/seo/metadata";
 import { ADOPTION_FORM_URL } from "@/lib/constants/social";
 import { ADOPTION_REASONS } from "@/lib/content/adoption-reasons";
+import { ADOPTION } from "@/lib/replacements";
 
 export const metadata = buildMetadata({
   title: "Adopt a Cat — Give a Rescue a Forever Home",
@@ -36,13 +38,36 @@ export default async function AdoptionPage() {
 
       {/* Hero — arched banner */}
       <section
-        className="relative py-24 md:py-36 text-center overflow-hidden"
+        className="relative py-24 md:py-36 text-center overflow-hidden flex flex-col items-center justify-center"
         style={{
+          minHeight: "500px",
           background: "var(--ubasti-sage)",
           borderBottomLeftRadius: "50% 8%",
           borderBottomRightRadius: "50% 8%",
         }}
       >
+        {/* Background image */}
+        {ADOPTION.heroImage && (
+          <Image
+            src={ADOPTION.heroImage}
+            alt="Cats available for adoption"
+            fill
+            className="object-cover"
+            priority
+            sizes="100vw"
+          />
+        )}
+
+        {/* Dark overlay */}
+        <div
+          className="absolute inset-0 z-0"
+          style={{
+            background:
+              "linear-gradient(180deg, rgba(83,93,58,0.45) 0%, rgba(43,46,31,0.6) 100%)",
+          }}
+          aria-hidden="true"
+        />
+
         <div className="max-w-[1280px] mx-auto px-6 relative z-10">
           <p className="text-xs font-bold uppercase tracking-widest mb-4" style={{ color: "var(--ubasti-cream)", opacity: 0.8 }}>
             Open Hearts, Open Homes

@@ -19,7 +19,8 @@
     "googleMapsUrl": ""
   },
   "adoption": {
-    "formUrl": "https://forms.google.com/placeholder"
+    "formUrl": "https://forms.google.com/placeholder",
+    "heroImage": "/images/adoption/adoption-hero.png"
   },
   "hero": {
     "banner": "/images/hero-banner.png"
