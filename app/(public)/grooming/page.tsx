@@ -4,6 +4,7 @@ import { BookWizard } from "../book/BookWizard";
 import { getBookableDates } from "@/lib/booking/slots";
 import { SectionTitle } from "@/components/ui/SectionTitle";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
+import { GroomingServices, type GroomingService } from "@/components/public/GroomingServices";
 import { buildMetadata } from "@/lib/seo/metadata";
 
 export const metadata = buildMetadata({
@@ -13,7 +14,7 @@ export const metadata = buildMetadata({
   keywords: ["cat grooming chennai", "dog grooming chennai", "pet grooming near me", "pet spa chennai"],
 });
 
-const MAIN_PACKAGES = [
+const MAIN_PACKAGES: GroomingService[] = [
   {
     name: "Classic Bath",
     desc: "A refreshing shampoo wash, soft blow dry — all the essentials for a fresh, happy pet.",
@@ -66,7 +67,7 @@ const ADDONS = [
   { name: "Toothbrush", price: "₹200" },
 ];
 
-const SPA_SERVICES = [
+const SPA_SERVICES: GroomingService[] = [
   {
     name: "Full Body Massage (30 Mins)",
     desc: "A soothing massage with nourishing oils to melt away tension, improve circulation, and leave your pet feeling calm, pampered, and refreshed.",
@@ -115,46 +116,6 @@ const SPA_SERVICES = [
     highlight: true,
   },
 ];
-
-function PriceBreakdown({ prices }: { prices: typeof MAIN_PACKAGES[0]["prices"] }) {
-  if ("flat" in prices) {
-    return (
-      <p className="text-2xl font-bold" style={{ fontFamily: "var(--font-cinzel)", color: "var(--ubasti-olive-dark)" }}>
-        {prices.flat}
-      </p>
-    );
-  }
-  return (
-    <div className="flex flex-col gap-3 mt-1">
-      {prices.cats && (
-        <div>
-          <p className="text-xs font-bold uppercase tracking-widest mb-1" style={{ color: "var(--ubasti-mustard)" }}>Cats</p>
-          <div className="flex flex-col gap-1">
-            {prices.cats.map((r) => (
-              <div key={r.label} className="flex justify-between text-sm">
-                <span style={{ color: "var(--ubasti-sage)" }}>{r.label}</span>
-                <span className="font-bold" style={{ fontFamily: "var(--font-cinzel)", color: "var(--ubasti-olive-dark)" }}>{r.price}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-      )}
-      {prices.dogs && (
-        <div>
-          <p className="text-xs font-bold uppercase tracking-widest mb-1" style={{ color: "var(--ubasti-mustard)" }}>Dogs</p>
-          <div className="flex flex-col gap-1">
-            {prices.dogs.map((r) => (
-              <div key={r.label} className="flex justify-between text-sm">
-                <span style={{ color: "var(--ubasti-sage)" }}>{r.label}</span>
-                <span className="font-bold" style={{ fontFamily: "var(--font-cinzel)", color: "var(--ubasti-olive-dark)" }}>{r.price}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-      )}
-    </div>
-  );
-}
 
 /* ──────────────────────── Section Banner ──────────────────────── */
 function SectionBanner({ src, alt }: { src: string; alt: string }) {
@@ -221,33 +182,8 @@ export default async function GroomingPage() {
         </div>
       </section>
 
-      {/* Main Packages */}
-      <section className="py-16 md:py-20">
-        <div className="max-w-[1280px] mx-auto px-6 md:px-12 lg:px-16">
-          <ScrollReveal>
-            <SectionBanner src="/images/grooming/packages.png" alt="Freshly groomed cat and dog on a premium grooming table" />
-            <SectionTitle eyebrow="Grooming Packages" title="Main Services" className="mb-10" />
-          </ScrollReveal>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {MAIN_PACKAGES.map((svc, i) => (
-              <ScrollReveal key={svc.name} delay={i * 0.07}>
-                <div className="rounded-2xl p-6 flex flex-col gap-3 h-full"
-                  style={{ background: "var(--ubasti-cream)", boxShadow: "0 8px 24px rgba(44,46,31,0.08)" }}>
-                  <h3 className="text-xl" style={{ fontFamily: "var(--font-cormorant)", color: "var(--ubasti-ink)", fontWeight: 600 }}>
-                    {svc.name}
-                  </h3>
-                  {svc.desc && (
-                    <p className="text-sm leading-relaxed" style={{ color: "var(--ubasti-sage)" }}>{svc.desc}</p>
-                  )}
-                  <div className="mt-auto pt-3 border-t" style={{ borderColor: "var(--ubasti-blush)" }}>
-                    <PriceBreakdown prices={svc.prices} />
-                  </div>
-                </div>
-              </ScrollReveal>
-            ))}
-          </div>
-        </div>
-      </section>
+      {/* Main Packages + Spa Services (with Cat/Dog toggle) */}
+      <GroomingServices mainPackages={MAIN_PACKAGES} spaServices={SPA_SERVICES} />
 
       {/* À La Carte Add-ons */}
       <section className="py-16 md:py-20" style={{ background: "var(--ubasti-cream)" }}>
@@ -278,67 +214,6 @@ export default async function GroomingPage() {
               </table>
             </div>
           </ScrollReveal>
-        </div>
-      </section>
-
-      {/* Spa Services */}
-      <section className="py-16 md:py-20">
-        <div className="max-w-[1280px] mx-auto px-6 md:px-12 lg:px-16">
-          <ScrollReveal>
-            <SectionBanner src="/images/grooming/spa.png" alt="Cat enjoying a luxurious spa massage treatment" />
-            <SectionTitle eyebrow="Spa" title="Spa Services" className="mb-10" />
-          </ScrollReveal>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {SPA_SERVICES.map((svc, i) => (
-              <ScrollReveal key={svc.name} delay={i * 0.07}>
-                <div className="rounded-2xl p-6 flex flex-col gap-3 h-full"
-                  style={{
-                    background: svc.highlight ? "var(--ubasti-olive-dark)" : "var(--ubasti-cream)",
-                    color: svc.highlight ? "var(--ubasti-cream)" : "inherit",
-                    boxShadow: "0 8px 24px rgba(44,46,31,0.08)",
-                  }}>
-                  <h3 className="text-xl" style={{ fontFamily: "var(--font-cormorant)", color: svc.highlight ? "var(--ubasti-cream)" : "var(--ubasti-ink)", fontWeight: 600 }}>
-                    {svc.name}
-                  </h3>
-                  {svc.desc && (
-                    <p className="text-sm leading-relaxed" style={{ color: svc.highlight ? "rgba(255,255,255,0.75)" : "var(--ubasti-sage)" }}>{svc.desc}</p>
-                  )}
-                  <div className="mt-auto pt-3 border-t" style={{ borderColor: svc.highlight ? "rgba(255,255,255,0.2)" : "var(--ubasti-blush)" }}>
-                    {"flat" in svc.prices ? (
-                      <p className="text-2xl font-bold" style={{ fontFamily: "var(--font-cinzel)", color: svc.highlight ? "var(--ubasti-mustard)" : "var(--ubasti-olive-dark)" }}>
-                        {svc.prices.flat}
-                      </p>
-                    ) : (
-                      <div className="flex flex-col gap-3">
-                        {svc.prices.cats && (
-                          <div>
-                            <p className="text-xs font-bold uppercase tracking-widest mb-1" style={{ color: "var(--ubasti-mustard)" }}>Cats</p>
-                            {svc.prices.cats.map((r) => (
-                              <div key={r.label} className="flex justify-between text-sm">
-                                <span style={{ color: svc.highlight ? "rgba(255,255,255,0.7)" : "var(--ubasti-sage)" }}>{r.label}</span>
-                                <span className="font-bold" style={{ fontFamily: "var(--font-cinzel)", color: svc.highlight ? "var(--ubasti-cream)" : "var(--ubasti-olive-dark)" }}>{r.price}</span>
-                              </div>
-                            ))}
-                          </div>
-                        )}
-                        {svc.prices.dogs && (
-                          <div>
-                            <p className="text-xs font-bold uppercase tracking-widest mb-1" style={{ color: "var(--ubasti-mustard)" }}>Dogs</p>
-                            {svc.prices.dogs.map((r) => (
-                              <div key={r.label} className="flex justify-between text-sm">
-                                <span style={{ color: svc.highlight ? "rgba(255,255,255,0.7)" : "var(--ubasti-sage)" }}>{r.label}</span>
-                                <span className="font-bold" style={{ fontFamily: "var(--font-cinzel)", color: svc.highlight ? "var(--ubasti-cream)" : "var(--ubasti-olive-dark)" }}>{r.price}</span>
-                              </div>
-                            ))}
-                          </div>
-                        )}
-                      </div>
-                    )}
-                  </div>
-                </div>
-              </ScrollReveal>
-            ))}
-          </div>
         </div>
       </section>
 
