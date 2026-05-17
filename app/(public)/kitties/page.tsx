@@ -3,13 +3,11 @@ import { kitties } from "@/lib/db/schema";
 import { asc } from "drizzle-orm";
 import Image from "next/image";
 import { KittyCard } from "@/components/public/KittyCard";
-import { SectionTitle } from "@/components/ui/SectionTitle";
 import { Badge } from "@/components/ui/Badge";
 import { FaqSection } from "@/components/public/FaqSection";
 import { FAQ_BY_PAGE } from "@/lib/content/faqs";
 import { buildMetadata } from "@/lib/seo/metadata";
 import { WavyDivider } from "@/components/decorative/WavyDivider";
-import { ScallopDivider } from "@/components/decorative/ScallopDivider";
 import { KITTIES, DECORATIVE } from "@/lib/replacements";
 
 export const metadata = buildMetadata({
@@ -31,7 +29,7 @@ export default async function KittiesPage() {
     <div style={{ background: "var(--ubasti-paper)" }}>
       {/* ── Hero with background image ── */}
       <section
-        className="relative overflow-hidden flex items-center justify-center"
+        className="relative flex items-center justify-center"
         style={{
           height: "clamp(380px, 55vh, 560px)",
           minHeight: 380,
@@ -64,7 +62,7 @@ export default async function KittiesPage() {
 
         {/* Decorative cat outlines */}
         <div
-          className="absolute bottom-8 left-6 w-20 h-20 md:w-28 md:h-28 opacity-30 hidden md:block"
+          className="absolute bottom-28 left-6 w-20 h-20 md:w-28 md:h-28 opacity-30 hidden md:block"
           aria-hidden="true"
         >
           <Image
@@ -77,7 +75,7 @@ export default async function KittiesPage() {
         </div>
 
         {/* Title content */}
-        <div className="relative z-10 text-center px-6">
+        <div className="relative z-10 text-center px-6" style={{ marginBottom: "60px" }}>
           <p
             className="text-sm font-bold uppercase tracking-widest mb-4"
             style={{ color: "var(--ubasti-mustard)", fontFamily: "var(--font-inter)" }}
@@ -104,18 +102,31 @@ export default async function KittiesPage() {
               textShadow: "0 1px 10px rgba(0,0,0,0.3)",
             }}
           >
-            eight egyptians in search of forever homes (and laps)
+            paws, purrs & forever homes await
           </p>
         </div>
-      </section>
 
-      {/* ── Wavy transition from hero to main content ── */}
-      <WavyDivider
-        topColor="transparent"
-        bottomColor="var(--ubasti-cream)"
-        height={100}
-        variant="double"
-      />
+        {/* ── Wavy transition overlaying hero bottom ── */}
+        <div className="absolute bottom-0 left-0 right-0 z-20" style={{ lineHeight: 0 }}>
+          <svg
+            viewBox="0 0 1440 120"
+            preserveAspectRatio="none"
+            style={{ width: "100%", height: "100px", display: "block" }}
+            focusable="false"
+            aria-hidden="true"
+          >
+            <path
+              d="M0,60 C240,100 480,20 720,60 C960,100 1200,20 1440,60 V120 H0 Z"
+              fill="var(--ubasti-cream)"
+              opacity={0.4}
+            />
+            <path
+              d="M0,80 C180,40 360,110 540,70 C720,30 900,100 1080,60 C1260,20 1380,80 1440,70 V120 H0 Z"
+              fill="var(--ubasti-cream)"
+            />
+          </svg>
+        </div>
+      </section>
 
       {/* ── Cat gallery section ── */}
       <section
