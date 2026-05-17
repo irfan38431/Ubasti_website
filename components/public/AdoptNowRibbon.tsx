@@ -19,26 +19,6 @@ export function AdoptNowRibbon() {
 
   return (
     <div className="hidden md:block fixed left-0 top-1/2 z-40" style={{ transform: "translateY(-50%)" }}>
-      {/* Animated cat pointer — appears to the right of the ribbon */}
-      <motion.div
-        className="absolute pointer-events-none"
-        style={{ right: -64, top: "50%", transform: "translateY(-50%)", width: 60, height: 60 }}
-        aria-hidden="true"
-        animate={shouldReduce ? {} : {
-          rotate: [0, 15, -5, 10, 0],
-          y: [0, -4, 0, -2, 0],
-        }}
-        transition={{ duration: 2.4, repeat: Infinity, ease: "easeInOut" }}
-      >
-        <Image
-          src="/images/decorative/cat-outline.svg"
-          alt=""
-          fill
-          className="object-contain"
-          style={{ filter: "invert(0.3) sepia(0.5)" }}
-        />
-      </motion.div>
-
       {/* Ribbon button */}
       <motion.div
         animate={shouldReduce ? {} : {
@@ -58,12 +38,10 @@ export function AdoptNowRibbon() {
         <Link
           href="/adoption"
           aria-label="Adopt Now"
-          className="flex items-center justify-center"
+          className="flex items-center justify-center gap-2"
           style={{
-            writingMode: "vertical-rl",
-            textOrientation: "mixed",
             color: "var(--ubasti-cream)",
-            padding: "1rem 0.6rem",
+            padding: "0.6rem 1rem",
             fontSize: "0.7rem",
             fontWeight: 700,
             letterSpacing: "0.15em",
