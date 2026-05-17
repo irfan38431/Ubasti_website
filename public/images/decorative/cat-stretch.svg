@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" fill="none" stroke="#2C2E1F" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+  <!-- Stretching cat — front legs out, rear up, tail high -->
+  <!-- Body arc / back -->
+  <path d="M110 230 Q150 160 220 190 Q270 210 290 250" />
+  <!-- Belly -->
+  <path d="M130 280 Q180 260 260 278" />
+  <!-- Head -->
+  <circle cx="95" cy="250" r="42" />
+  <!-- Ears -->
+  <polygon points="62,218 54,175 85,210" />
+  <polygon points="120,212 130,170 105,208" />
+  <!-- Inner ears -->
+  <polygon points="66,215 60,185 82,210" stroke-width="1.5" />
+  <polygon points="116,212 124,182 108,208" stroke-width="1.5" />
+  <!-- Eyes (relaxed, half-closed) -->
+  <path d="M76 244 Q84 238 92 244" stroke-width="2" />
+  <path d="M100 240 Q108 234 116 240" stroke-width="2" />
+  <!-- Nose -->
+  <circle cx="96" cy="256" r="3" fill="#2C2E1F" stroke="none" />
+  <path d="M93 258 Q96 262 99 258" />
+  <!-- Mouth -->
+  <path d="M85 264 Q96 272 107 264" />
+  <!-- Whiskers -->
+  <line x1="58" y1="250" x2="84" y2="254" />
+  <line x1="55" y1="258" x2="83" y2="258" />
+  <line x1="58" y1="266" x2="84" y2="262" />
+  <line x1="108" y1="254" x2="140" y2="248" />
+  <line x1="110" y1="258" x2="142" y2="256" />
+  <line x1="108" y1="262" x2="140" y2="266" />
+  <!-- Front legs (stretched out) -->
+  <path d="M115 278 L70 320 Q60 330 72 332 L95 330" />
+  <path d="M140 276 L100 318 Q90 328 102 330 L125 328" />
+  <!-- Front paw toes -->
+  <path d="M72 326 Q78 320 84 326" stroke-width="1.5" />
+  <path d="M102 324 Q108 318 114 324" stroke-width="1.5" />
+  <!-- Rear / haunches (raised up) -->
+  <ellipse cx="275" cy="248" rx="45" ry="38" />
+  <!-- Hind legs -->
+  <path d="M260 280 Q250 310 245 330 Q242 340 258 338" />
+  <path d="M290 280 Q285 310 282 330 Q280 340 296 338" />
+  <!-- Hind paw toes -->
+  <path d="M248 332 Q254 326 260 332" stroke-width="1.5" />
+  <path d="M286 332 Q292 326 298 332" stroke-width="1.5" />
+  <!-- Tail (curved upward gracefully) -->
+  <path d="M310 235 Q345 200 350 160 Q352 130 335 120" />
+</svg>

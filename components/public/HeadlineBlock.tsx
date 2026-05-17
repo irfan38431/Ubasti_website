@@ -12,7 +12,7 @@ export function HeadlineBlock() {
         className="relative overflow-hidden py-28 md:py-40 flex items-center justify-center"
         style={{ background: "var(--ubasti-ink)" }}
       >
-        {/* Top-right: cat-yawn (largest) */}
+        {/* Top-right: stretching cat (largest) */}
         <motion.div
           className="absolute top-4 right-[3%] md:right-[8%] w-32 h-32 md:w-56 md:h-56 opacity-75 hidden sm:block"
           style={{ transform: "rotate(-8deg)", zIndex: 0 }}
@@ -21,15 +21,15 @@ export function HeadlineBlock() {
           transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
         >
           <Image
-            src="/images/decorative/cat_outline_1.png"
+            src="/images/decorative/cat-stretch.svg"
             alt=""
             fill
             className="object-contain"
-            style={{ mixBlendMode: "screen" }}
+            style={{ filter: "invert(1) brightness(1.6)" }}
           />
         </motion.div>
 
-        {/* Bottom-left: cat-outline */}
+        {/* Bottom-left: playful cat */}
         <motion.div
           className="absolute bottom-4 left-[3%] md:left-[8%] w-28 h-28 md:w-52 md:h-52 opacity-70"
           style={{ transform: "rotate(6deg)", zIndex: 0 }}
@@ -38,15 +38,15 @@ export function HeadlineBlock() {
           transition={{ duration: 4.7, repeat: Infinity, ease: "easeInOut" }}
         >
           <Image
-            src="/images/decorative/cat_outline_2.png"
+            src="/images/decorative/cat-play.svg"
             alt=""
             fill
             className="object-contain"
-            style={{ mixBlendMode: "screen" }}
+            style={{ filter: "invert(1) brightness(1.6)" }}
           />
         </motion.div>
 
-        {/* Right-center: cat-pspsps (medium, rotated) */}
+        {/* Bottom-right: walking cat (medium, rotated) */}
         <motion.div
           className="absolute bottom-8 right-[4%] md:right-[12%] w-24 h-24 md:w-44 md:h-44 opacity-65 hidden sm:block"
           style={{ transform: "rotate(12deg)", zIndex: 0 }}
@@ -55,11 +55,11 @@ export function HeadlineBlock() {
           transition={{ duration: 5.4, repeat: Infinity, ease: "easeInOut" }}
         >
           <Image
-            src="/images/decorative/cat_outline_3.png"
+            src="/images/decorative/cat-walk.svg"
             alt=""
             fill
             className="object-contain"
-            style={{ mixBlendMode: "screen" }}
+            style={{ filter: "invert(1) brightness(1.6)" }}
           />
         </motion.div>
 

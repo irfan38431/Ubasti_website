@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" fill="none" stroke="#2C2E1F" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+  <!-- Playful cat — sitting up, one paw raised batting -->
+  <!-- Body -->
+  <ellipse cx="200" cy="290" rx="70" ry="80" />
+  <!-- Head (slightly tilted) -->
+  <circle cx="200" cy="168" r="58" />
+  <!-- Ears (alert, perked up) -->
+  <polygon points="155,130 138,78 180,118" />
+  <polygon points="245,130 262,78 220,118" />
+  <!-- Inner ears -->
+  <polygon points="158,126 146,90 176,118" stroke-width="1.5" />
+  <polygon points="242,126 254,90 224,118" stroke-width="1.5" />
+  <!-- Eyes (wide, alert, curious) -->
+  <circle cx="180" cy="162" r="12" />
+  <circle cx="220" cy="162" r="12" />
+  <circle cx="183" cy="162" r="5" fill="#2C2E1F" stroke="none" />
+  <circle cx="223" cy="162" r="5" fill="#2C2E1F" stroke="none" />
+  <!-- Nose -->
+  <circle cx="200" cy="180" r="3.5" fill="#2C2E1F" stroke="none" />
+  <path d="M196 182 Q200 186 204 182" />
+  <!-- Mouth -->
+  <path d="M190 190 Q200 198 210 190" />
+  <!-- Whiskers -->
+  <line x1="140" y1="174" x2="186" y2="178" />
+  <line x1="136" y1="184" x2="184" y2="184" />
+  <line x1="140" y1="194" x2="186" y2="188" />
+  <line x1="214" y1="178" x2="260" y2="174" />
+  <line x1="216" y1="184" x2="264" y2="184" />
+  <line x1="214" y1="188" x2="260" y2="194" />
+  <!-- Left paw (raised up, batting!) -->
+  <path d="M148 260 Q115 220 105 180 Q100 165 110 160" />
+  <!-- Paw spread (batting) -->
+  <path d="M108 164 Q100 150 96 145" stroke-width="2" />
+  <path d="M110 160 Q106 146 105 140" stroke-width="2" />
+  <path d="M114 158 Q114 144 116 138" stroke-width="2" />
+  <!-- Right paw (resting) -->
+  <path d="M238 310 Q260 330 248 342 Q236 350 220 340" />
+  <ellipse cx="236" cy="348" rx="22" ry="10" />
+  <!-- Paw toes right -->
+  <path d="M220 342 Q226 334 232 342" stroke-width="1.5" />
+  <path d="M232 340 Q238 332 244 340" stroke-width="1.5" />
+  <path d="M244 342 Q250 334 256 342" stroke-width="1.5" />
+  <!-- Left paw resting -->
+  <ellipse cx="168" cy="348" rx="22" ry="10" />
+  <path d="M152 342 Q158 334 164 342" stroke-width="1.5" />
+  <path d="M164 340 Q170 332 176 340" stroke-width="1.5" />
+  <path d="M176 342 Q182 334 188 342" stroke-width="1.5" />
+  <!-- Tail (curled behind) -->
+  <path d="M270 320 Q330 290 335 240 Q338 200 310 210 Q290 218 295 240" />
+</svg>
