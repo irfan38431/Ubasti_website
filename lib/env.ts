@@ -37,12 +37,9 @@ const envSchema = z.object({
   // Cron
   CRON_SECRET: z.string().optional(),
 
-  // Email (SMTP — for email OTP)
-  SMTP_HOST: z.string().optional(),
-  SMTP_PORT: z.coerce.number().optional().default(587),
-  SMTP_USER: z.string().optional(),
-  SMTP_PASS: z.string().optional(),
-  SMTP_FROM: z.string().optional().default("Ubasti Cat Cafe <hello@ubasti.in>"),
+  // Email (Resend — for email OTP)
+  RESEND_API_KEY: z.string().optional(),
+  EMAIL_FROM: z.string().optional().default("Ubasti Cat Cafe <hello@ubasticats.com>"),
 });
 
 // Only validate at runtime in server context (not during type generation)

@@ -1,4 +1,4 @@
-import nodemailer from "nodemailer";
+import { Resend } from "resend";
 
 interface SendEmailOptions {
   to: string;
@@ -6,30 +6,24 @@ interface SendEmailOptions {
   html: string;
 }
 
-function getTransporter() {
-  const host = process.env.SMTP_HOST;
-  const user = process.env.SMTP_USER;
-  const pass = process.env.SMTP_PASS;
+let _resend: Resend | null = null;
 
-  if (!host || !user || !pass) return null;
-
-  return nodemailer.createTransport({
-    host,
-    port: Number(process.env.SMTP_PORT ?? 587),
-    secure: false,
-    auth: { user, pass },
-  });
+function getResend(): Resend | null {
+  const key = process.env.RESEND_API_KEY;
+  if (!key) return null;
+  if (!_resend) _resend = new Resend(key);
+  return _resend;
 }
 
 export async function sendEmail({ to, subject, html }: SendEmailOptions) {
-  const transporter = getTransporter();
-  const from = process.env.SMTP_FROM ?? "Ubasti Cat Cafe <hello@ubasti.in>";
+  const resend = getResend();
+  const from = process.env.EMAIL_FROM ?? "Ubasti Cat Cafe <hello@ubasticats.com>";
 
-  if (!transporter) {
-    // Dev fallback — log the email so developers can see the OTP code
+  if (!resend) {
     console.log(`\n[EMAIL DEV] To: ${to}\nSubject: ${subject}\n${html}\n`);
     return;
   }
 
-  await transporter.sendMail({ from, to, subject, html });
+  const { error } = await resend.emails.send({ from, to, subject, html });
+  if (error) throw new Error(`Resend error: ${error.message}`);
 }
