@@ -43,20 +43,25 @@ export async function POST(req: NextRequest) {
     userAgent: req.headers.get("user-agent") ?? undefined,
   });
 
-  await sendEmail({
-    to: email,
-    subject: "Your Ubasti login code",
-    html: `
-      <div style="font-family:sans-serif;max-width:400px;margin:0 auto;padding:24px">
-        <p style="font-size:18px;font-weight:600;color:#2B2E1F;margin-bottom:8px">Your Ubasti login code</p>
-        <p style="font-size:14px;color:#95996D;margin-bottom:24px">Use this code to sign in. It expires in 5 minutes.</p>
-        <div style="background:#FAF6F0;border:1px solid #F2D4CC;border-radius:12px;padding:24px;text-align:center;font-size:36px;font-weight:700;letter-spacing:8px;color:#535D3A">
-          ${code}
+  try {
+    await sendEmail({
+      to: email,
+      subject: "Your Ubasti login code",
+      html: `
+        <div style="font-family:sans-serif;max-width:400px;margin:0 auto;padding:24px">
+          <p style="font-size:18px;font-weight:600;color:#2B2E1F;margin-bottom:8px">Your Ubasti login code</p>
+          <p style="font-size:14px;color:#95996D;margin-bottom:24px">Use this code to sign in. It expires in 5 minutes.</p>
+          <div style="background:#FAF6F0;border:1px solid #F2D4CC;border-radius:12px;padding:24px;text-align:center;font-size:36px;font-weight:700;letter-spacing:8px;color:#535D3A">
+            ${code}
+          </div>
+          <p style="font-size:12px;color:#B5BC91;margin-top:16px;text-align:center">If you didn't request this, you can safely ignore this email.</p>
         </div>
-        <p style="font-size:12px;color:#B5BC91;margin-top:16px;text-align:center">If you didn't request this, you can safely ignore this email.</p>
-      </div>
-    `,
-  });
+      `,
+    });
+  } catch (err) {
+    console.error("[send-email-otp] sendEmail failed:", err);
+    return NextResponse.json({ error: "Failed to send email. Please try again." }, { status: 500 });
+  }
 
   await audit({
     action:     "email_otp.send",
