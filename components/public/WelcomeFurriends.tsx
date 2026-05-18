@@ -16,7 +16,7 @@ export function WelcomeFurriends() {
                 className="text-4xl md:text-5xl text-center"
                 style={{ fontFamily: "var(--font-cormorant)", color: "var(--ubasti-ink)", fontWeight: 600 }}
               >
-                Welcome!              </h2>
+                Welcome!</h2>
               {/* Sparkles near heading */}
               <div
                 className="absolute -top-6 -right-10 w-12 h-12 md:w-16 md:h-16 opacity-60 hidden sm:block"
