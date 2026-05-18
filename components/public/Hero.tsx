@@ -19,7 +19,8 @@ export function Hero() {
           src={HERO.banner}
           alt="Cozy interior of Ubasti Cat Cafe"
           fill
-          className="object-cover object-top"
+          className="object-cover"
+          style={{ objectPosition: "center 30%" }}
           priority
           sizes="100vw"
         />
