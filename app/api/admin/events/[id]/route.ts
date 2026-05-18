@@ -29,8 +29,9 @@ const patchSchema = z.object({
   location:      z.string().max(200).optional(),
   capacity:      z.number().int().positive().nullable().optional(),
   priceInr:      z.number().int().min(0).nullable().optional(),
-  coverImageUrl: z.string().url().nullable().optional(),
-  isPublished:   z.boolean().optional(),
+  coverImageUrl:   z.string().url().nullable().optional(),
+  isPublished:     z.boolean().optional(),
+  registrationUrl: z.string().url().nullable().optional(),
 });
 
 export async function PATCH(req: NextRequest, ctx: Ctx) {

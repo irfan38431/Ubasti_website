@@ -72,6 +72,7 @@ export const events = pgTable(
     capacity:       integer("capacity"),
     priceInr:       integer("price_inr"),
     isPublished:    boolean("is_published").notNull().default(false),
+    registrationUrl: text("registration_url"),
     createdBy:      uuid("created_by").references(() => users.id),
     updatedBy:      uuid("updated_by").references(() => users.id),
     updatedAt:      timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
@@ -117,3 +118,49 @@ export const loungeSettings = pgTable("lounge_settings", {
   closedDays:      jsonb("closed_days").notNull().default([2]),   // 0=Sun..6=Sat; default: Tue=2
   updatedAt:       timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
 });
+
+// ── grooming_bookings ──────────────────────────────────────────────────────
+
+export const groomingBookings = pgTable(
+  "grooming_bookings",
+  {
+    id:            uuid("id").primaryKey().defaultRandom(),
+    userId:        uuid("user_id").notNull().references(() => users.id),
+    services:      jsonb("services").notNull().$type<string[]>(),
+    scheduledDate: text("scheduled_date").notNull(),
+    petName:       text("pet_name").notNull(),
+    petBreed:      text("pet_breed"),
+    petNotes:      text("pet_notes"),
+    status:        text("status").notNull().default("pending"),
+    adminNotes:    text("admin_notes"),
+    createdAt:     timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+  },
+  (t) => [
+    index("grooming_bookings_user_idx").on(t.userId),
+    index("grooming_bookings_date_idx").on(t.scheduledDate),
+  ]
+);
+
+// ── boarding_bookings ──────────────────────────────────────────────────────
+
+export const boardingBookings = pgTable(
+  "boarding_bookings",
+  {
+    id:          uuid("id").primaryKey().defaultRandom(),
+    userId:      uuid("user_id").notNull().references(() => users.id),
+    stayType:    text("stay_type").notNull(),
+    foodOption:  text("food_option").notNull(),
+    checkIn:     text("check_in").notNull(),
+    checkOut:    text("check_out").notNull(),
+    petName:     text("pet_name").notNull(),
+    petBreed:    text("pet_breed"),
+    petNotes:    text("pet_notes"),
+    status:      text("status").notNull().default("pending"),
+    adminNotes:  text("admin_notes"),
+    createdAt:   timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+  },
+  (t) => [
+    index("boarding_bookings_user_idx").on(t.userId),
+    index("boarding_bookings_checkin_idx").on(t.checkIn),
+  ]
+);

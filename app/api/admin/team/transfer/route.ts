@@ -33,7 +33,10 @@ export async function POST(req: NextRequest) {
     if (!newAdmin) return NextResponse.json({ error: "Target user not found" }, { status: 404 });
     if (!newAdmin.isAdmin) return NextResponse.json({ error: "Target user must be an admin first" }, { status: 400 });
 
-    // Verify OTP for current root admin
+    // Verify OTP for current root admin (requires a phone number)
+    if (!caller.phoneE164) {
+      return NextResponse.json({ error: "Root admin must have a phone number to use OTP-based transfer" }, { status: 400 });
+    }
     const now     = new Date();
     const [record] = await db.select().from(otpCodes)
       .where(and(

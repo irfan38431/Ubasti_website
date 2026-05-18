@@ -7,22 +7,27 @@ import { usePathname } from "next/navigation";
 import {
   LayoutDashboard, Calendar, BookOpen, FileText,
   Users, Image, ClipboardList, LogOut, ChevronRight,
-  PartyPopper, Settings,
+  PartyPopper, Settings, Cat, Scissors, BarChart2, Home,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useAuth } from "@/lib/contexts/auth";
 import { useRouter } from "next/navigation";
 
 const LINKS = [
-  { href: "/admin",              label: "Dashboard",    icon: LayoutDashboard },
-  { href: "/admin/appointments", label: "Appointments", icon: Calendar },
-  { href: "/admin/events",       label: "Events",       icon: PartyPopper },
-  { href: "/admin/blog",         label: "Blog",         icon: BookOpen },
-  { href: "/admin/pages",        label: "Pages",        icon: FileText },
-  { href: "/admin/inquiries",    label: "Inquiries",    icon: ClipboardList },
-  { href: "/admin/media",        label: "Media",        icon: Image },
-  { href: "/admin/team",         label: "Team",         icon: Users },
-  { href: "/admin/audit",        label: "Audit Log",    icon: Settings },
+  { href: "/admin",                       label: "Dashboard",          icon: LayoutDashboard },
+  { href: "/admin/appointments",          label: "Appointments",       icon: Calendar },
+  { href: "/admin/grooming-bookings",     label: "Grooming Bookings",  icon: Scissors },
+  { href: "/admin/boarding-bookings",     label: "Boarding Bookings",  icon: Home },
+  { href: "/admin/events",               label: "Events",             icon: PartyPopper },
+  { href: "/admin/kitties",               label: "Kitties",         icon: Cat },
+  { href: "/admin/blog",                  label: "Blog",            icon: BookOpen },
+  { href: "/admin/pages",                 label: "Pages",           icon: FileText },
+  { href: "/admin/inquiries",             label: "Inquiries",       icon: ClipboardList },
+  { href: "/admin/media",                 label: "Media",           icon: Image },
+  { href: "/admin/team",                  label: "Team",            icon: Users },
+  { href: "/admin/settings/grooming",     label: "Grooming Prices", icon: Scissors },
+  { href: "/admin/settings/counters",     label: "Impact Counters", icon: BarChart2 },
+  { href: "/admin/audit",                 label: "Audit Log",       icon: Settings },
 ];
 
 export function AdminSidebar() {
@@ -99,7 +104,7 @@ export function AdminSidebar() {
       <div className="shrink-0 p-3 border-t" style={{ borderColor: "var(--ubasti-blush-light)" }}>
         {!collapsed && user && (
           <p className="text-xs mb-2 truncate opacity-60" style={{ color: "var(--ubasti-ink)" }}>
-            {user.displayName ?? user.phoneE164}
+            {user.displayName ?? user.email ?? user.phoneE164}
           </p>
         )}
         <button

@@ -28,21 +28,25 @@ function devCheck(key: string, limit: number, windowMs: number) {
 
 export type RateLimitResult = { success: boolean; remaining?: number };
 
-let _sendByPhone: Ratelimit | null = null;
-let _sendByIp:    Ratelimit | null = null;
-let _verifyPhone: Ratelimit | null = null;
-let _contactIp:   Ratelimit | null = null;
-let _inquiryIp:   Ratelimit | null = null;
+let _sendByPhone:  Ratelimit | null = null;
+let _sendByIp:     Ratelimit | null = null;
+let _verifyPhone:  Ratelimit | null = null;
+let _sendByEmail:  Ratelimit | null = null;
+let _verifyEmail:  Ratelimit | null = null;
+let _contactIp:    Ratelimit | null = null;
+let _inquiryIp:    Ratelimit | null = null;
 
 function getLimiters() {
   const redis = makeRedis();
   if (!redis) return null;
-  _sendByPhone ??= new Ratelimit({ redis, limiter: Ratelimit.slidingWindow(3,  "15m"), prefix: "rl:otp:phone" });
-  _sendByIp    ??= new Ratelimit({ redis, limiter: Ratelimit.slidingWindow(10, "1h"),  prefix: "rl:otp:ip" });
-  _verifyPhone ??= new Ratelimit({ redis, limiter: Ratelimit.slidingWindow(10, "15m"), prefix: "rl:verify:phone" });
-  _contactIp   ??= new Ratelimit({ redis, limiter: Ratelimit.slidingWindow(10, "1h"),  prefix: "rl:contact:ip" });
-  _inquiryIp   ??= new Ratelimit({ redis, limiter: Ratelimit.slidingWindow(5,  "1h"),  prefix: "rl:inquiry:ip" });
-  return { sendByPhone: _sendByPhone, sendByIp: _sendByIp, verifyPhone: _verifyPhone, contactIp: _contactIp, inquiryIp: _inquiryIp };
+  _sendByPhone  ??= new Ratelimit({ redis, limiter: Ratelimit.slidingWindow(3,  "15m"), prefix: "rl:otp:phone" });
+  _sendByIp     ??= new Ratelimit({ redis, limiter: Ratelimit.slidingWindow(10, "1h"),  prefix: "rl:otp:ip" });
+  _verifyPhone  ??= new Ratelimit({ redis, limiter: Ratelimit.slidingWindow(10, "15m"), prefix: "rl:verify:phone" });
+  _sendByEmail  ??= new Ratelimit({ redis, limiter: Ratelimit.slidingWindow(3,  "15m"), prefix: "rl:otp:email" });
+  _verifyEmail  ??= new Ratelimit({ redis, limiter: Ratelimit.slidingWindow(10, "15m"), prefix: "rl:verify:email" });
+  _contactIp    ??= new Ratelimit({ redis, limiter: Ratelimit.slidingWindow(10, "1h"),  prefix: "rl:contact:ip" });
+  _inquiryIp    ??= new Ratelimit({ redis, limiter: Ratelimit.slidingWindow(5,  "1h"),  prefix: "rl:inquiry:ip" });
+  return { sendByPhone: _sendByPhone, sendByIp: _sendByIp, verifyPhone: _verifyPhone, sendByEmail: _sendByEmail, verifyEmail: _verifyEmail, contactIp: _contactIp, inquiryIp: _inquiryIp };
 }
 
 export async function checkSendOtpLimits(
@@ -71,6 +75,24 @@ export async function checkVerifyOtpLimit(
     return { success: devCheck(`verify:${phoneE164}`, 10, 15 * 60 * 1000) };
   }
   const result = await limiters.verifyPhone.limit(phoneE164);
+  return { success: result.success, remaining: result.remaining };
+}
+
+export async function checkSendEmailOtpLimit(email: string): Promise<RateLimitResult> {
+  const limiters = getLimiters();
+  if (!limiters) {
+    return { success: devCheck(`email:${email}`, 3, 15 * 60 * 1000) };
+  }
+  const result = await limiters.sendByEmail.limit(email);
+  return { success: result.success };
+}
+
+export async function checkVerifyEmailOtpLimit(email: string): Promise<RateLimitResult> {
+  const limiters = getLimiters();
+  if (!limiters) {
+    return { success: devCheck(`verify:email:${email}`, 10, 15 * 60 * 1000) };
+  }
+  const result = await limiters.verifyEmail.limit(email);
   return { success: result.success, remaining: result.remaining };
 }
 

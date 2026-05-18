@@ -4,6 +4,7 @@
  * Requires DATABASE_URL in env (or .env.local loaded externally).
  */
 import "dotenv/config";
+import * as argon2 from "argon2";
 import postgres from "postgres";
 import { drizzle } from "drizzle-orm/postgres-js";
 import * as schema from "../lib/db/schema";
@@ -14,29 +15,57 @@ if (!DB_URL) throw new Error("DATABASE_URL not set");
 const client = postgres(DB_URL, { prepare: false });
 const db = drizzle(client, { schema });
 
-const ADMIN_PHONE = process.env.SEED_ROOT_ADMIN_PHONE ?? "+919445077270";
-const ADMIN_NAME  = process.env.SEED_ROOT_ADMIN_NAME  ?? "Irfan";
+const ADMIN_PHONE    = process.env.SEED_ROOT_ADMIN_PHONE    ?? "+919445077270";
+const ADMIN_NAME     = process.env.SEED_ROOT_ADMIN_NAME     ?? "Irfan";
+const ADMIN_EMAIL    = process.env.SEED_ROOT_ADMIN_EMAIL    ?? "webdev@ubasticats.com";
+const ADMIN_PASSWORD = process.env.SEED_ROOT_ADMIN_PASSWORD ?? "";
 
 async function main() {
   console.log("Seeding database...");
 
-  // 1. Root admin user
-  const [admin] = await db
-    .insert(schema.users)
-    .values({
-      phoneE164:   ADMIN_PHONE,
-      displayName: ADMIN_NAME,
-      isAdmin:     true,
-      isRootAdmin: true,
-    })
-    .onConflictDoNothing({ target: schema.users.phoneE164 })
-    .returning();
+  // 1. Root admin user — email+password (primary) + phone (optional legacy)
+  const passwordHash = ADMIN_PASSWORD
+    ? await argon2.hash(ADMIN_PASSWORD, { type: argon2.argon2id })
+    : undefined;
 
-  const adminId = admin?.id ?? (
-    await db.query.users.findFirst({
-      where: (u, { eq }) => eq(u.phoneE164, ADMIN_PHONE),
-    })
-  )?.id;
+  // Try email-based upsert first
+  let adminId: string | undefined;
+  if (ADMIN_EMAIL) {
+    const [adminByEmail] = await db
+      .insert(schema.users)
+      .values({
+        email:        ADMIN_EMAIL,
+        passwordHash: passwordHash ?? null,
+        displayName:  ADMIN_NAME,
+        isAdmin:      true,
+        isRootAdmin:  true,
+      })
+      .onConflictDoUpdate({
+        target: schema.users.email,
+        set:    { passwordHash: passwordHash ?? null, isAdmin: true, isRootAdmin: true },
+      })
+      .returning();
+    adminId = adminByEmail?.id;
+  }
+
+  // Fallback: phone-based upsert for backwards compatibility
+  if (!adminId && ADMIN_PHONE) {
+    const [adminByPhone] = await db
+      .insert(schema.users)
+      .values({
+        phoneE164:   ADMIN_PHONE,
+        displayName: ADMIN_NAME,
+        isAdmin:     true,
+        isRootAdmin: true,
+      })
+      .onConflictDoNothing({ target: schema.users.phoneE164 })
+      .returning();
+    adminId = adminByPhone?.id ?? (
+      await db.query.users.findFirst({
+        where: (u, { eq }) => eq(u.phoneE164, ADMIN_PHONE),
+      })
+    )?.id;
+  }
 
   if (adminId) {
     await db
@@ -47,36 +76,13 @@ async function main() {
         notes:   "Founding admin, seeded on initial deploy",
       })
       .onConflictDoNothing({ target: schema.admins.userId });
-    console.log(`✓ Admin user: ${ADMIN_NAME} (${ADMIN_PHONE})`);
+    console.log(`✓ Admin user: ${ADMIN_NAME} (${ADMIN_EMAIL || ADMIN_PHONE})`);
   }
 
   // 2. CMS pages with initial blocks
+  // NOTE: "home" is intentionally excluded — it uses a static layout in app/(public)/page.tsx.
+  // Seeding home blocks would cause BlocksRenderer to override the static page.
   const cmsPages = [
-    {
-      slug: "home", title: "Home",
-      blocks: [
-        { type: "hero", eyebrow: "Chennai's First Cat Lounge", heading: "Where Coffee\\nMeets Cats",
-          subheading: "a sanctuary for snuggle time, slow mornings & furriends forever",
-          imageUrl: "/images/placeholders/hero-cat-portrait.svg",
-          ctaText: "Book a Session", ctaHref: "/book",
-          ctaSecondaryText: "Meet the Kitties", ctaSecondaryHref: "/kitties" },
-        { type: "ideology", eyebrow: "Our Ideology",
-          heading: "Inspired by Bastet,\ngoddess of home, cats & calm.",
-          quote: "the world could use more slow mornings, warm cups, and cats on laps",
-          body: "Ubasti is a cat cafe and adoption lounge in Chennai. We believe every cat deserves a forever home, and every person deserves a few minutes of purring. Come for the coffee. Stay for the cats. Leave with a friend." },
-        { type: "offerings", eyebrow: "What We Offer", items: [
-          { imageUrl: "/images/placeholders/offering-coffee.svg", badge: "coffee-cause", title: "Craft Coffee", body: "Specialty brews, teas, and light bites — savoured in the quiet company of cats." },
-          { imageUrl: "/images/placeholders/offering-cats.svg", badge: "forever-friend", title: "Resident Cats", body: "Eight resident felines looking for cuddles, playtime, and — if the stars align — forever homes." },
-          { imageUrl: "/images/placeholders/offering-community.svg", badge: "purrfect-partners", title: "Community", body: "Events, yoga mornings, adoption drives, and private bookings. A space that brings people together." },
-        ]},
-        { type: "booking_cta", heading: "Ready for some purrfect company?",
-          sub: "book a 60-minute lounge session — just you, a cup, and the cats",
-          ctaText: "Book Now — it's free", ctaHref: "/book",
-          note: "Pay on arrival · Cancel up to 24h before · No account needed to browse" },
-        { type: "kitty_teaser", eyebrow: "Meet the Gang", heading: "Our Resident Felines" },
-        { type: "contact_form" },
-      ],
-    },
     {
       slug: "about", title: "About Us",
       blocks: [
@@ -206,7 +212,43 @@ async function main() {
     .onConflictDoNothing({ target: schema.events.slug });
   console.log("✓ Sample event seeded");
 
-  // 5. Sample blog post
+  // 5. Site settings — grooming packages (fallback seed)
+  const groomingPackages = {
+    mainPackages: [
+      { name: "Classic Bath", desc: "A refreshing shampoo wash, soft blow dry — all the essentials for a fresh, happy pet.", prices: { cats: [{ label: "Long Coat", price: "₹1,000" }, { label: "Short Coat", price: "₹850" }], dogs: [{ label: "Small", price: "₹1,000" }, { label: "Medium", price: "₹1,300" }, { label: "Large", price: "₹1,600" }] } },
+      { name: "The Royal Treatment", desc: "Our premium combo with imported shampoo + conditioner, combing, ear clean, toothbrushing, and an anal cleanse — the ultimate head-to-tail care.", prices: { cats: [{ label: "Long Coat", price: "₹1,700" }, { label: "Short Coat", price: "₹1,600" }], dogs: [{ label: "Small", price: "₹1,300" }, { label: "Medium", price: "₹1,600" }, { label: "Large", price: "₹1,900" }] } },
+      { name: "Signature Groom", desc: "A complete makeover with shampoo wash, soft blow dry, neat haircut, nail trim, and ear clean for a polished finish.", prices: { cats: [{ label: "Long Coat", price: "₹1,700" }, { label: "Short Coat", price: "₹1,600" }], dogs: [{ label: "Small", price: "₹1,600" }, { label: "Medium", price: "₹1,800" }, { label: "Large", price: "₹2,000" }] } },
+      { name: "Couture Cut", desc: "Tailored haircuts to match your pet's unique paw-sonality, leaving them looking chic and charming.", prices: { dogs: [{ label: "Small", price: "₹1,000" }, { label: "Medium", price: "₹1,200" }, { label: "Large", price: "₹1,400" }] } },
+      { name: "Neat & Tidy", desc: "A speedy spruce-up with a nail cut and ear clean — short, sweet, and oh-so-convenient.", prices: { flat: "₹450" } },
+      { name: "The Detailed Groom", desc: "Because details matter: underpaws, underbelly, genitals, nail trim, ear clean, and a neat eye trim to keep your pet tidy and comfortable.", prices: { flat: "₹650" } },
+    ],
+    spaServices: [
+      { name: "Full Body Massage (30 Mins)", desc: "A soothing massage with nourishing oils to melt away tension, improve circulation, and leave your pet feeling calm, pampered, and refreshed.", prices: { cats: [{ label: "Cats", price: "₹600" }], dogs: [{ label: "Small", price: "₹600" }, { label: "Medium", price: "₹700" }, { label: "Large", price: "₹800" }] } },
+      { name: "Pawdicure Massage (15 Mins)", desc: "A gentle paw massage that relaxes tired little feet, boosts comfort, and keeps those precious paws feeling their best.", prices: { flat: "₹400" } },
+      { name: "The Healing Bath", desc: "A soothing spa session with your vet-prescribed shampoo, perfect for sensitive skin and special care needs. (Customer provides shampoo)", prices: { cats: [{ label: "Long Coat", price: "₹750" }, { label: "Short Coat", price: "₹650" }], dogs: [{ label: "Small", price: "₹1,300" }, { label: "Medium", price: "₹1,700" }, { label: "Large", price: "₹1,800" }] } },
+      { name: "The Tick-Free Bath (1 Hr)", desc: "Protective treatment to keep your pet itch-free, comfortable, and ready for cuddles.", prices: { flat: "₹1,100" } },
+      { name: "The Colour Pop", desc: "Safe, pet-friendly colouring for a stylish flair that makes your furry friend stand out.", prices: { flat: "₹600" } },
+      { name: "Dematting (Min. 3 Hrs)", desc: "", prices: { flat: "₹600/hr" } },
+      { name: "Deshedding (Min. 2 Hrs)", desc: "", prices: { flat: "₹600/hr" } },
+      { name: "Signature Spa Combo", desc: "The Ultimate Indulgence — a complete head-to-tail luxury experience for the perfect spa day.", prices: { flat: "₹2,499" }, highlight: true },
+    ],
+    addons: [
+      { name: "Anal Gland Cleansing", price: "₹200" },
+      { name: "Hair Brushing", price: "₹200" },
+      { name: "Eye Trim", price: "₹200" },
+      { name: "Eye Hair Removal", price: "₹200" },
+      { name: "Paw Trim", price: "₹200" },
+      { name: "Toothbrush", price: "₹200" },
+    ],
+  };
+
+  await db
+    .insert(schema.siteSettings)
+    .values({ key: "groomingPackages", value: groomingPackages, updatedAt: new Date() })
+    .onConflictDoNothing({ target: schema.siteSettings.key });
+  console.log("✓ Grooming packages seeded to site_settings");
+
+  // 6. Sample blog post
   await db
     .insert(schema.blogPosts)
     .values({

@@ -10,24 +10,26 @@ const RichTextEditor = dynamic(
 );
 
 interface EventData {
-  id?:           string;
-  title:         string;
-  slug:          string;
-  description:   string;
-  bodyRichtext:  string;
-  startsAt:      string;
-  endsAt:        string;
-  location:      string;
-  capacity:      string;
-  priceInr:      string;
-  coverImageUrl: string;
-  isPublished:   boolean;
+  id?:             string;
+  title:           string;
+  slug:            string;
+  description:     string;
+  bodyRichtext:    string;
+  startsAt:        string;
+  endsAt:          string;
+  location:        string;
+  capacity:        string;
+  priceInr:        string;
+  coverImageUrl:   string;
+  isPublished:     boolean;
+  registrationUrl: string;
 }
 
 const EMPTY: EventData = {
   title: "", slug: "", description: "", bodyRichtext: "",
   startsAt: "", endsAt: "", location: "Ubasti Cat Cafe, Chennai",
   capacity: "", priceInr: "0", coverImageUrl: "", isPublished: false,
+  registrationUrl: "",
 };
 
 function toIsoLocal(dt: string) {
@@ -63,17 +65,18 @@ export function EventEditor({ eventId }: { eventId?: string }) {
         const e    = data.event;
         if (!cancelled) setForm({
           id:            e.id,
-          title:         e.title ?? "",
-          slug:          e.slug ?? "",
-          description:   e.description ?? "",
-          bodyRichtext:  typeof e.bodyRichtext === "string" ? e.bodyRichtext : JSON.stringify(e.bodyRichtext ?? {}),
-          startsAt:      toIsoLocal(e.startsAt),
-          endsAt:        toIsoLocal(e.endsAt),
-          location:      e.location ?? "",
-          capacity:      e.capacity ? String(e.capacity) : "",
-          priceInr:      e.priceInr != null ? String(e.priceInr) : "0",
-          coverImageUrl: e.coverImageUrl ?? "",
-          isPublished:   !!e.isPublished,
+          title:           e.title ?? "",
+          slug:            e.slug ?? "",
+          description:     e.description ?? "",
+          bodyRichtext:    typeof e.bodyRichtext === "string" ? e.bodyRichtext : JSON.stringify(e.bodyRichtext ?? {}),
+          startsAt:        toIsoLocal(e.startsAt),
+          endsAt:          toIsoLocal(e.endsAt),
+          location:        e.location ?? "",
+          capacity:        e.capacity ? String(e.capacity) : "",
+          priceInr:        e.priceInr != null ? String(e.priceInr) : "0",
+          coverImageUrl:   e.coverImageUrl ?? "",
+          isPublished:     !!e.isPublished,
+          registrationUrl: e.registrationUrl ?? "",
         });
       } catch {
         if (!cancelled) setError("Failed to load event.");
@@ -120,8 +123,9 @@ export function EventEditor({ eventId }: { eventId?: string }) {
         location:      form.location || undefined,
         capacity:      form.capacity ? parseInt(form.capacity) : undefined,
         priceInr:      form.priceInr ? parseInt(form.priceInr) : 0,
-        coverImageUrl: form.coverImageUrl || undefined,
-        isPublished:   publish ?? form.isPublished,
+        coverImageUrl:   form.coverImageUrl || undefined,
+        isPublished:     publish ?? form.isPublished,
+        registrationUrl: form.registrationUrl || undefined,
       };
 
       if (isNew) {
@@ -258,6 +262,11 @@ export function EventEditor({ eventId }: { eventId?: string }) {
               <div className="flex flex-col gap-1">
                 <label className="text-xs font-medium uppercase tracking-wide" style={{ color: "var(--ubasti-sage)" }}>Cover image URL</label>
                 <input type="text" value={form.coverImageUrl} onChange={(e) => set("coverImageUrl", e.target.value)} className={field} style={fieldStyle} />
+              </div>
+              <div className="flex flex-col gap-1">
+                <label className="text-xs font-medium uppercase tracking-wide" style={{ color: "var(--ubasti-sage)" }}>Registration URL (Google Forms)</label>
+                <input type="url" value={form.registrationUrl} onChange={(e) => set("registrationUrl", e.target.value)} className={field} style={fieldStyle} placeholder="https://forms.gle/…" />
+                <p className="text-xs" style={{ color: "var(--ubasti-sage)", opacity: 0.7 }}>If set, public page shows an external registration link instead of the built-in form.</p>
               </div>
             </div>
           </div>

@@ -6,8 +6,14 @@ export const config = {
     "/admin/:path*",
     "/account/:path*",
     "/book",
+    "/grooming/book",
+    "/boarding/book",
     "/api/admin/:path*",
     "/api/appointments/:path*",
+    "/api/grooming-bookings/:path*",
+    "/api/grooming-bookings",
+    "/api/boarding-bookings/:path*",
+    "/api/boarding-bookings",
   ],
 };
 

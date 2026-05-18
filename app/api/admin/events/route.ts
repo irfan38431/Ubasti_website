@@ -31,8 +31,9 @@ const createSchema = z.object({
   location:      z.string().max(200).optional(),
   capacity:      z.number().int().positive().optional(),
   priceInr:      z.number().int().min(0).optional(),
-  coverImageUrl: z.string().url().optional(),
-  isPublished:   z.boolean().default(false),
+  coverImageUrl:   z.string().url().optional(),
+  isPublished:     z.boolean().default(false),
+  registrationUrl: z.string().url().optional(),
 });
 
 export async function POST(req: NextRequest) {

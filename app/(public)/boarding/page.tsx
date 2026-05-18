@@ -11,18 +11,22 @@ export const metadata = buildMetadata({
   keywords: ["cat boarding chennai", "cat stay chennai", "cat hostel chennai"],
 });
 
-const BOARDING_OPTIONS = [
+const BOARDING_PACKAGES = [
   {
-    label: "With Food",
-    desc: "Meals provided by Ubasti",
-    price: "₹1,000",
-    unit: "/night",
+    name: "Lounge Stay",
+    desc: "Your cat roams the lounge every day with feline friends and enrichment activities.",
+    options: [
+      { label: "Ubasti provides food & litter", price: "₹1,000" },
+      { label: "Food & litter by pet parent", price: "₹900" },
+    ],
   },
   {
-    label: "Without Food",
-    desc: "Owner provides food",
-    price: "₹900",
-    unit: "/night",
+    name: "Enclosure Stay",
+    desc: "Your cat stays in a private, cozy boarding enclosure for a calm and secure stay.",
+    options: [
+      { label: "Ubasti provides food & litter", price: "₹800" },
+      { label: "Food & litter by pet parent", price: "₹700" },
+    ],
   },
 ];
 
@@ -125,21 +129,25 @@ export default function BoardingPage() {
             </div>
             <SectionTitle eyebrow="Pricing" title="Boarding Rates" className="mb-10" />
           </ScrollReveal>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-2xl mx-auto">
-            {BOARDING_OPTIONS.map((opt, i) => (
-              <ScrollReveal key={opt.label} delay={i * 0.1}>
-                <div className="rounded-2xl p-8 flex flex-col gap-3 text-center"
-                  style={{
-                    background: i === 0 ? "var(--ubasti-sage)" : "var(--ubasti-olive-dark)",
-                    color: "var(--ubasti-cream)",
-                    boxShadow: "0 8px 24px rgba(44,46,31,0.08)",
-                  }}>
-                  <h2 className="text-2xl" style={{ fontFamily: "var(--font-cormorant)", fontWeight: 600 }}>{opt.label}</h2>
-                  <p className="text-sm opacity-80">{opt.desc}</p>
-                  <p className="text-4xl font-bold mt-2" style={{ fontFamily: "var(--font-cinzel)" }}>
-                    {opt.price}
-                    <span className="text-lg font-normal opacity-70">{opt.unit}</span>
-                  </p>
+          <div className="flex flex-col gap-10 max-w-3xl mx-auto">
+            {BOARDING_PACKAGES.map((pkg, pi) => (
+              <ScrollReveal key={pkg.name} delay={pi * 0.1}>
+                <div className="rounded-2xl overflow-hidden" style={{ boxShadow: "0 8px 24px rgba(44,46,31,0.08)" }}>
+                  <div className="px-8 py-5 text-center" style={{ background: pi === 0 ? "var(--ubasti-sage)" : "var(--ubasti-olive-dark)", color: "var(--ubasti-cream)" }}>
+                    <h2 className="text-2xl mb-1" style={{ fontFamily: "var(--font-cormorant)", fontWeight: 600 }}>{pkg.name}</h2>
+                    <p className="text-sm opacity-80">{pkg.desc}</p>
+                  </div>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 divide-y sm:divide-y-0 sm:divide-x" style={{ borderColor: "rgba(44,46,31,0.1)", background: "var(--ubasti-paper)" }}>
+                    {pkg.options.map((opt) => (
+                      <div key={opt.label} className="flex flex-col items-center gap-2 px-8 py-6 text-center">
+                        <p className="text-4xl font-bold" style={{ fontFamily: "var(--font-cinzel)", color: "var(--ubasti-ink)" }}>
+                          {opt.price}
+                          <span className="text-lg font-normal opacity-60">/night</span>
+                        </p>
+                        <p className="text-sm" style={{ color: "var(--ubasti-sage)" }}>{opt.label}</p>
+                      </div>
+                    ))}
+                  </div>
                 </div>
               </ScrollReveal>
             ))}
@@ -176,15 +184,23 @@ export default function BoardingPage() {
       </section>
 
       {/* CTA */}
-      <section className="py-12 md:py-16 text-center" style={{ background: "var(--ubasti-cream)" }}>
-        <div className="max-w-xl mx-auto px-6">
-          <p className="text-base mb-6" style={{ color: "var(--ubasti-sage)" }}>
-            Ready to book boarding for your cat? Reach out via our contact form or Instagram.
+      <section className="py-20 px-4 text-center" style={{ background: "var(--ubasti-cream)" }}>
+        <div className="max-w-lg mx-auto">
+          <p className="text-sm font-bold uppercase tracking-widest mb-3" style={{ color: "var(--ubasti-mustard)" }}>
+            Ready to Book?
           </p>
-          <Link href="/#main-content"
-            className="inline-flex h-12 items-center px-8 rounded-full font-medium text-sm transition-opacity hover:opacity-90"
-            style={{ background: "var(--ubasti-olive-dark)", color: "var(--ubasti-cream)" }}>
-            Contact Us
+          <h2 className="text-4xl md:text-5xl mb-4" style={{ fontFamily: "var(--font-cormorant)", color: "var(--ubasti-ink)", fontWeight: 600 }}>
+            Book a Boarding Stay
+          </h2>
+          <p className="text-sm mb-8" style={{ color: "var(--ubasti-sage)" }}>
+            Select your stay type, pick your dates, and we'll get back to you about the deposit to confirm.
+          </p>
+          <Link
+            href="/boarding/book"
+            className="inline-flex h-14 items-center px-10 rounded-full font-medium text-base transition-opacity hover:opacity-90"
+            style={{ background: "var(--ubasti-olive-dark)", color: "var(--ubasti-cream)" }}
+          >
+            Book Boarding →
           </Link>
         </div>
       </section>
@@ -197,7 +213,7 @@ export default function BoardingPage() {
           </h2>
           <div className="divide-y" style={{ borderColor: "var(--ubasti-blush)" }}>
             {[
-              { q: "How do I book boarding?", a: "Contact us via the form or Instagram at least 3 days in advance. We'll confirm availability and guide you through drop-off." },
+              { q: "How do I book boarding?", a: "Use the 'Book Boarding' button above to submit your request online. We'll contact you to arrange the deposit and confirm your dates." },
               { q: "Are vaccinations required?", a: "Yes — your cat must be up-to-date on core vaccinations. Please bring proof of vaccination on drop-off day." },
               { q: "Can I visit my cat during boarding?", a: "Yes, during lounge hours. We also send daily photo updates via WhatsApp." },
               { q: "Does my cat get a free bath?", a: "Yes! Cats boarding for a minimum of three days receive a complimentary bath." },

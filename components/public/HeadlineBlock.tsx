@@ -12,57 +12,6 @@ export function HeadlineBlock() {
         className="relative overflow-hidden py-28 md:py-40 flex items-center justify-center"
         style={{ background: "var(--ubasti-ink)" }}
       >
-        {/* Top-right: stretching cat (largest) */}
-        <motion.div
-          className="absolute top-4 right-[3%] md:right-[8%] w-32 h-32 md:w-56 md:h-56 opacity-75 hidden sm:block"
-          style={{ transform: "rotate(-8deg)", zIndex: 0 }}
-          aria-hidden="true"
-          animate={shouldReduce ? {} : { y: [0, -6, 0], rotate: [0, 1.5, 0, -1.5, 0] }}
-          transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-        >
-          <Image
-            src="/images/decorative/cat-stretch.svg"
-            alt=""
-            fill
-            className="object-contain"
-            style={{ filter: "invert(1) brightness(1.6)" }}
-          />
-        </motion.div>
-
-        {/* Bottom-left: playful cat */}
-        <motion.div
-          className="absolute bottom-4 left-[3%] md:left-[8%] w-28 h-28 md:w-52 md:h-52 opacity-70"
-          style={{ transform: "rotate(6deg)", zIndex: 0 }}
-          aria-hidden="true"
-          animate={shouldReduce ? {} : { y: [0, -6, 0], rotate: [0, 1.5, 0, -1.5, 0] }}
-          transition={{ duration: 4.7, repeat: Infinity, ease: "easeInOut" }}
-        >
-          <Image
-            src="/images/decorative/cat-play.svg"
-            alt=""
-            fill
-            className="object-contain"
-            style={{ filter: "invert(1) brightness(1.6)" }}
-          />
-        </motion.div>
-
-        {/* Bottom-right: walking cat (medium, rotated) */}
-        <motion.div
-          className="absolute bottom-8 right-[4%] md:right-[12%] w-24 h-24 md:w-44 md:h-44 opacity-65 hidden sm:block"
-          style={{ transform: "rotate(12deg)", zIndex: 0 }}
-          aria-hidden="true"
-          animate={shouldReduce ? {} : { y: [0, -6, 0], rotate: [0, 1.5, 0, -1.5, 0] }}
-          transition={{ duration: 5.4, repeat: Infinity, ease: "easeInOut" }}
-        >
-          <Image
-            src="/images/decorative/cat-walk.svg"
-            alt=""
-            fill
-            className="object-contain"
-            style={{ filter: "invert(1) brightness(1.6)" }}
-          />
-        </motion.div>
-
         {/* Top-left: sparkles (smaller) */}
         <motion.div
           className="absolute top-8 left-[4%] md:left-[10%] w-20 h-20 md:w-36 md:h-36 opacity-60"

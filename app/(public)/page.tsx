@@ -25,6 +25,30 @@ export const metadata = buildMetadata({
 
 interface Props { searchParams: Promise<Record<string, string>> }
 
+async function fetchStats(): Promise<{ rescued: number; atCafe: number; adopted: number }> {
+  try {
+    const { db } = await import("@/lib/db/client");
+    const { kitties, siteSettings } = await import("@/lib/db/schema");
+    const { count, inArray, eq } = await import("drizzle-orm");
+    const [
+      [{ rescued }], [{ atCafe }], [{ adopted }], overrideRow,
+    ] = await Promise.all([
+      db.select({ rescued: count() }).from(kitties),
+      db.select({ atCafe: count() }).from(kitties).where(inArray(kitties.status, ["available", "on-hold", "reserved"])),
+      db.select({ adopted: count() }).from(kitties).where(inArray(kitties.status, ["adopted"])),
+      db.query.siteSettings.findFirst({ where: (s, { eq }) => eq(s.key, "impactCounters") }),
+    ]);
+    const override = (overrideRow?.value ?? {}) as { rescued?: number | null; atCafe?: number | null; adopted?: number | null };
+    return {
+      rescued: override.rescued != null ? override.rescued : Number(rescued),
+      atCafe:  override.atCafe  != null ? override.atCafe  : Number(atCafe),
+      adopted: override.adopted != null ? override.adopted : Number(adopted),
+    };
+  } catch {
+    return { rescued: 0, atCafe: 0, adopted: 0 };
+  }
+}
+
 export default async function HomePage({ searchParams }: Props) {
   const [hdrs, sp] = await Promise.all([headers(), searchParams]);
   const isAdmin  = hdrs.get("x-is-admin") === "true";
@@ -49,6 +73,7 @@ export default async function HomePage({ searchParams }: Props) {
   }
 
   // Static home page: assembles all blocks with scallop dividers between sections
+  const stats = await fetchStats();
   return (
     <>
       {/* Task 2: Short hero — photo strip + centered wordmark. Scallop → ink */}
@@ -76,7 +101,7 @@ export default async function HomePage({ searchParams }: Props) {
       <ScallopDivider top="var(--ubasti-ink)" bottom="var(--ubasti-paper)" />
 
       {/* Counters block */}
-      <CountersBlock />
+      <CountersBlock {...stats} />
 
       {/* Scallop: paper → blush-light for connect */}
       <ScallopDivider top="var(--ubasti-paper)" bottom="var(--ubasti-blush-light)" flip />

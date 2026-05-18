@@ -178,6 +178,24 @@ export default async function PrivatePartiesPage({ searchParams }: Props) {
       <section className="py-24 md:py-32">
         <div className="max-w-2xl mx-auto px-6">
           <ScrollReveal><SectionTitle eyebrow="Get in Touch" title="Send an Inquiry" className="mb-10" /></ScrollReveal>
+          <ScrollReveal delay={0.05}>
+            <div className="mb-8 rounded-2xl p-6 flex flex-col sm:flex-row items-start sm:items-center gap-4"
+              style={{ background: "var(--ubasti-blush)", border: "1px solid var(--ubasti-blush-light)" }}>
+              <div className="flex flex-col gap-1">
+                <p className="text-xs font-bold uppercase tracking-widest" style={{ color: "var(--ubasti-mustard)" }}>Prefer to Call?</p>
+                <p className="text-sm leading-relaxed" style={{ color: "var(--ubasti-sage)" }}>
+                  Reach us directly to discuss your event, check availability, or ask any questions.
+                </p>
+              </div>
+              <a
+                href="tel:+919384284888"
+                className="shrink-0 inline-flex items-center h-11 px-6 rounded-full font-medium text-sm transition-opacity hover:opacity-90 whitespace-nowrap"
+                style={{ background: "var(--ubasti-olive-dark)", color: "var(--ubasti-cream)" }}
+              >
+                +91 93842 84888
+              </a>
+            </div>
+          </ScrollReveal>
           <InquiryForm />
         </div>
       </section>

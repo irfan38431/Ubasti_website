@@ -7,7 +7,8 @@ interface AuthUser {
   id: string;
   displayName: string | null;
   isAdmin: boolean;
-  phoneE164: string;
+  phoneE164: string | null;
+  email: string | null;
 }
 
 interface AuthContextValue {

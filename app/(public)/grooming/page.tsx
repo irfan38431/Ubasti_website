@@ -1,7 +1,5 @@
-import { Suspense } from "react";
 import Image from "next/image";
-import { BookWizard } from "../book/BookWizard";
-import { getBookableDates } from "@/lib/booking/slots";
+import Link from "next/link";
 import { SectionTitle } from "@/components/ui/SectionTitle";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
 import { GroomingServices, type GroomingService } from "@/components/public/GroomingServices";
@@ -139,9 +137,20 @@ function SectionBanner({ src, alt }: { src: string; alt: string }) {
   );
 }
 
+async function fetchGroomingData() {
+  try {
+    const { db } = await import("@/lib/db/client");
+    const row = await db.query.siteSettings.findFirst({ where: (s, { eq }) => eq(s.key, "groomingPackages") });
+    if (row?.value) return row.value as { mainPackages: GroomingService[]; spaServices: GroomingService[]; addons: typeof ADDONS };
+  } catch {}
+  return null;
+}
+
 export default async function GroomingPage() {
-  let dates: string[] = [];
-  try { dates = getBookableDates(); } catch {}
+  const dbData = await fetchGroomingData();
+  const mainPackages = dbData?.mainPackages ?? MAIN_PACKAGES;
+  const spaServices  = dbData?.spaServices  ?? SPA_SERVICES;
+  const addons       = dbData?.addons       ?? ADDONS;
 
   return (
     <div style={{ background: "var(--ubasti-paper)" }}>
@@ -183,7 +192,7 @@ export default async function GroomingPage() {
       </section>
 
       {/* Main Packages + Spa Services (with Cat/Dog toggle) */}
-      <GroomingServices mainPackages={MAIN_PACKAGES} spaServices={SPA_SERVICES} />
+      <GroomingServices mainPackages={mainPackages} spaServices={spaServices} />
 
       {/* À La Carte Add-ons */}
       <section className="py-16 md:py-20" style={{ background: "var(--ubasti-cream)" }}>
@@ -202,7 +211,7 @@ export default async function GroomingPage() {
                   </tr>
                 </thead>
                 <tbody>
-                  {ADDONS.map((addon, i) => (
+                  {addons.map((addon, i) => (
                     <tr key={addon.name} style={{ background: i % 2 === 0 ? "var(--ubasti-paper)" : "white" }}>
                       <td className="px-6 py-3" style={{ color: "var(--ubasti-ink)" }}>{addon.name}</td>
                       <td className="px-6 py-3 text-right font-bold" style={{ fontFamily: "var(--font-cinzel)", color: "var(--ubasti-olive-dark)" }}>
@@ -224,23 +233,25 @@ export default async function GroomingPage() {
         </p>
       </div>
 
-      {/* Book a Session */}
-      <section className="py-16 px-4" style={{ background: "var(--ubasti-cream)" }}>
-        <div className="max-w-2xl mx-auto">
-          <div className="mb-10 text-center">
-            <p className="text-sm font-bold uppercase tracking-widest mb-2" style={{ color: "var(--ubasti-mustard)" }}>
-              Book a Session
-            </p>
-            <h2 className="text-4xl md:text-5xl" style={{ fontFamily: "var(--font-cormorant)", color: "var(--ubasti-ink)", fontWeight: 600 }}>
-              Reserve Your Slot
-            </h2>
-            <p className="text-sm mt-3" style={{ color: "var(--ubasti-sage)" }}>
-              60-minute sessions · Pay on arrival · Cancel up to 24h before
-            </p>
-          </div>
-          <Suspense fallback={<div className="h-64 rounded-2xl animate-pulse" style={{ background: "var(--ubasti-cream)" }} />}>
-            <BookWizard dates={dates} />
-          </Suspense>
+      {/* Book Grooming CTA */}
+      <section className="py-20 px-4 text-center" style={{ background: "var(--ubasti-cream)" }}>
+        <div className="max-w-lg mx-auto">
+          <p className="text-sm font-bold uppercase tracking-widest mb-3" style={{ color: "var(--ubasti-mustard)" }}>
+            Ready to Pamper Your Pet?
+          </p>
+          <h2 className="text-4xl md:text-5xl mb-4" style={{ fontFamily: "var(--font-cormorant)", color: "var(--ubasti-ink)", fontWeight: 600 }}>
+            Book a Grooming Appointment
+          </h2>
+          <p className="text-sm mb-8" style={{ color: "var(--ubasti-sage)" }}>
+            Select your services, pick a date, and we'll call to confirm your time. Pay at the cafe after the service.
+          </p>
+          <Link
+            href="/grooming/book"
+            className="inline-flex h-14 items-center px-10 rounded-full font-medium text-base transition-opacity hover:opacity-90"
+            style={{ background: "var(--ubasti-olive-dark)", color: "var(--ubasti-cream)" }}
+          >
+            Book Grooming →
+          </Link>
         </div>
       </section>
 

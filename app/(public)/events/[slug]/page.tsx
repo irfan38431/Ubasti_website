@@ -182,14 +182,26 @@ export default async function EventDetailPage({ params }: Props) {
             )}
 
             {/* Register */}
-            <Suspense fallback={null}>
-              <RegisterButton
-                eventSlug={slug}
-                isFull={isFull}
-                isFree={isFree}
-                priceInr={event.priceInr}
-              />
-            </Suspense>
+            {event.registrationUrl ? (
+              <a
+                href={event.registrationUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center h-12 px-6 rounded-full font-medium text-sm transition-opacity hover:opacity-90"
+                style={{ background: "var(--ubasti-olive-dark)", color: "var(--ubasti-cream)" }}
+              >
+                Register via Google Forms →
+              </a>
+            ) : (
+              <Suspense fallback={null}>
+                <RegisterButton
+                  eventSlug={slug}
+                  isFull={isFull}
+                  isFree={isFree}
+                  priceInr={event.priceInr}
+                />
+              </Suspense>
+            )}
           </div>
         </div>
       </div>

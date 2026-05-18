@@ -13,7 +13,7 @@ export async function GET(req: NextRequest) {
   // Re-verify isAdmin from DB on every call — revocation takes effect immediately
   const user = await db.query.users.findFirst({
     where: eq(users.id, session.sub),
-    columns: { id: true, displayName: true, isAdmin: true, phoneE164: true },
+    columns: { id: true, displayName: true, isAdmin: true, phoneE164: true, email: true },
   });
 
   if (!user) {

@@ -2,7 +2,6 @@
 import { useRef, useEffect, useState } from "react";
 import { useInView, animate, motion, useReducedMotion } from "framer-motion";
 import Image from "next/image";
-import { SITE_STATS } from "@/lib/site-stats";
 
 interface CounterProps { label: string; target: number; bg: string; color: string; }
 
@@ -39,13 +38,15 @@ const CAT_DECORATIONS = [
   { src: "/images/decorative/sparkles.svg",    style: { bottom: -24, left: 48, rotate: -8 }, dur: 2.9 },
 ];
 
-export function CountersBlock() {
+interface CountersBlockProps { rescued: number; atCafe: number; adopted: number }
+
+export function CountersBlock({ rescued, atCafe, adopted }: CountersBlockProps) {
   const shouldReduce = useReducedMotion();
 
   const cards = [
-    { label: "Cats Rescued",     target: SITE_STATS.rescued, bg: "var(--ubasti-sage)",       color: "var(--ubasti-cream)" },
-    { label: "Cats at the Cafe", target: SITE_STATS.atCafe,  bg: "var(--ubasti-olive-dark)", color: "var(--ubasti-cream)" },
-    { label: "Cats Adopted",     target: SITE_STATS.adopted, bg: "var(--ubasti-blush)",      color: "var(--ubasti-ink)" },
+    { label: "Cats Rescued",     target: rescued, bg: "var(--ubasti-sage)",       color: "var(--ubasti-cream)" },
+    { label: "Cats at the Cafe", target: atCafe,  bg: "var(--ubasti-olive-dark)", color: "var(--ubasti-cream)" },
+    { label: "Cats Adopted",     target: adopted, bg: "var(--ubasti-blush)",      color: "var(--ubasti-ink)" },
   ];
 
   return (

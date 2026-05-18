@@ -119,6 +119,14 @@ export const auditLog = pgTable(
   ]
 );
 
+// ── site_settings ──────────────────────────────────────────────────────────
+
+export const siteSettings = pgTable("site_settings", {
+  key:       text("key").primaryKey(),
+  value:     jsonb("value").notNull(),
+  updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
+});
+
 // ── contact_submissions ────────────────────────────────────────────────────
 
 export const contactSubmissions = pgTable("contact_submissions", {
