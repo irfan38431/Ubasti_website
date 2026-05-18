@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { PhoneInput } from "@/components/auth/PhoneInput";
 import { OtpInput }   from "@/components/auth/OtpInput";
 
@@ -9,10 +9,15 @@ type Tab      = "email" | "phone";
 type EmailStep = "input" | "otp";
 type PhoneStep = "phone" | "otp";
 
+function safeNext(raw: string | null): string {
+  if (!raw) return "/account";
+  if (!raw.startsWith("/") || raw.startsWith("//") || raw.startsWith("/api/")) return "/account";
+  return raw;
+}
+
 export function LoginForm() {
-  const router       = useRouter();
   const searchParams = useSearchParams();
-  const nextPath     = searchParams.get("next") ?? "/account";
+  const nextPath     = safeNext(searchParams.get("next"));
 
   const [tab, setTab] = useState<Tab>("email");
 
@@ -78,7 +83,7 @@ export function LoginForm() {
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error ?? "Verification failed");
-      router.push(nextPath);
+      window.location.assign(nextPath);
     } catch (e) {
       setEmailError(e instanceof Error ? e.message : "Verification failed");
       setEmailOtp("");
@@ -120,7 +125,7 @@ export function LoginForm() {
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error ?? "Verification failed");
-      router.push(nextPath);
+      window.location.assign(nextPath);
     } catch (e) {
       setPhoneError(e instanceof Error ? e.message : "Verification failed");
       setPhoneOtp("");
