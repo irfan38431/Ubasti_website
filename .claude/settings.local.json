@@ -10,7 +10,12 @@
       "Bash(Out-Null)",
       "Bash(pnpm typecheck *)",
       "Bash(cd D:\\\\\\\\UBASTI\\\\\\\\ubasti-cafe)",
-      "Bash(powershell *)"
+      "Bash(powershell *)",
+      "Bash(pnpm install *)",
+      "Bash(findstr -i \"nodemailer\\\\|bcrypt\")",
+      "Bash(git add *)",
+      "Bash(git commit -m ' *)",
+      "Bash(git push *)"
     ]
   },
   "enableAllProjectMcpServers": true,
