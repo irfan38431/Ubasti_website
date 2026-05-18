@@ -2,6 +2,8 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
+import { MediaPicker } from "@/components/admin/MediaPicker";
 
 interface KittyFormProps {
   initial?: {
@@ -35,6 +37,7 @@ export function KittyForm({ initial }: KittyFormProps) {
   const [sortOrder,   setSortOrder]   = useState(String(initial?.sortOrder ?? 0));
   const [saving,      setSaving]      = useState(false);
   const [error,       setError]       = useState("");
+  const [pickerOpen,  setPickerOpen]  = useState(false);
 
   function autoSlug(n: string) {
     return n.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
@@ -51,7 +54,11 @@ export function KittyForm({ initial }: KittyFormProps) {
         : await fetch("/api/admin/kitties", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error ?? "Failed to save");
-      router.push("/admin/kitties");
+      if (status === "adopted") {
+        router.push("/admin/adoptions");
+      } else {
+        router.push("/admin/kitties");
+      }
     } catch (err) {
       setError(err instanceof Error ? err.message : "Failed to save");
     } finally {
@@ -148,14 +155,40 @@ export function KittyForm({ initial }: KittyFormProps) {
 
         <div className="grid grid-cols-3 gap-4">
           <div className="col-span-2">
-            <label style={labelStyle}>Image URL</label>
-            <input style={inputStyle} value={imageUrl} onChange={(e) => setImageUrl(e.target.value)} placeholder="https://…" />
+            <label style={labelStyle}>Photo</label>
+            <div className="flex items-center gap-3">
+              {imageUrl ? (
+                <div className="relative w-16 h-16 rounded-xl overflow-hidden shrink-0" style={{ border: "1px solid var(--ubasti-blush-light)" }}>
+                  <Image src={imageUrl} alt="Kitty photo" fill className="object-cover" />
+                </div>
+              ) : (
+                <div className="w-16 h-16 rounded-xl flex items-center justify-center shrink-0 text-2xl" style={{ background: "var(--ubasti-blush-light)" }}>🐱</div>
+              )}
+              <button
+                type="button"
+                onClick={() => setPickerOpen(true)}
+                className="h-9 px-4 rounded-full text-sm font-medium border"
+                style={{ borderColor: "var(--ubasti-sage-light)", color: "var(--ubasti-ink)", background: "var(--ubasti-paper)" }}
+              >
+                {imageUrl ? "Change Image" : "Upload Image"}
+              </button>
+              {imageUrl && (
+                <button type="button" onClick={() => setImageUrl("")} className="text-xs" style={{ color: "var(--ubasti-danger)" }}>Remove</button>
+              )}
+            </div>
           </div>
           <div>
             <label style={labelStyle}>Sort Order</label>
             <input style={inputStyle} type="number" value={sortOrder} onChange={(e) => setSortOrder(e.target.value)} />
           </div>
         </div>
+        <MediaPicker open={pickerOpen} onClose={() => setPickerOpen(false)} onSelect={(url) => { setImageUrl(url); setPickerOpen(false); }} />
+
+        {status === "adopted" && (
+          <div className="rounded-xl px-4 py-3 text-sm" style={{ background: "var(--ubasti-mustard)", color: "var(--ubasti-ink)" }}>
+            After saving, you will be taken to the Adoptions page to record the adopter's details and schedule follow-up check-ins.
+          </div>
+        )}
 
         {error && <p className="text-sm" style={{ color: "var(--ubasti-danger)" }}>{error}</p>}
 

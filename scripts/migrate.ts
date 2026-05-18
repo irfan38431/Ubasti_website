@@ -101,6 +101,54 @@ async function main() {
   await sql`CREATE INDEX IF NOT EXISTS grooming_bookings_date_idx ON grooming_bookings (scheduled_date)`;
   console.log("✓ grooming_bookings table created");
 
+  // 8. Create adoption_records table (idempotent)
+  await sql`
+    CREATE TABLE IF NOT EXISTS adoption_records (
+      id             uuid        PRIMARY KEY DEFAULT gen_random_uuid(),
+      kitty_id       uuid        NOT NULL REFERENCES kitties(id),
+      adopter_name   text        NOT NULL,
+      adopter_phone  text        NOT NULL,
+      adopter_email  text,
+      adoption_date  timestamptz NOT NULL,
+      notes          text,
+      created_at     timestamptz NOT NULL DEFAULT now()
+    )
+  `;
+  await sql`CREATE INDEX IF NOT EXISTS adoption_records_kitty_idx ON adoption_records (kitty_id)`;
+  console.log("✓ adoption_records table created");
+
+  // 9. Create adoption_checkups table (idempotent)
+  await sql`
+    CREATE TABLE IF NOT EXISTS adoption_checkups (
+      id                 uuid        PRIMARY KEY DEFAULT gen_random_uuid(),
+      adoption_record_id uuid        NOT NULL REFERENCES adoption_records(id),
+      scheduled_date     timestamptz NOT NULL,
+      sent_at            timestamptz,
+      status             text        NOT NULL DEFAULT 'pending',
+      response           text,
+      response_media_url text,
+      created_at         timestamptz NOT NULL DEFAULT now()
+    )
+  `;
+  await sql`CREATE INDEX IF NOT EXISTS adoption_checkups_record_idx ON adoption_checkups (adoption_record_id)`;
+  await sql`CREATE INDEX IF NOT EXISTS adoption_checkups_scheduled_idx ON adoption_checkups (scheduled_date) WHERE status = 'pending'`;
+  console.log("✓ adoption_checkups table created");
+
+  // 10. Create email_subscriptions table (idempotent)
+  await sql`
+    CREATE TABLE IF NOT EXISTS email_subscriptions (
+      id               uuid        PRIMARY KEY DEFAULT gen_random_uuid(),
+      email            text        UNIQUE NOT NULL,
+      name             text,
+      token            text        NOT NULL,
+      status           text        NOT NULL DEFAULT 'active',
+      subscribed_at    timestamptz NOT NULL DEFAULT now(),
+      unsubscribed_at  timestamptz
+    )
+  `;
+  await sql`CREATE INDEX IF NOT EXISTS email_subscriptions_status_idx ON email_subscriptions (status)`;
+  console.log("✓ email_subscriptions table created");
+
   await sql.end();
   console.log("\nMigration complete.");
 }

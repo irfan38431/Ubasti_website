@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { INSTAGRAM_URL, BRAND } from "@/lib/replacements";
+import { SubscribeForm } from "@/components/public/SubscribeForm";
 
 export function Footer() {
   return (
@@ -33,6 +34,9 @@ export function Footer() {
           <span aria-hidden="true">·</span>
           <Link href="/adoption" className="hover:opacity-100 transition-opacity">adoption</Link>
         </nav>
+
+        {/* Newsletter subscription */}
+        <SubscribeForm />
 
         {/* Copyright */}
         <p

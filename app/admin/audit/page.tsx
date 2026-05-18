@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { formatDistanceToNow } from "date-fns";
+import { getAuditLabel, formatAuditTime } from "@/lib/audit-labels";
 
 interface AuditEntry {
   id:          number;
@@ -81,21 +81,32 @@ export default function AdminAudit() {
               </tr>
             </thead>
             <tbody>
-              {entries.map((e, i) => (
-                <tr key={e.id} style={{ background: i % 2 === 0 ? "var(--ubasti-white)" : "var(--ubasti-paper)", borderBottom: "1px solid var(--ubasti-blush-light)" }}>
-                  <td className="px-4 py-2.5 font-mono text-xs" style={{ color: "var(--ubasti-olive-dark)" }}>{e.action}</td>
-                  <td className="px-4 py-2.5 text-xs" style={{ color: "var(--ubasti-ink)" }}>
-                    {e.actorName ?? e.actorPhone ?? <span style={{ color: "var(--ubasti-sage)" }}>system</span>}
-                  </td>
-                  <td className="px-4 py-2.5 text-xs" style={{ color: "var(--ubasti-sage)" }}>
-                    {e.targetType ? `${e.targetType}${e.targetId ? ` · ${e.targetId.slice(0, 8)}` : ""}` : "—"}
-                  </td>
-                  <td className="px-4 py-2.5 font-mono text-xs" style={{ color: "var(--ubasti-sage)" }}>{e.ipAddress ?? "—"}</td>
-                  <td className="px-4 py-2.5 text-xs" style={{ color: "var(--ubasti-sage)" }}>
-                    {formatDistanceToNow(new Date(e.createdAt), { addSuffix: true })}
-                  </td>
-                </tr>
-              ))}
+              {entries.map((e, i) => {
+                const { icon, label } = getAuditLabel(e.action);
+                return (
+                  <tr key={e.id} className="group" style={{ background: i % 2 === 0 ? "var(--ubasti-white)" : "var(--ubasti-paper)", borderBottom: "1px solid var(--ubasti-blush-light)" }}>
+                    <td className="px-4 py-2.5 text-sm" style={{ color: "var(--ubasti-ink)" }}>
+                      <span className="mr-2">{icon}</span>
+                      <span>{label}</span>
+                      <span
+                        className="ml-2 font-mono text-xs opacity-0 group-hover:opacity-100"
+                        title={e.action}
+                        style={{ color: "var(--ubasti-sage)" }}
+                      >({e.action})</span>
+                    </td>
+                    <td className="px-4 py-2.5 text-xs" style={{ color: "var(--ubasti-ink)" }}>
+                      {e.actorName ?? e.actorPhone ?? <span style={{ color: "var(--ubasti-sage)" }}>system</span>}
+                    </td>
+                    <td className="px-4 py-2.5 text-xs" style={{ color: "var(--ubasti-sage)" }}>
+                      {e.targetType ? `${e.targetType}${e.targetId ? ` · ${e.targetId.slice(0, 8)}` : ""}` : "—"}
+                    </td>
+                    <td className="px-4 py-2.5 font-mono text-xs" style={{ color: "var(--ubasti-sage)" }}>{e.ipAddress ?? "—"}</td>
+                    <td className="px-4 py-2.5 text-xs" style={{ color: "var(--ubasti-sage)" }}>
+                      {formatAuditTime(e.createdAt)}
+                    </td>
+                  </tr>
+                );
+              })}
             </tbody>
           </table>
         </div>

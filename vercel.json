@@ -3,6 +3,10 @@
     {
       "path": "/api/cron/reminders",
       "schedule": "30 3 * * *"
+    },
+    {
+      "path": "/api/cron/adoption-checkups",
+      "schedule": "0 1 * * *"
     }
   ]
 }

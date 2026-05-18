@@ -16,7 +16,11 @@
       "Bash(git add *)",
       "Bash(git commit -m ' *)",
       "Bash(git push *)",
-      "Bash(pnpm add *)"
+      "Bash(pnpm add *)",
+      "Bash(cd D:\\\\UBASTI\\\\ubasti-cafe *)",
+      "Bash(grep -E \"\\\\.ts$\")",
+      "Bash(npx tsx *)",
+      "Bash(npm run *)"
     ]
   },
   "enableAllProjectMcpServers": true,

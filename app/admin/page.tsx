@@ -1,13 +1,15 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { formatDistanceToNow } from "date-fns";
+import { getAuditLabel, formatAuditTime } from "@/lib/audit-labels";
 
 interface Kpis {
-  todayBookings:  number;
-  upcomingEvents: number;
-  newInquiries:   number;
-  totalUsers:     number;
+  todayBookings:    number;
+  upcomingEvents:   number;
+  newInquiries:     number;
+  totalUsers:       number;
+  activeAdoptions:  number;
+  subscribers:      number;
 }
 
 interface AuditEntry {
@@ -16,14 +18,17 @@ interface AuditEntry {
   targetType:  string | null;
   targetId:    string | null;
   actorUserId: string | null;
+  actorName:   string | null;
   createdAt:   string;
 }
 
 const TILES = (k: Kpis) => [
-  { label: "Bookings Today",   value: k.todayBookings,  href: "/admin/appointments", color: "var(--ubasti-mustard)" },
-  { label: "Upcoming Events",  value: k.upcomingEvents, href: "/admin/events",       color: "var(--ubasti-sage)" },
-  { label: "New Inquiries",    value: k.newInquiries,   href: "/admin/inquiries",    color: k.newInquiries > 0 ? "var(--ubasti-danger)" : "var(--ubasti-sage)" },
-  { label: "Total Members",    value: k.totalUsers,     href: "/admin/team",         color: "var(--ubasti-olive-dark)" },
+  { label: "Bookings Today",   value: k.todayBookings,    href: "/admin/appointments", color: "var(--ubasti-mustard)" },
+  { label: "Upcoming Events",  value: k.upcomingEvents,   href: "/admin/events",       color: "var(--ubasti-sage)" },
+  { label: "New Inquiries",    value: k.newInquiries,     href: "/admin/inquiries",    color: k.newInquiries > 0 ? "var(--ubasti-danger)" : "var(--ubasti-sage)" },
+  { label: "Adoptions",        value: k.activeAdoptions,  href: "/admin/adoptions",    color: "var(--ubasti-blush)" },
+  { label: "Subscribers",      value: k.subscribers,      href: "/admin/subscribers",  color: "var(--ubasti-olive-dark)" },
+  { label: "Total Members",    value: k.totalUsers,        href: "/admin/team",         color: "var(--ubasti-sage)" },
 ];
 
 export default function AdminDashboard() {
@@ -57,7 +62,7 @@ export default function AdminDashboard() {
       </h1>
 
       {/* KPI tiles */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 lg:grid-cols-3 gap-4">
         {kpis ? TILES(kpis).map((tile) => (
           <a
             key={tile.label}
@@ -72,7 +77,7 @@ export default function AdminDashboard() {
               {tile.value}
             </span>
           </a>
-        )) : Array.from({ length: 4 }).map((_, i) => (
+        )) : Array.from({ length: 6 }).map((_, i) => (
           <div key={i} className="rounded-2xl p-5 h-[88px] animate-pulse" style={{ background: "var(--ubasti-blush-light)" }} />
         ))}
       </div>
@@ -87,9 +92,9 @@ export default function AdminDashboard() {
       <div className="flex flex-wrap gap-3">
         {[
           { label: "New Event",         href: "/admin/events/new" },
-          { label: "New Blog Post",     href: "/admin/blog/new" },
+          { label: "Add Kitty",         href: "/admin/kitties/new" },
           { label: "View Appointments", href: "/admin/appointments" },
-          { label: "Media Library",     href: "/admin/media" },
+          { label: "Adoptions",         href: "/admin/adoptions" },
         ].map((a) => (
           <a
             key={a.label}
@@ -111,28 +116,28 @@ export default function AdminDashboard() {
           <p className="text-sm" style={{ color: "var(--ubasti-sage)" }}>No activity yet.</p>
         ) : (
           <div className="rounded-2xl overflow-hidden" style={{ border: "1px solid var(--ubasti-blush-light)" }}>
-            {audit.map((entry, i) => (
-              <div
-                key={entry.id}
-                className="flex items-center justify-between px-5 py-3 text-sm"
-                style={{
-                  background: i % 2 === 0 ? "var(--ubasti-white)" : "var(--ubasti-paper)",
-                  borderBottom: i < audit.length - 1 ? "1px solid var(--ubasti-blush-light)" : "none",
-                }}
-              >
-                <span className="font-mono text-xs" style={{ color: "var(--ubasti-olive-dark)" }}>
-                  {entry.action}
-                </span>
-                {entry.targetType && (
-                  <span className="text-xs" style={{ color: "var(--ubasti-sage)" }}>
-                    {entry.targetType}{entry.targetId ? ` · ${entry.targetId.slice(0, 8)}` : ""}
+            {audit.map((entry, i) => {
+              const { icon, label } = getAuditLabel(entry.action);
+              return (
+                <div
+                  key={entry.id}
+                  className="flex items-center gap-3 px-5 py-3"
+                  style={{
+                    background: i % 2 === 0 ? "var(--ubasti-white)" : "var(--ubasti-paper)",
+                    borderBottom: i < audit.length - 1 ? "1px solid var(--ubasti-blush-light)" : "none",
+                  }}
+                >
+                  <span className="text-base shrink-0">{icon}</span>
+                  <span className="flex-1 text-sm" style={{ color: "var(--ubasti-ink)" }}>{label}</span>
+                  {entry.actorName && (
+                    <span className="text-xs shrink-0" style={{ color: "var(--ubasti-sage)" }}>by {entry.actorName}</span>
+                  )}
+                  <span className="text-xs shrink-0" style={{ color: "var(--ubasti-sage)" }}>
+                    {formatAuditTime(entry.createdAt)}
                   </span>
-                )}
-                <span className="text-xs" style={{ color: "var(--ubasti-sage)" }}>
-                  {formatDistanceToNow(new Date(entry.createdAt), { addSuffix: true })}
-                </span>
-              </div>
-            ))}
+                </div>
+              );
+            })}
           </div>
         )}
       </div>

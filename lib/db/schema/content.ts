@@ -136,3 +136,41 @@ export const contactSubmissions = pgTable("contact_submissions", {
   message:   text("message").notNull(),
   createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
 });
+
+// ── adoption_records ───────────────────────────────────────────────────────
+
+export const adoptionRecords = pgTable("adoption_records", {
+  id:           uuid("id").primaryKey().defaultRandom(),
+  kittyId:      uuid("kitty_id").notNull().references(() => kitties.id),
+  adopterName:  text("adopter_name").notNull(),
+  adopterPhone: text("adopter_phone").notNull(),
+  adopterEmail: text("adopter_email"),
+  adoptionDate: timestamp("adoption_date", { withTimezone: true }).notNull(),
+  notes:        text("notes"),
+  createdAt:    timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+});
+
+// ── adoption_checkups ──────────────────────────────────────────────────────
+
+export const adoptionCheckups = pgTable("adoption_checkups", {
+  id:               uuid("id").primaryKey().defaultRandom(),
+  adoptionRecordId: uuid("adoption_record_id").notNull().references(() => adoptionRecords.id),
+  scheduledDate:    timestamp("scheduled_date", { withTimezone: true }).notNull(),
+  sentAt:           timestamp("sent_at", { withTimezone: true }),
+  status:           text("status").notNull().default("pending"), // pending | sent | responded
+  response:         text("response"),
+  responseMediaUrl: text("response_media_url"),
+  createdAt:        timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+});
+
+// ── email_subscriptions ────────────────────────────────────────────────────
+
+export const emailSubscriptions = pgTable("email_subscriptions", {
+  id:               uuid("id").primaryKey().defaultRandom(),
+  email:            text("email").unique().notNull(),
+  name:             text("name"),
+  token:            text("token").notNull(),
+  status:           text("status").notNull().default("active"), // active | unsubscribed
+  subscribedAt:     timestamp("subscribed_at", { withTimezone: true }).notNull().defaultNow(),
+  unsubscribedAt:   timestamp("unsubscribed_at", { withTimezone: true }),
+});

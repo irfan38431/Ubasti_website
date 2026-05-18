@@ -15,4 +15,5 @@ export type SmsTemplateKey =
   | "BOOKING_CONFIRM"
   | "BOOKING_CANCEL"
   | "BOOKING_REMINDER"
-  | "EVENT_CONFIRM";
+  | "EVENT_CONFIRM"
+  | "ADOPTION_CHECKUP";

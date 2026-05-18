@@ -1,4 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
+import { db } from "@/lib/db/client";
+import { adoptionRecords, adoptionCheckups } from "@/lib/db/schema";
+import { eq, and } from "drizzle-orm";
 
 /**
  * GET /api/webhooks/whatsapp
@@ -22,22 +25,73 @@ export async function GET(req: NextRequest) {
 /**
  * POST /api/webhooks/whatsapp
  * Receives delivery status updates and inbound message events from Meta.
- * We only log them — no blocking logic here.
  */
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
-    // Log delivery statuses for debugging; extend to DB writes as needed.
+
     for (const entry of body?.entry ?? []) {
       for (const change of entry?.changes ?? []) {
-        const statuses = change?.value?.statuses ?? [];
-        for (const s of statuses) {
+        const value = change?.value ?? {};
+
+        // Delivery statuses
+        for (const s of value?.statuses ?? []) {
           console.log(`[WhatsApp] message ${s.id} status: ${s.status} for ${s.recipient_id}`);
+        }
+
+        // Inbound messages — check if sender is an adopter and store reply
+        for (const msg of value?.messages ?? []) {
+          const fromPhone = msg.from as string | undefined;
+          if (!fromPhone) continue;
+
+          const text      = msg.text?.body as string | undefined;
+          const mediaId   = (msg.image ?? msg.video)?.id as string | undefined;
+
+          if (!text && !mediaId) continue;
+
+          // Look up an adoption record for this phone number
+          const records = await db
+            .select({ id: adoptionRecords.id })
+            .from(adoptionRecords)
+            .where(eq(adoptionRecords.adopterPhone, `+${fromPhone}`))
+            .limit(1);
+
+          if (records.length === 0) continue;
+
+          // Find the most recently sent checkup for this record
+          const checkups = await db
+            .select({ id: adoptionCheckups.id })
+            .from(adoptionCheckups)
+            .where(and(
+              eq(adoptionCheckups.adoptionRecordId, records[0].id),
+              eq(adoptionCheckups.status, "sent"),
+            ))
+            .orderBy(adoptionCheckups.scheduledDate)
+            .limit(1);
+
+          if (checkups.length === 0) continue;
+
+          // Build media URL if it's an image (requires Graph API call with token to get URL)
+          let mediaUrl: string | null = null;
+          if (mediaId && process.env.WHATSAPP_ACCESS_TOKEN) {
+            try {
+              const mediaMeta = await fetch(`https://graph.facebook.com/v21.0/${mediaId}`, {
+                headers: { Authorization: `Bearer ${process.env.WHATSAPP_ACCESS_TOKEN}` },
+              });
+              const metaJson = await mediaMeta.json() as { url?: string };
+              mediaUrl = metaJson.url ?? null;
+            } catch {}
+          }
+
+          await db.update(adoptionCheckups)
+            .set({ status: "responded", response: text ?? null, responseMediaUrl: mediaUrl })
+            .where(eq(adoptionCheckups.id, checkups[0].id));
         }
       }
     }
-  } catch {
-    // Ignore parse errors — always return 200 so Meta doesn't retry
+  } catch (err) {
+    console.error("[WhatsApp webhook]", err);
+    // Always return 200 so Meta doesn't retry
   }
   return NextResponse.json({ ok: true });
 }

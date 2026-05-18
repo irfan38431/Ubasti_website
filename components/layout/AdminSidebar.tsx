@@ -5,9 +5,9 @@ import Link from "next/link";
 import NextImage from "next/image";
 import { usePathname } from "next/navigation";
 import {
-  LayoutDashboard, Calendar, BookOpen, FileText,
+  LayoutDashboard, Calendar,
   Users, Image, ClipboardList, LogOut, ChevronRight,
-  PartyPopper, Settings, Cat, Scissors, BarChart2, Home,
+  PartyPopper, Settings, Cat, Scissors, BarChart2, Home, Heart, Mail,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useAuth } from "@/lib/contexts/auth";
@@ -19,15 +19,15 @@ const LINKS = [
   { href: "/admin/grooming-bookings",     label: "Grooming Bookings",  icon: Scissors },
   { href: "/admin/boarding-bookings",     label: "Boarding Bookings",  icon: Home },
   { href: "/admin/events",               label: "Events",             icon: PartyPopper },
-  { href: "/admin/kitties",               label: "Kitties",         icon: Cat },
-  { href: "/admin/blog",                  label: "Blog",            icon: BookOpen },
-  { href: "/admin/pages",                 label: "Pages",           icon: FileText },
-  { href: "/admin/inquiries",             label: "Inquiries",       icon: ClipboardList },
-  { href: "/admin/media",                 label: "Media",           icon: Image },
-  { href: "/admin/team",                  label: "Team",            icon: Users },
-  { href: "/admin/settings/grooming",     label: "Grooming Prices", icon: Scissors },
-  { href: "/admin/settings/counters",     label: "Impact Counters", icon: BarChart2 },
-  { href: "/admin/audit",                 label: "Audit Log",       icon: Settings },
+  { href: "/admin/kitties",               label: "Kitties",            icon: Cat },
+  { href: "/admin/adoptions",             label: "Adoptions",          icon: Heart },
+  { href: "/admin/inquiries",             label: "Inquiries",          icon: ClipboardList },
+  { href: "/admin/subscribers",           label: "Subscribers",        icon: Mail },
+  { href: "/admin/media",                 label: "Media",              icon: Image },
+  { href: "/admin/team",                  label: "Team",               icon: Users },
+  { href: "/admin/settings/grooming",     label: "Grooming Prices",    icon: Scissors },
+  { href: "/admin/settings/counters",     label: "Impact Counters",    icon: BarChart2 },
+  { href: "/admin/audit",                 label: "Activity Log",       icon: Settings },
 ];
 
 export function AdminSidebar() {
