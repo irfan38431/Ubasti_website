@@ -20,7 +20,7 @@ export function Hero() {
           alt="Cozy interior of Ubasti Cat Cafe"
           fill
           className="object-cover"
-          style={{ objectPosition: "center 50%" }}
+          style={{ objectPosition: "center 65%" }}
           priority
           sizes="100vw"
         />
