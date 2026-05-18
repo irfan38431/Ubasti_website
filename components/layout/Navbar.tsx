@@ -155,10 +155,10 @@ export function Navbar() {
         </nav>
 
         {/* User section */}
-        {user && (
-          <>
-            <hr style={{ borderColor: "rgba(242,224,205,0.15)" }} />
-            <div className="px-4 py-4 flex flex-col gap-1">
+        <hr style={{ borderColor: "rgba(242,224,205,0.15)" }} />
+        <div className="px-4 py-4 flex flex-col gap-1">
+          {user ? (
+            <>
               <Link href="/account" onClick={() => setOpen(false)}
                 className="flex items-center gap-3 px-4 py-3 rounded-xl transition-colors hover:bg-white/10"
                 style={{ color: "var(--ubasti-cream)", fontSize: "0.9rem" }}>
@@ -178,9 +178,15 @@ export function Navbar() {
               >
                 <LogOut size={16} /> Logout
               </button>
-            </div>
-          </>
-        )}
+            </>
+          ) : (
+            <Link href="/login" onClick={() => setOpen(false)}
+              className="flex items-center gap-3 px-4 py-3 rounded-xl transition-colors hover:bg-white/10"
+              style={{ color: "var(--ubasti-cream)", fontSize: "0.9rem" }}>
+              <User size={16} /> Log in
+            </Link>
+          )}
+        </div>
       </div>
     </>
   );
