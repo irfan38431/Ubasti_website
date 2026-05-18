@@ -82,6 +82,25 @@ async function main() {
   await sql`ALTER TABLE events ADD COLUMN IF NOT EXISTS registration_url text`;
   console.log("✓ events.registration_url column added");
 
+  // 7. Create grooming_bookings table (idempotent)
+  await sql`
+    CREATE TABLE IF NOT EXISTS grooming_bookings (
+      id             uuid        PRIMARY KEY DEFAULT gen_random_uuid(),
+      user_id        uuid        NOT NULL REFERENCES users(id),
+      services       jsonb       NOT NULL,
+      scheduled_date text        NOT NULL,
+      pet_name       text        NOT NULL,
+      pet_breed      text,
+      pet_notes      text,
+      status         text        NOT NULL DEFAULT 'pending',
+      admin_notes    text,
+      created_at     timestamptz NOT NULL DEFAULT now()
+    )
+  `;
+  await sql`CREATE INDEX IF NOT EXISTS grooming_bookings_user_idx ON grooming_bookings (user_id)`;
+  await sql`CREATE INDEX IF NOT EXISTS grooming_bookings_date_idx ON grooming_bookings (scheduled_date)`;
+  console.log("✓ grooming_bookings table created");
+
   await sql.end();
   console.log("\nMigration complete.");
 }
