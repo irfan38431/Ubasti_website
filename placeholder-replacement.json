@@ -52,10 +52,9 @@
     "community": "/images/placeholders/Offering_cats.png"
   },
   "about": {
-    "photo": "/images/placeholders/Offering_cats.png",
+    "photo": "/images/About_story.jpeg",
     "story": "/images/About_story.jpeg",
-    "team": "/images/placeholders/About_story.jpeg"
-  },
+    "team": "/images/About_story.jpeg"  },
   "adoptionReasons": [
     "/images/placeholders/Adoption-1.jpeg",
     "/images/placeholders/Adoption-2.jpeg",
