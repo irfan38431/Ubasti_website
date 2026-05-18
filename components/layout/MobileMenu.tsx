@@ -128,8 +128,8 @@ export function MobileMenu({ open, onClose }: Props) {
               </>
             ) : (
               <Link href="/login" onClick={onClose}
-                className="text-xl py-3 mt-2 opacity-70 hover:opacity-100"
-                style={{ fontFamily: "var(--font-inter)", color: "var(--ubasti-blush)" }}>
+                className="text-3xl py-3 border-b border-[rgba(242,224,205,0.15)] transition-opacity hover:opacity-80"
+                style={{ fontFamily: "var(--font-cormorant)", color: "var(--ubasti-cream)", fontWeight: 600 }}>
                 Log in
               </Link>
             )}
