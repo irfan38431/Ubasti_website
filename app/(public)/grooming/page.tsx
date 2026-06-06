@@ -191,6 +191,8 @@ export default async function GroomingPage() {
         </div>
       </section>
 
+      <div>
+
       {/* Main Packages + Spa Services (with Cat/Dog toggle) */}
       <GroomingServices mainPackages={mainPackages} spaServices={spaServices} />
 
@@ -279,6 +281,8 @@ export default async function GroomingPage() {
           </div>
         </div>
       </section>
+
+      </div>{/* end parallax-slide-over */}
     </div>
   );
 }

@@ -4,13 +4,11 @@ import { BlocksRenderer } from "@/lib/cms/blocks-renderer";
 import { PageEditorClient } from "@/components/admin/PageEditorClient";
 
 import { Hero }                  from "@/components/public/Hero";
-import { HeadlineBlock }         from "@/components/public/HeadlineBlock";
+import { HeroSections }          from "@/components/public/HeroSections";
 import { AboutBlock }            from "@/components/public/AboutBlock";
 import { SlideshowStrip }        from "@/components/public/SlideshowStrip";
-import { ScallopDivider }        from "@/components/decorative/ScallopDivider";
 import { VideoBackgroundBlock }  from "@/components/public/VideoBackgroundBlock";
 import { CountersBlock }         from "@/components/public/CountersBlock";
-import { ContactForm }           from "@/components/public/ContactForm";
 import { BottomNavigationBlock } from "@/components/public/BottomNavigationBlock";
 import { FaqSection }            from "@/components/public/FaqSection";
 import { FAQ_BY_PAGE }          from "@/lib/content/faqs";
@@ -72,51 +70,32 @@ export default async function HomePage({ searchParams }: Props) {
     return <BlocksRenderer blocks={filteredBlocks} />;
   }
 
-  // Static home page: assembles all blocks with scallop dividers between sections
   const stats = await fetchStats();
   return (
     <>
-      {/* Task 2: Short hero — photo strip + centered wordmark. Scallop → ink */}
-      <Hero />
+      {/* ── Panel stack ──────────────────────────────────────────────
+          Hero (z:1) → Welcome (z:2, slides over Hero) →
+          HeroSections (Offerings z:3, Lounge z:4, Book z:5 — sticky).
+      ─────────────────────────────────────────────────────────────── */}
+      <div className="panels-stack">
+        <Hero />
+        {/* Welcome — slides up over the Hero banner (wavy top clip-path) */}
+        <AboutBlock />
+        {/* Offerings → Lounge → Book — sticky stacking panels */}
+        <HeroSections />
+      </div>
 
-      {/* Task 3: Dark headline block — H1 + 4 scattered cats. Scallop → cream */}
-      <HeadlineBlock />
-
-      {/* Task 4: About — two-column, arch photo, wavy underline */}
-      <AboutBlock />
-
-      {/* Scallop: cream → paper for offerings */}
-      <ScallopDivider top="var(--ubasti-cream)" bottom="var(--ubasti-paper)" />
-
-      {/* Task 5: Slideshow marquee strip */}
-      <SlideshowStrip />
-
-      {/* Task 6: Dedicated scallop-edge divider — paper → ink */}
-      <ScallopDivider top="var(--ubasti-paper)" bottom="var(--ubasti-ink)" flip />
-
-      {/* Task 7: Video background + wordmark overlay */}
-      <VideoBackgroundBlock />
-
-      {/* Scallop: ink → paper for counters */}
-      <ScallopDivider top="var(--ubasti-ink)" bottom="var(--ubasti-paper)" />
-
-      {/* Counters block */}
-      <CountersBlock {...stats} />
-
-      {/* Scallop: paper → blush-light for connect */}
-      <ScallopDivider top="var(--ubasti-paper)" bottom="var(--ubasti-blush-light)" flip />
-
-      {/* Task 10: Connect with US — brand mark + Instagram handle + form */}
-      <ContactForm />
-
-      {/* FAQ */}
-      <FaqSection title="Got Questions?" items={FAQ_BY_PAGE.home} />
-
-      {/* Scallop: blush-light → ink for bottom nav */}
-      <ScallopDivider top="var(--ubasti-blush-light)" bottom="var(--ubasti-ink)" />
-
-      {/* Task 12: Bottom navigation block */}
-      <BottomNavigationBlock />
+      {/* ── Post-panel content ────────────────────────────────────────
+          Slides over all sticky panels (z-index: 6 via post-panels class).
+          Connect sits below the FAQ, just above the bottom nav.
+      ─────────────────────────────────────────────────────────────── */}
+      <div className="post-panels">
+        <SlideshowStrip />
+        <VideoBackgroundBlock />
+        <CountersBlock {...stats} />
+        <FaqSection title="Got Questions?" items={FAQ_BY_PAGE.home} />
+        <BottomNavigationBlock />
+      </div>
     </>
   );
 }

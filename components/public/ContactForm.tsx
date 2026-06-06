@@ -51,13 +51,6 @@ export function ContactForm() {
               />
             </div>
 
-            <h2
-              className="text-4xl md:text-5xl text-center"
-              style={{ fontFamily: "var(--font-cormorant)", color: "var(--ubasti-ink)", fontWeight: 600 }}
-            >
-              Connect with US
-            </h2>
-
             {/* Instagram handle */}
             <a
               href={INSTAGRAM_URL}

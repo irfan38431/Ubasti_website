@@ -1,54 +1,33 @@
-import Image from "next/image";
-import { ScrollReveal } from "@/components/ui/ScrollReveal";
+﻿import { ScrollReveal } from "@/components/ui/ScrollReveal";
 import { ArchImage } from "@/components/decorative/ArchImage";
 import { WavyUnderline } from "@/components/decorative/WavyUnderline";
-import { ABOUT, DECORATIVE } from "@/lib/replacements";
+import { ABOUT } from "@/lib/replacements";
 
 export function AboutBlock() {
   return (
     <section
-      className="relative py-16 md:py-24 overflow-hidden"
-      style={{ background: "var(--ubasti-cream)" }}
+      className="relative py-20 md:py-32 overflow-hidden"
+      style={{
+        background: "var(--ubasti-cream)",
+        clipPath: "url(#ubasti-wave-top)",
+        position: "relative",
+        zIndex: 2,
+        /* Pull up so the wavy top always overlaps the hero photo —
+           the cream wave sits directly on the image, never on a flat band. */
+        marginTop: "-7rem",
+      }}
     >
-      {/* Cat-outline peeking from the top (overlaps the scallop divider above) */}
-      <div
-        className="absolute -top-16 left-[5%] w-28 h-28 md:w-40 md:h-40 opacity-60 hidden md:block"
-        style={{ transform: "rotate(5deg)", zIndex: 1 }}
-        aria-hidden="true"
-      >
-        <Image
-          src={DECORATIVE.catOutline}
-          alt=""
-          fill
-          className="object-contain"
-        />
-      </div>
-
-      {/* Sparkles top-right */}
-      <div
-        className="absolute top-8 right-[4%] w-16 h-16 md:w-24 md:h-24 opacity-55 hidden sm:block"
-        style={{ transform: "rotate(10deg)", zIndex: 0 }}
-        aria-hidden="true"
-      >
-        <Image
-          src={DECORATIVE.sparkles}
-          alt=""
-          fill
-          className="object-contain"
-        />
-      </div>
-
       <div className="max-w-[1280px] mx-auto px-6 md:px-12 lg:px-16">
         <ScrollReveal>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16 items-center">
-            {/* Left — text */}
+            {/* Left â€” text */}
             <div className="flex flex-col gap-5">
               <div className="flex flex-col gap-2">
                 <h2
                   className="text-4xl md:text-5xl"
                   style={{ fontFamily: "var(--font-cormorant)", color: "var(--ubasti-ink)", fontWeight: 600 }}
                 >
-                  Welcome, furriends
+                  Welcome
                 </h2>
                 <WavyUnderline color="var(--ubasti-blush)" width={200} />
               </div>
@@ -72,7 +51,7 @@ export function AboutBlock() {
               </p>
             </div>
 
-            {/* Right — arch-framed photo */}
+            {/* Right â€” arch-framed photo */}
             <div className="relative w-full" style={{ aspectRatio: "3/4", maxHeight: "520px" }}>
               <ArchImage
                 src={ABOUT.photo}

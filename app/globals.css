@@ -97,3 +97,34 @@ body {
     scroll-behavior: auto !important;
   }
 }
+
+/* ── Parallax hero utilities ── */
+
+/* Content wrapper that slides over a sticky hero */
+.parallax-slide-over {
+  position: relative;
+  z-index: 1;
+}
+
+/* Performance hints for parallax layers */
+[data-parallax-bg],
+[data-parallax-text] {
+  will-change: transform;
+}
+
+/* ── Stacked panel layout ── */
+
+/* Container for full-viewport sticky panels.
+   Dark backdrop fills the area revealed above each wavy clip-path
+   (Welcome over the hero photo, Book over the lounge photo) so the
+   cream/blush wave emerges straight out of the dark image — no white gap. */
+.panels-stack {
+  position: relative;
+  background: var(--ubasti-ink);
+}
+
+/* Post-panel content — stacks above all sticky panels (Hero z:1, Welcome z:2, Offerings z:3, Lounge z:4, Book z:5) */
+.post-panels {
+  position: relative;
+  z-index: 6;
+}

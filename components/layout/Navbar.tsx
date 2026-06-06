@@ -86,6 +86,7 @@ export function Navbar() {
           src={BRAND.symbolGreen}
           alt=""
           fill
+          sizes="48px"
           className="object-cover rounded-full"
           aria-hidden="true"
         />
@@ -125,6 +126,7 @@ export function Navbar() {
               src={BRAND.symbolBeige}
               alt={`${BRAND.name} — Home`}
               fill
+              sizes="44px"
               className="object-cover rounded-full"
             />
           </Link>

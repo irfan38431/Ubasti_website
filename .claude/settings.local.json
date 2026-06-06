@@ -20,7 +20,9 @@
       "Bash(cd D:\\\\UBASTI\\\\ubasti-cafe *)",
       "Bash(grep -E \"\\\\.ts$\")",
       "Bash(npx tsx *)",
-      "Bash(npm run *)"
+      "Bash(npm run *)",
+      "Bash(Get-ChildItem -Path \"D:\\\\UBASTI\\\\ubasti-cafe\" -Force)",
+      "Bash(Select-Object Name, PSIsContainer)"
     ]
   },
   "enableAllProjectMcpServers": true,

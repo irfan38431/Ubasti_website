@@ -23,54 +23,110 @@ function isFlat(p: Prices): p is FlatPrices {
   return "flat" in p;
 }
 
-function PetToggle({ value, onChange }: { value: Pet; onChange: (p: Pet) => void }) {
-  const options: { key: Pet; label: string }[] = [
-    { key: "cats", label: "Cats" },
-    { key: "dogs", label: "Dogs" },
+/** Portrait photo selector — pick Cats or Dogs by tapping their picture.
+ *  The chosen pet lifts up in full colour with an olive ring + ✓ badge;
+ *  the other is gently dimmed, inviting a tap. Drives the price filtering. */
+function PetSelector({ value, onChange }: { value: Pet; onChange: (p: Pet) => void }) {
+  const options: { key: Pet; label: string; img: string; alt: string }[] = [
+    { key: "cats", label: "Cats", img: "/images/placeholders/Grooming_cat.jpeg", alt: "A cat being groomed at Ubasti" },
+    { key: "dogs", label: "Dogs", img: "/images/placeholders/Grooming_dog.jpeg", alt: "A freshly groomed dog dressed up at Ubasti" },
   ];
   return (
-    <div className="flex justify-center mb-10">
-      <div
-        role="tablist"
-        aria-label="Choose pet type"
-        className="inline-flex items-center gap-1"
-        style={{
-          background: "var(--ubasti-cream)",
-          border: "1px solid var(--ubasti-blush)",
-          borderRadius: "9999px",
-          padding: "0.25rem",
-          boxShadow: "0 4px 14px rgba(44,46,31,0.08)",
-        }}
-      >
-        {options.map((opt) => {
-          const active = opt.key === value;
-          return (
-            <button
-              key={opt.key}
-              role="tab"
-              aria-selected={active}
-              onClick={() => onChange(opt.key)}
-              className="transition-colors duration-200"
+    <div
+      role="tablist"
+      aria-label="Choose pet type"
+      className="flex justify-center items-stretch gap-4 md:gap-8 mb-12"
+    >
+      {options.map((opt) => {
+        const active = opt.key === value;
+        return (
+          <button
+            key={opt.key}
+            role="tab"
+            aria-selected={active}
+            aria-label={`Show ${opt.label} prices`}
+            onClick={() => onChange(opt.key)}
+            className="group relative overflow-hidden rounded-3xl transition-all duration-300 focus:outline-none"
+            style={{
+              width: "clamp(150px, 36vw, 280px)",
+              aspectRatio: "4 / 5",
+              padding: 0,
+              border: "none",
+              cursor: "pointer",
+              transform: active ? "translateY(-6px)" : "translateY(0)",
+              boxShadow: active
+                ? "0 0 0 4px var(--ubasti-olive-dark), 0 18px 40px rgba(44,46,31,0.28)"
+                : "0 8px 24px rgba(44,46,31,0.12)",
+            }}
+          >
+            <Image
+              src={opt.img}
+              alt={opt.alt}
+              fill
+              sizes="(max-width: 768px) 36vw, 280px"
+              className="object-cover transition-all duration-300 group-hover:scale-105"
               style={{
-                background: active ? "var(--ubasti-olive-dark)" : "transparent",
-                color: active ? "var(--ubasti-cream)" : "var(--ubasti-sage)",
-                borderRadius: "9999px",
-                padding: "0.55rem 1.5rem",
-                fontFamily: "var(--font-inter)",
-                fontSize: "0.8rem",
-                fontWeight: 700,
-                letterSpacing: "0.18em",
-                textTransform: "uppercase",
-                cursor: "pointer",
-                border: "none",
-                minWidth: "100px",
+                filter: active ? "none" : "grayscale(0.55) brightness(0.78)",
+                transform: active ? "scale(1.04)" : "scale(1)",
+              }}
+            />
+            {/* Bottom scrim + label */}
+            <div
+              className="absolute inset-0 flex items-end justify-center"
+              style={{
+                background: active
+                  ? "linear-gradient(0deg, rgba(44,46,31,0.80) 0%, rgba(44,46,31,0.04) 58%)"
+                  : "linear-gradient(0deg, rgba(44,46,31,0.62) 0%, rgba(44,46,31,0.10) 62%)",
               }}
             >
-              {opt.label}
-            </button>
-          );
-        })}
-      </div>
+              <div className="flex flex-col items-center gap-0.5 pb-4 md:pb-5">
+                <span
+                  style={{
+                    fontFamily: "var(--font-cinzel)",
+                    color: "#fff",
+                    fontSize: "clamp(0.95rem, 2.4vw, 1.3rem)",
+                    fontWeight: 700,
+                    letterSpacing: "0.18em",
+                    textTransform: "uppercase",
+                  }}
+                >
+                  {opt.label}
+                </span>
+                <span
+                  style={{
+                    fontFamily: "var(--font-inter)",
+                    fontSize: "0.58rem",
+                    letterSpacing: "0.22em",
+                    textTransform: "uppercase",
+                    fontWeight: 700,
+                    color: active ? "var(--ubasti-mustard)" : "transparent",
+                    transition: "color 0.3s",
+                  }}
+                >
+                  Viewing prices
+                </span>
+              </div>
+            </div>
+            {/* Active check badge */}
+            {active && (
+              <span
+                aria-hidden
+                className="absolute top-3 right-3 flex items-center justify-center rounded-full"
+                style={{
+                  width: 28,
+                  height: 28,
+                  background: "var(--ubasti-olive-dark)",
+                  color: "var(--ubasti-cream)",
+                  fontSize: "0.8rem",
+                  boxShadow: "0 2px 8px rgba(0,0,0,0.3)",
+                }}
+              >
+                ✓
+              </span>
+            )}
+          </button>
+        );
+      })}
     </div>
   );
 }
@@ -186,7 +242,7 @@ export function GroomingServices({
             <SectionTitle eyebrow="Grooming Packages" title="Main Services" className="mb-6" />
           </ScrollReveal>
 
-          <PetToggle value={pet} onChange={setPet} />
+          <PetSelector value={pet} onChange={setPet} />
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {filteredMain.map((svc, i) => (

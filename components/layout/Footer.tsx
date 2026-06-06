@@ -16,6 +16,7 @@ export function Footer() {
             src="/images/Ubasti Symbol_beige.png"
             alt={BRAND.name}
             fill
+            sizes="80px"
             className="object-contain"
           />
         </div>

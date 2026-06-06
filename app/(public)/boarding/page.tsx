@@ -2,6 +2,7 @@ import Image from "next/image";
 import { SectionTitle } from "@/components/ui/SectionTitle";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
 import { buildMetadata } from "@/lib/seo/metadata";
+import { ParallaxHero } from "@/components/public/ParallaxHero";
 import Link from "next/link";
 
 export const metadata = buildMetadata({
@@ -70,8 +71,13 @@ export default function BoardingPage() {
   return (
     <div style={{ background: "var(--ubasti-paper)" }}>
       {/* Hero */}
-      <section className="relative overflow-hidden" style={{ background: "var(--ubasti-blush)" }}>
-        <div className="absolute inset-0">
+      <ParallaxHero style={{ background: "var(--ubasti-blush)" }}>
+        {/* Background image — oversized for parallax travel */}
+        <div
+          data-parallax-bg
+          className="absolute inset-x-0"
+          style={{ top: "-20%", height: "140%", zIndex: 0 }}
+        >
           <Image
             src="/images/boarding/hero.png"
             alt="Cozy cat boarding at Ubasti Cat Cafe"
@@ -82,7 +88,12 @@ export default function BoardingPage() {
             style={{ filter: "brightness(0.5) saturate(1.15)" }}
           />
         </div>
-        <div className="relative py-24 md:py-36 text-center">
+
+        <div
+          data-parallax-text
+          className="relative py-24 md:py-36 text-center"
+          style={{ zIndex: 2 }}
+        >
           <div className="max-w-[1280px] mx-auto px-6">
             <p
               className="text-sm font-bold uppercase tracking-widest mb-3"
@@ -104,7 +115,10 @@ export default function BoardingPage() {
             </p>
           </div>
         </div>
-      </section>
+      </ParallaxHero>
+
+      {/* Slide-over wrapper — covers the sticky hero */}
+      <div className="parallax-slide-over">
 
       {/* About boarding */}
       <section className="py-14 md:py-20">
@@ -230,6 +244,8 @@ export default function BoardingPage() {
           </div>
         </div>
       </section>
+
+      </div>{/* end parallax-slide-over */}
     </div>
   );
 }

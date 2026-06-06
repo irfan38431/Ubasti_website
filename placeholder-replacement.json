@@ -23,11 +23,11 @@
     "heroImage": "/images/adoption/adoption-hero.png"
   },
   "hero": {
-    "banner": "/images/hero-banner.png"
+    "banner": "/images/hero-banner.png",
+    "lounge": "/images/placeholders/About_page-scroll.jpeg"
   },
   "slideshow": [
     "/images/slideshow_images/Image-1.jpeg",
-    "/images/slideshow_images/image-2.jpeg",
     "/images/slideshow_images/image-3.jpeg",
     "/images/slideshow_images/image-4.jpeg",
     "/images/slideshow_images/image-5.jpeg",
@@ -49,12 +49,13 @@
   "offerings": {
     "coffee": "/images/placeholders/Offering_cats.png",
     "cats": "/images/placeholders/Offering_cats.png",
+    "cuddles": "/images/placeholders/Offering_cats.png",
     "community": "/images/placeholders/Offering_cats.png"
   },
   "about": {
-    "photo": "/images/About_story.jpeg",
-    "story": "/images/About_story.jpeg",
-    "team": "/images/About_story.jpeg"  },
+    "photo": "/images/placeholders/image-2.jpeg",
+    "story": "/images/placeholders/image-2.jpeg",
+    "team": "/images/placeholders/image-2.jpeg"  },
   "adoptionReasons": [
     "/images/placeholders/Adoption-1.jpeg",
     "/images/placeholders/Adoption-2.jpeg",

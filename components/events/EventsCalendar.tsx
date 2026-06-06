@@ -24,11 +24,12 @@ interface Props {
 
 const TZ = "Asia/Kolkata";
 const DAYS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-const DOT_COLORS = [
-  "var(--ubasti-sage)",
-  "var(--ubasti-blush)",
-  "var(--ubasti-olive-dark)",
-  "var(--ubasti-mustard)",
+// Soft pastel chips for events — cycles through the brand pastels.
+const EVENT_COLORS: { bg: string; fg: string }[] = [
+  { bg: "var(--ubasti-blush)",      fg: "var(--ubasti-ink)" },
+  { bg: "var(--ubasti-sage-light)", fg: "var(--ubasti-ink)" },
+  { bg: "var(--ubasti-gold)",       fg: "var(--ubasti-ink)" },
+  { bg: "var(--ubasti-mustard)",    fg: "var(--ubasti-ink)" },
 ];
 
 function toLocalDateKey(isoString: string): string {
@@ -80,82 +81,114 @@ export function EventsCalendar({ events }: Props) {
 
   return (
     <>
-      {/* Month navigation */}
-      <div className="flex items-center justify-between mb-6">
-        <button
-          onClick={prevMonth}
-          className="w-9 h-9 rounded-full flex items-center justify-center transition-colors hover:bg-[var(--ubasti-cream)]"
-          aria-label="Previous month"
-          style={{ color: "var(--ubasti-sage)" }}
-        >
-          ←
-        </button>
-        <h2 className="text-xl" style={{ fontFamily: "var(--font-cormorant)", color: "var(--ubasti-ink)", fontWeight: 600 }}>
-          {monthLabel}
-        </h2>
-        <button
-          onClick={nextMonth}
-          className="w-9 h-9 rounded-full flex items-center justify-center transition-colors hover:bg-[var(--ubasti-cream)]"
-          aria-label="Next month"
-          style={{ color: "var(--ubasti-sage)" }}
-        >
-          →
-        </button>
-      </div>
+      <div
+        className="relative overflow-hidden rounded-[2rem] p-4 md:p-8"
+        style={{
+          background: "linear-gradient(135deg, var(--ubasti-paper) 0%, var(--ubasti-cream) 100%)",
+          border: "1px solid var(--ubasti-blush-light)",
+          boxShadow: "0 18px 50px rgba(44,46,31,0.10)",
+        }}
+      >
+        {/* ── Abstract pastel decorations ── */}
+        <div aria-hidden className="pointer-events-none absolute inset-0">
+          <div style={{ position: "absolute", top: -70, right: -50, width: 230, height: 230, borderRadius: "50%", background: "radial-gradient(circle, var(--ubasti-blush) 0%, transparent 70%)", opacity: 0.5, filter: "blur(6px)" }} />
+          <div style={{ position: "absolute", bottom: -80, left: -60, width: 280, height: 280, borderRadius: "50%", background: "radial-gradient(circle, var(--ubasti-sage-light) 0%, transparent 70%)", opacity: 0.4, filter: "blur(8px)" }} />
+          <div style={{ position: "absolute", top: "38%", left: -40, width: 130, height: 130, borderRadius: "50%", background: "radial-gradient(circle, var(--ubasti-mustard) 0%, transparent 70%)", opacity: 0.18, filter: "blur(6px)" }} />
+          {/* Dotted squiggle flourish, top-left */}
+          <svg width="150" height="40" viewBox="0 0 150 40" className="absolute top-4 left-4" style={{ color: "var(--ubasti-blush)", opacity: 0.55 }}>
+            <path d="M2,20 Q20,2 38,20 T74,20 T110,20 T146,20" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeDasharray="1 7" />
+          </svg>
+        </div>
 
-      {/* Day headers */}
-      <div className="grid grid-cols-7 mb-1">
-        {DAYS.map((d) => (
-          <div key={d} className="text-center text-xs font-medium py-2 uppercase tracking-wider"
-            style={{ color: "var(--ubasti-sage)" }}>
-            {d}
-          </div>
-        ))}
-      </div>
-
-      {/* Date cells */}
-      <div className="grid grid-cols-7 gap-px" style={{ background: "var(--ubasti-blush-light)" }}>
-        {cells.map((cell, i) => {
-          if (!cell.day || !cell.dateKey) {
-            return <div key={i} style={{ background: "var(--ubasti-paper)" }} className="min-h-[72px]" />;
-          }
-          const dayEvents = eventsByDate.get(cell.dateKey) ?? [];
-          const isToday = cell.dateKey === todayKey;
-
-          return (
-            <div
-              key={cell.dateKey}
-              className="min-h-[72px] p-1.5 flex flex-col"
-              style={{ background: "var(--ubasti-paper)" }}
+        <div className="relative z-10">
+          {/* Month navigation */}
+          <div className="flex items-center justify-between mb-6">
+            <button
+              onClick={prevMonth}
+              className="w-10 h-10 rounded-full flex items-center justify-center transition-all hover:scale-110"
+              aria-label="Previous month"
+              style={{ background: "var(--ubasti-white)", color: "var(--ubasti-olive-dark)", boxShadow: "0 3px 10px rgba(44,46,31,0.10)" }}
             >
-              <span
-                className="text-xs font-medium w-6 h-6 rounded-full flex items-center justify-center mb-1 shrink-0"
-                style={{
-                  background: isToday ? "var(--ubasti-olive-dark)" : "transparent",
-                  color: isToday ? "var(--ubasti-cream)" : "var(--ubasti-sage)",
-                }}
-              >
-                {cell.day}
-              </span>
-              <div className="flex flex-col gap-0.5 overflow-hidden">
-                {dayEvents.map((ev, di) => (
-                  <button
-                    key={ev.id}
-                    onClick={() => setSelected(ev)}
-                    className="text-left text-[10px] leading-tight px-1 py-0.5 rounded truncate w-full transition-opacity hover:opacity-80"
-                    style={{
-                      background: DOT_COLORS[di % DOT_COLORS.length],
-                      color: di % DOT_COLORS.length === 1 ? "var(--ubasti-ink)" : "var(--ubasti-cream)",
-                    }}
-                    title={ev.title}
-                  >
-                    {ev.title}
-                  </button>
-                ))}
+              ←
+            </button>
+            <h2 className="text-2xl md:text-3xl" style={{ fontFamily: "var(--font-cormorant)", color: "var(--ubasti-ink)", fontWeight: 600 }}>
+              {monthLabel}
+            </h2>
+            <button
+              onClick={nextMonth}
+              className="w-10 h-10 rounded-full flex items-center justify-center transition-all hover:scale-110"
+              aria-label="Next month"
+              style={{ background: "var(--ubasti-white)", color: "var(--ubasti-olive-dark)", boxShadow: "0 3px 10px rgba(44,46,31,0.10)" }}
+            >
+              →
+            </button>
+          </div>
+
+          {/* Day headers */}
+          <div className="grid grid-cols-7 mb-2">
+            {DAYS.map((d, di) => (
+              <div key={d} className="text-center text-[11px] md:text-xs font-bold py-2 uppercase tracking-[0.15em]"
+                style={{ color: di === 0 || di === 6 ? "var(--ubasti-blush)" : "var(--ubasti-sage)" }}>
+                {d}
               </div>
-            </div>
-          );
-        })}
+            ))}
+          </div>
+
+          {/* Date cells */}
+          <div className="grid grid-cols-7 gap-1.5 md:gap-2">
+            {cells.map((cell, i) => {
+              if (!cell.day || !cell.dateKey) {
+                return <div key={i} className="min-h-[68px] md:min-h-[92px]" />;
+              }
+              const dayEvents = eventsByDate.get(cell.dateKey) ?? [];
+              const isToday = cell.dateKey === todayKey;
+              const isWeekend = i % 7 === 0 || i % 7 === 6;
+              const hasEvents = dayEvents.length > 0;
+
+              return (
+                <div
+                  key={cell.dateKey}
+                  className="min-h-[68px] md:min-h-[92px] p-1.5 md:p-2 flex flex-col rounded-xl md:rounded-2xl transition-all duration-200 hover:-translate-y-0.5"
+                  style={{
+                    background: isToday
+                      ? "var(--ubasti-blush-light)"
+                      : isWeekend
+                        ? "rgba(242,218,197,0.55)"
+                        : "var(--ubasti-white)",
+                    border: isToday ? "1.5px solid var(--ubasti-olive-dark)" : "1px solid rgba(229,182,174,0.35)",
+                    boxShadow: hasEvents ? "0 5px 16px rgba(44,46,31,0.10)" : "0 1px 4px rgba(44,46,31,0.04)",
+                  }}
+                >
+                  <span
+                    className="text-xs font-bold w-6 h-6 rounded-full flex items-center justify-center mb-1 shrink-0"
+                    style={{
+                      background: isToday ? "var(--ubasti-olive-dark)" : "transparent",
+                      color: isToday ? "var(--ubasti-cream)" : "var(--ubasti-ink)",
+                    }}
+                  >
+                    {cell.day}
+                  </span>
+                  <div className="flex flex-col gap-0.5 overflow-hidden">
+                    {dayEvents.map((ev, di) => {
+                      const c = EVENT_COLORS[di % EVENT_COLORS.length];
+                      return (
+                        <button
+                          key={ev.id}
+                          onClick={() => setSelected(ev)}
+                          className="text-left text-[10px] leading-tight px-1.5 py-0.5 rounded-full truncate w-full font-medium transition-transform hover:scale-[1.03]"
+                          style={{ background: c.bg, color: c.fg }}
+                          title={ev.title}
+                        >
+                          {ev.title}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
       </div>
 
       {/* Event detail modal */}

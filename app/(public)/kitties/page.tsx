@@ -8,6 +8,7 @@ import { FaqSection } from "@/components/public/FaqSection";
 import { FAQ_BY_PAGE } from "@/lib/content/faqs";
 import { buildMetadata } from "@/lib/seo/metadata";
 import { WavyDivider } from "@/components/decorative/WavyDivider";
+import { ParallaxHero } from "@/components/public/ParallaxHero";
 import { KITTIES, DECORATIVE } from "@/lib/replacements";
 
 export const metadata = buildMetadata({
@@ -28,27 +29,34 @@ export default async function KittiesPage() {
   return (
     <div style={{ background: "var(--ubasti-paper)" }}>
       {/* ── Hero with background image ── */}
-      <section
-        className="relative flex items-center justify-center"
+      <ParallaxHero
+        className="flex items-center justify-center"
         style={{
           height: "clamp(380px, 55vh, 560px)",
           minHeight: 380,
         }}
       >
-        {/* Background image */}
-        <Image
-          src={KITTIES.heroImage}
-          alt="Cats lounging at Ubasti Cat Cafe"
-          fill
-          className="object-cover"
-          priority
-          sizes="100vw"
-        />
+        {/* Background image — oversized for parallax travel */}
+        <div
+          data-parallax-bg
+          className="absolute inset-x-0"
+          style={{ top: "-20%", height: "140%", zIndex: 0 }}
+        >
+          <Image
+            src={KITTIES.heroImage}
+            alt="Cats lounging at Ubasti Cat Cafe"
+            fill
+            className="object-cover"
+            priority
+            sizes="100vw"
+          />
+        </div>
 
         {/* Dark overlay */}
         <div
           className="absolute inset-0"
           style={{
+            zIndex: 1,
             background:
               "linear-gradient(180deg, rgba(83,93,58,0.45) 0%, rgba(43,46,31,0.6) 100%)",
           }}
@@ -56,13 +64,14 @@ export default async function KittiesPage() {
         />
 
         {/* Badge */}
-        <div className="absolute top-6 right-8 hidden md:block z-10">
+        <div className="absolute top-6 right-8 hidden md:block" style={{ zIndex: 3 }}>
           <Badge variant="forever-friend" size={100} rotate={-10} />
         </div>
 
         {/* Decorative cat outlines */}
         <div
           className="absolute bottom-28 left-6 w-20 h-20 md:w-28 md:h-28 opacity-30 hidden md:block"
+          style={{ zIndex: 2 }}
           aria-hidden="true"
         >
           <Image
@@ -74,8 +83,12 @@ export default async function KittiesPage() {
           />
         </div>
 
-        {/* Title content */}
-        <div className="relative z-10 text-center px-6" style={{ marginBottom: "60px" }}>
+        {/* Title content — floats independently */}
+        <div
+          data-parallax-text
+          className="relative text-center px-6"
+          style={{ zIndex: 2, marginBottom: "60px" }}
+        >
           <p
             className="text-sm font-bold uppercase tracking-widest mb-4"
             style={{ color: "var(--ubasti-mustard)", fontFamily: "var(--font-inter)" }}
@@ -107,7 +120,7 @@ export default async function KittiesPage() {
         </div>
 
         {/* ── Wavy transition overlaying hero bottom ── */}
-        <div className="absolute bottom-0 left-0 right-0 z-20" style={{ lineHeight: 0 }}>
+        <div className="absolute bottom-0 left-0 right-0" style={{ lineHeight: 0, zIndex: 3 }}>
           <svg
             viewBox="0 0 1440 120"
             preserveAspectRatio="none"
@@ -126,7 +139,10 @@ export default async function KittiesPage() {
             />
           </svg>
         </div>
-      </section>
+      </ParallaxHero>
+
+      {/* Slide-over wrapper — covers the sticky hero */}
+      <div className="parallax-slide-over">
 
       {/* ── Cat gallery section ── */}
       <section
@@ -241,6 +257,8 @@ export default async function KittiesPage() {
       />
 
       <FaqSection title="Kitty FAQs" items={FAQ_BY_PAGE.kitties} />
+
+      </div>{/* end parallax-slide-over */}
     </div>
   );
 }
